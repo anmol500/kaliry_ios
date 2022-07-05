@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>432237475442-74jrh9ofgrrte582vf7q7tp2m8iao0a3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.432237475442-74jrh9ofgrrte582vf7q7tp2m8iao0a3</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>432237475442-qs7dcroh49ba0f9j8so44mpqls5dodqj.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyASI7WrUyNdPXvnYBzw5ckihw8GfR86fmc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>432237475442</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kaliry.flutterfly</string>
+	<key>PROJECT_ID</key>
+	<string>kaliry-e5570</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kaliry-e5570.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:432237475442:ios:9eb300a6ffbb19cea034eb</string>
+</dict>
+</plist>

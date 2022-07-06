@@ -22,8 +22,7 @@ class _SettingScreenState extends State<SettingScreen> {
       leading: Container(
         width: 40,
         height: 43,
-        decoration: BoxDecoration(
-            color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
+        decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
         alignment: Alignment.center,
         child: Icon(
           icons,
@@ -34,8 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
       title: Text(
         title,
         maxLines: 2,
-        style: TextStyle(
-            fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
+        style: TextStyle(fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
       ),
       trailing: IconButton(
           icon: Icon(Icons.keyboard_arrow_right),
@@ -61,8 +59,7 @@ class _SettingScreenState extends State<SettingScreen> {
       leading: Container(
         width: 40,
         height: 40,
-        decoration: BoxDecoration(
-            color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
+        decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
         alignment: Alignment.center,
         child: Icon(
           icon,
@@ -72,8 +69,7 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
       title: Text(
         title,
-        style: TextStyle(
-            fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
+        style: TextStyle(fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
       ),
       subtitle: Text(
         subTitle == null || subTitle == "null" ? "N/A" : subTitle,
@@ -88,23 +84,14 @@ class _SettingScreenState extends State<SettingScreen> {
         margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Color(0x1c2464).withOpacity(0.30),
-                blurRadius: 25.0,
-                offset: Offset(0.0, 20.0),
-                spreadRadius: -15.0)
-          ],
+          boxShadow: boxShadow1,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Column(
           children: [
-            personalInfoTile(0, FontAwesomeIcons.user, translate("Name_"),
-                user.fname.toString() + " " + user.lname.toString(), txtClr),
-            personalInfoTile(1, Icons.mail, translate("Email_"),
-                user.email.toString(), txtClr),
-            personalInfoTile(3, FontAwesomeIcons.phone,
-                translate("Mobile_Number"), user.mobile.toString(), txtClr),
+            personalInfoTile(0, FontAwesomeIcons.user, translate("Name_"), user.fname.toString() + " " + user.lname.toString(), txtClr),
+            personalInfoTile(1, Icons.mail, translate("Email_"), user.email.toString(), txtClr),
+            personalInfoTile(3, FontAwesomeIcons.phone, translate("Mobile_Number"), user.mobile.toString(), txtClr),
           ],
         ));
   }
@@ -116,27 +103,16 @@ class _SettingScreenState extends State<SettingScreen> {
         padding: EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Color(0x1c2464).withOpacity(0.30),
-                blurRadius: 25.0,
-                offset: Offset(0.0, 20.0),
-                spreadRadius: -15.0)
-          ],
+          boxShadow: boxShadow1,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Column(
           children: [
-            supportTile(0, FontAwesomeIcons.questionCircle,
-                translate("Become_an_Instructor"), txtColor),
-            supportTile(1, FontAwesomeIcons.shieldVirus, translate("About_Us"),
-                txtColor),
-            supportTile(2, FontAwesomeIcons.facebookMessenger,
-                translate("Contact_Us"), txtColor),
-            supportTile(
-                3, FontAwesomeIcons.handsHelping, translate("FAQ_"), txtColor),
-            supportTile(4, FontAwesomeIcons.handsHelping,
-                translate("Instructor_FAQ"), txtColor),
+            supportTile(0, FontAwesomeIcons.questionCircle, translate("Become_an_Instructor"), txtColor),
+            supportTile(1, FontAwesomeIcons.shieldVirus, translate("About_Us"), txtColor),
+            supportTile(2, FontAwesomeIcons.facebookMessenger, translate("Contact_Us"), txtColor),
+            supportTile(3, FontAwesomeIcons.handsHelping, translate("FAQ_"), txtColor),
+            supportTile(4, FontAwesomeIcons.handsHelping, translate("Instructor_FAQ"), txtColor),
           ],
         ));
   }
@@ -148,13 +124,7 @@ class _SettingScreenState extends State<SettingScreen> {
       padding: EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x1c2464).withOpacity(0.30),
-              blurRadius: 25.0,
-              offset: Offset(0.0, 20.0),
-              spreadRadius: -15.0)
-        ],
+        boxShadow: boxShadow1,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
@@ -163,9 +133,7 @@ class _SettingScreenState extends State<SettingScreen> {
             leading: Container(
               width: 40,
               height: 43,
-              decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
               alignment: Alignment.center,
               child: Icon(
                 Icons.loop_sharp,
@@ -176,8 +144,7 @@ class _SettingScreenState extends State<SettingScreen> {
             title: Text(
               'Video Loop',
               maxLines: 2,
-              style: TextStyle(
-                  fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
+              style: TextStyle(fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
             ),
             trailing: Switch(
               onChanged: (newValue) {
@@ -192,9 +159,7 @@ class _SettingScreenState extends State<SettingScreen> {
             leading: Container(
               width: 40,
               height: 43,
-              decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
               alignment: Alignment.center,
               child: Icon(
                 Icons.subtitles,
@@ -205,8 +170,7 @@ class _SettingScreenState extends State<SettingScreen> {
             title: Text(
               'Video Subtitle',
               maxLines: 2,
-              style: TextStyle(
-                  fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
+              style: TextStyle(fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
             ),
             trailing: Switch(
               onChanged: (newValue) {
@@ -232,8 +196,7 @@ class _SettingScreenState extends State<SettingScreen> {
         children: [
           Text(
             txt,
-            style: TextStyle(
-                color: clr, fontSize: 19, fontWeight: FontWeight.w600),
+            style: TextStyle(color: clr, fontSize: 19, fontWeight: FontWeight.w600),
           ),
           if (type == 1)
             IconButton(
@@ -243,8 +206,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   size: 20,
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (contet) => EditProfile()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (contet) => EditProfile()));
                 })
         ],
       ),
@@ -268,8 +230,7 @@ class _SettingScreenState extends State<SettingScreen> {
               Provider.of<Visible>(context, listen: false).toggleVisible(false);
               Navigator.of(context).pushNamed('/SignIn');
             } else {
-              _scaffoldKey.currentState.showSnackBar(
-                  SnackBar(content: Text(translate("Logout_failed"))));
+              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
             }
           },
           child: logoutLoading
@@ -278,10 +239,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 )
               : Text(
                   translate("LOG_OUT"),
-                  style: TextStyle(
-                      color: headingColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700),
+                  style: TextStyle(color: headingColor, fontSize: 16, fontWeight: FontWeight.w700),
                 )),
     );
   }
@@ -293,8 +251,7 @@ class _SettingScreenState extends State<SettingScreen> {
         margin: EdgeInsets.symmetric(vertical: 10),
         height: 6,
         width: 120,
-        decoration: BoxDecoration(
-            color: Colors.grey[300], borderRadius: BorderRadius.circular(3)),
+        decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(3)),
       ),
     );
   }
@@ -312,8 +269,7 @@ class _SettingScreenState extends State<SettingScreen> {
   bool isSubtitle = false;
   Future<void> initSubtitle() async {
     if (await storage.containsKey(key: 'isSubtitle')) {
-      isSubtitle =
-          await storage.read(key: 'isSubtitle') == 'true' ? true : false;
+      isSubtitle = await storage.read(key: 'isSubtitle') == 'true' ? true : false;
       setState(() {});
     }
   }
@@ -337,13 +293,11 @@ class _SettingScreenState extends State<SettingScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              headingOfSection(
-                  translate("Personal_Information"), mode.headingColor, 1),
+              headingOfSection(translate("Personal_Information"), mode.headingColor, 1),
               personalInfoSection(user, mode.txtcolor),
               headingOfSection(translate("Support_"), mode.headingColor, 0),
               supportSection(mode.txtcolor),
-              headingOfSection(
-                  translate("Video Player Setting"), mode.headingColor, 0),
+              headingOfSection(translate("Video Player Setting"), mode.headingColor, 0),
               playerSection(mode.txtcolor),
               logoutSection(mode.headingColor),
             ],

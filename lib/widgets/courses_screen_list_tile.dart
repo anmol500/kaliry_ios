@@ -20,9 +20,7 @@ class ExpCoursesListItem extends StatelessWidget {
       flex: 1,
       child: Container(
         child: new ClipRRect(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10.0),
-              topLeft: Radius.circular(10.0)),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0), topLeft: Radius.circular(10.0)),
           child: img == "null" || img == null
               ? Image.asset(
                   "assets/placeholder/exp_course_placeholder.png",
@@ -34,8 +32,7 @@ class ExpCoursesListItem extends StatelessWidget {
                   fit: BoxFit.cover,
                   height: 140,
                   imageUrl: "${APIData.courseImages}$img",
-                  placeholder: (context, x) => Image.asset(
-                      "assets/placeholder/exp_course_placeholder.png"),
+                  placeholder: (context, x) => Image.asset("assets/placeholder/exp_course_placeholder.png"),
                 ),
         ),
       ),
@@ -43,14 +40,10 @@ class ExpCoursesListItem extends StatelessWidget {
   }
 
   Widget showDetails(BuildContext context, String category) {
-    var currency = Provider.of<HomeDataProvider>(context, listen: false)
-        .homeModel
-        .currency
-        .currency;
+    var currency = Provider.of<HomeDataProvider>(context, listen: false).homeModel.currency.currency;
     double progress;
     if (isPurchased) {
-      progress =
-          Provider.of<CoursesProvider>(context).getProgress(courseDetail.id);
+      progress = Provider.of<CoursesProvider>(context).getProgress(courseDetail.id);
     }
     var courseDurationType;
     return Expanded(
@@ -96,42 +89,28 @@ class ExpCoursesListItem extends StatelessWidget {
                     ? Text(
                         "Full Time Access",
                         textAlign: TextAlign.right,
-                        style: TextStyle(
-                            color: Color(0xFF3f4654),
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w600),
+                        style: TextStyle(color: Color(0xFF3f4654), fontSize: 14.0, fontWeight: FontWeight.w600),
                       )
                     : Text(
-                        courseDetail.durationType == "m"
-                            ? courseDetail.duration.toString() + ' Months'
-                            : courseDetail.duration.toString() + ' Days',
+                        courseDetail.durationType == "m" ? courseDetail.duration.toString() + ' Months' : courseDetail.duration.toString() + ' Days',
                         textAlign: TextAlign.right,
-                        style: TextStyle(
-                            color: Color(0xFF3f4654),
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w600),
+                        style: TextStyle(color: Color(0xFF3f4654), fontSize: 14.0, fontWeight: FontWeight.w600),
                       ),
                 Text(
-                  courseDetail.type == "0"
+                  courseDetail.type == "0" || courseDetail.type.isEmpty
                       ? "Free"
                       : courseDetail.discountPrice != null
                           ? "${(num.parse(courseDetail.discountPrice.toString()) * selectedCurrencyRate)} $selectedCurrency"
                           : "${(num.parse(courseDetail.price.toString()) * selectedCurrencyRate)} $selectedCurrency",
                   textAlign: TextAlign.right,
-                  style: TextStyle(
-                      color: Color(0xFF3f4654),
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(color: Color(0xFF3f4654), fontSize: 14.0, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
           SizedBox(
             height: 8.0,
           ),
-          if (isPurchased)
-            cusprogressbar(MediaQuery.of(context).size.width - 180, progress)
-          else
-            SizedBox.shrink(),
+          if (isPurchased) cusprogressbar(MediaQuery.of(context).size.width - 180, progress) else SizedBox.shrink(),
         ],
       ),
     );
@@ -139,13 +118,11 @@ class ExpCoursesListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String category = Provider.of<HomeDataProvider>(context)
-        .getCategoryName(courseDetail.categoryId);
+    String category = Provider.of<HomeDataProvider>(context).getCategoryName(courseDetail.categoryId);
     if (category == null) category = "N/A";
     return Container(
       margin: EdgeInsets.only(left: 15.0, right: 15.0),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

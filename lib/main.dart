@@ -14,7 +14,7 @@ void main() async {
   await FlutterDownloader.initialize(
       debug: true // optional: set false to disable printing logs to console
       );
-  await Firebase.initializeApp( );
+  await Firebase.initializeApp();
   WidgetsFlutterBinding.ensureInitialized();
   authToken = await storage.read(key: "token");
 

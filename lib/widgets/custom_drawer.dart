@@ -41,10 +41,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               fit: BoxFit.fitWidth,
               child: Text(
                 user.profileInstance.fname + " " + user.profileInstance.lname,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700),
+                style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700),
               ),
             ),
             SizedBox(
@@ -70,13 +67,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
         ),
       ),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF6E1A52),
-              Color(0xFFF44A4A),
-            ]),
+        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
+          Color(0xFF6E1A52),
+          Color(0xFFF44A4A),
+        ]),
         boxShadow: [
           BoxShadow(
             color: Color(0x1c2464).withOpacity(0.30),
@@ -111,16 +105,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           ListTile(
             title: Text(
-              translate("Blogs_"),
-              style: TextStyle(fontSize: 16.0),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "/blogList");
-            },
-          ),
-          ListTile(
-            title: Text(
               translate("Language_"),
               style: TextStyle(fontSize: 16.0),
             ),
@@ -151,16 +135,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           ListTile(
             title: Text(
-              translate("Become_an_Instructor"),
-              style: TextStyle(fontSize: 16.0),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "/becameInstructor");
-            },
-          ),
-          ListTile(
-            title: Text(
               translate("About_Us"),
               style: TextStyle(fontSize: 16.0),
             ),
@@ -187,16 +161,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, "/userFaq");
-            },
-          ),
-          ListTile(
-            title: Text(
-              translate("Instructor_FAQ"),
-              style: TextStyle(fontSize: 16.0),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "/instructorFaq");
             },
           ),
           if (homeDataProvider.homeModel.settings.donationEnable == '1')
@@ -253,8 +217,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             Provider.of<Visible>(context, listen: false).toggleVisible(false);
             Navigator.of(context).pushNamed('/SignIn');
           } else {
-            _scaffoldKey.currentState.showSnackBar(
-                SnackBar(content: Text(translate("Logout_failed"))));
+            _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
           }
         },
         child: logoutLoading
@@ -263,10 +226,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               )
             : Text(
                 translate("LOG_OUT"),
-                style: TextStyle(
-                    color: headingColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700),
+                style: TextStyle(color: headingColor, fontSize: 16, fontWeight: FontWeight.w700),
               ),
       ),
     );

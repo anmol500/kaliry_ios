@@ -8,8 +8,7 @@ class PlayAudio extends StatefulWidget {
   _PlayAudioState createState() => _PlayAudioState();
 }
 
-class _PlayAudioState extends State<PlayAudio>
-    with SingleTickerProviderStateMixin {
+class _PlayAudioState extends State<PlayAudio> with SingleTickerProviderStateMixin {
   //we will need some variables
   bool playing = false; // at the begining we are not playing any song
   IconData playBtn = Icons.play_arrow; // the main state of the play button icon
@@ -49,11 +48,10 @@ class _PlayAudioState extends State<PlayAudio>
     super.initState();
     _controller = AnimationController(
       vsync: this, // the SingleTickerProviderStateMixin
-      duration:
-          Duration(seconds: 1), // how long should the animation take to finish
+      duration: Duration(seconds: 1), // how long should the animation take to finish
     );
     _player = AudioPlayer();
-    cache = AudioCache( );
+    cache = AudioCache();
 
     doGetDurationStuff();
     doGetPositionHandlerStuff();
@@ -67,7 +65,7 @@ class _PlayAudioState extends State<PlayAudio>
 
     //this function will allow us to move the cursor of the slider while we are playing the song
     // ignore: deprecated_member_use
-    _player.onPositionChanged.listen((p) {
+    _player.onAudioPositionChanged.listen((p) {
       setState(() {
         position = p;
       });
@@ -99,17 +97,15 @@ class _PlayAudioState extends State<PlayAudio>
 
   Future<int> _play() async {
     String url = '${widget.url}';
-    final playPosition = (position != null &&
-            musicLength != null &&
-            position.inMilliseconds > 0 &&
-            position.inMilliseconds < musicLength.inMilliseconds)
-        ? position
-        : null;
+    final playPosition = (position != null && musicLength != null && position.inMilliseconds > 0 && position.inMilliseconds < musicLength.inMilliseconds) ? position : null;
     var result;
     if (url.contains('http'))
-        await _player.play(UrlSource(url), position: playPosition);
+      await _player.play(url, position: playPosition);
     else
-      await _player.play(UrlSource(url), position: playPosition, );
+      await _player.play(
+        url,
+        position: playPosition,
+      );
 
     return result;
   }

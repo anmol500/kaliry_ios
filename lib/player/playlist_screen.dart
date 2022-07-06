@@ -38,14 +38,7 @@ import 'package:vimeo_player_flutter/vimeo_player_flutter.dart';
 import 'package:eclass/provider/watchlist_provider.dart';
 
 class PlayListScreen extends StatefulWidget {
-  PlayListScreen(
-      {Key key,
-      this.clips,
-      this.sections,
-      this.markedSec,
-      this.defaultIndex,
-      this.courseDetails})
-      : super(key: key);
+  PlayListScreen({Key key, this.clips, this.sections, this.markedSec, this.defaultIndex, this.courseDetails}) : super(key: key);
 
   final List<Section> sections;
   final List<VideoClip> clips;
@@ -57,8 +50,7 @@ class PlayListScreen extends StatefulWidget {
   _PlayListScreenState createState() => _PlayListScreenState();
 }
 
-class _PlayListScreenState extends State<PlayListScreen>
-    with WidgetsBindingObserver {
+class _PlayListScreenState extends State<PlayListScreen> with WidgetsBindingObserver {
   bool showBottomNavigation = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   AnimationController animationController;
@@ -133,15 +125,7 @@ class _PlayListScreenState extends State<PlayListScreen>
   bool isDataDownloadable(String url) {
     if (url.length >= 25) {
       var fileType = url.split(".").last;
-      if (fileType == "mp4" ||
-          fileType == "mpd" ||
-          fileType == "webm" ||
-          fileType == "mkv" ||
-          fileType == "m3u8" ||
-          fileType == "ogg" ||
-          fileType == "wav" ||
-          fileType == "mp3" ||
-          fileType == 'pdf') {
+      if (fileType == "mp4" || fileType == "mpd" || fileType == "webm" || fileType == "mkv" || fileType == "m3u8" || fileType == "ogg" || fileType == "wav" || fileType == "mp3" || fileType == 'pdf') {
         return true;
       } else {
         return false;
@@ -155,8 +139,7 @@ class _PlayListScreenState extends State<PlayListScreen>
     for (Section section in widget.sections) {
       for (VideoClip videoClip in section.sectionLessons) {
         videos.add({'name': videoClip.title, 'link': videoClip.parent});
-        print(
-            'Course Content :- name : ${videoClip.title}, link : ${videoClip.parent}');
+        print('Course Content :- name : ${videoClip.title}, link : ${videoClip.parent}');
       }
     }
     if (videos.length > 0) {
@@ -220,9 +203,7 @@ class _PlayListScreenState extends State<PlayListScreen>
               margin: EdgeInsets.only(left: 15.0),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: selectedSecs.contains(chpId)
-                      ? Colors.greenAccent
-                      : Colors.transparent,
+                  color: selectedSecs.contains(chpId) ? Colors.greenAccent : Colors.transparent,
                   border: selectedSecs.contains(chpId)
                       ? Border.all(color: Colors.transparent, width: 2.0)
                       : Border.all(
@@ -251,10 +232,7 @@ class _PlayListScreenState extends State<PlayListScreen>
               secDetails.chapterName,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: mode.titleTextColor),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: mode.titleTextColor),
             ),
           ),
         ],
@@ -303,21 +281,16 @@ class _PlayListScreenState extends State<PlayListScreen>
     int progress;
     // Downloader
     if (isDataDownloadable(lessClip.parent)) {
-      if (downloader.items[index].task.status == DownloadTaskStatus.undefined ||
-          downloader.items[index].task.status == DownloadTaskStatus.canceled ||
-          downloader.items[index].task.status == DownloadTaskStatus.failed) {
+      if (downloader.items[index].task.status == DownloadTaskStatus.undefined || downloader.items[index].task.status == DownloadTaskStatus.canceled || downloader.items[index].task.status == DownloadTaskStatus.failed) {
         downloadBtnTxt = 'Download';
         // Remove from offline_data.db
         dbHandler.delete(lessClip.parent);
-      } else if (downloader.items[index].task.status ==
-          DownloadTaskStatus.running) {
+      } else if (downloader.items[index].task.status == DownloadTaskStatus.running) {
         downloadBtnTxt = 'Cancel Download';
         progress = downloader.items[index].task.progress;
-      } else if (downloader.items[index].task.status ==
-          DownloadTaskStatus.paused) {
+      } else if (downloader.items[index].task.status == DownloadTaskStatus.paused) {
         downloadBtnTxt = 'Resume Download';
-      } else if (downloader.items[index].task.status ==
-          DownloadTaskStatus.complete) {
+      } else if (downloader.items[index].task.status == DownloadTaskStatus.complete) {
         downloadBtnTxt = 'Delete Download';
         progress = downloader.items[index].task.progress;
         // Add to offline_data.db
@@ -369,8 +342,7 @@ class _PlayListScreenState extends State<PlayListScreen>
     var currentVideo;
 
     if (lessClip.dateTime != null) {
-      if (lessClip.dateTime.millisecondsSinceEpoch <=
-          DateTime.now().millisecondsSinceEpoch) {
+      if (lessClip.dateTime.millisecondsSinceEpoch <= DateTime.now().millisecondsSinceEpoch) {
         currentVideo = (index == _playingIndex);
       } else {
         currentVideo = false;
@@ -380,8 +352,7 @@ class _PlayListScreenState extends State<PlayListScreen>
     }
 
     if (currentVideo) {
-      storage.write(
-          key: 'courseId : ${widget.courseDetails.course.id}', value: '$index');
+      storage.write(key: 'courseId : ${widget.courseDetails.course.id}', value: '$index');
     }
 
     return Container(
@@ -392,8 +363,7 @@ class _PlayListScreenState extends State<PlayListScreen>
         child: InkWell(
           borderRadius: BorderRadius.circular(10.0),
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -402,15 +372,7 @@ class _PlayListScreenState extends State<PlayListScreen>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Text("${lessClip.title}",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 19,
-                              color: mode.titleTextColor,
-                              fontWeight: currentVideo
-                                  ? FontWeight.w800
-                                  : FontWeight.w400)),
+                      child: Text("${lessClip.title}", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 19, color: mode.titleTextColor, fontWeight: currentVideo ? FontWeight.w800 : FontWeight.w400)),
                     ),
                     currentVideo
                         ? Icon(
@@ -431,14 +393,11 @@ class _PlayListScreenState extends State<PlayListScreen>
                             // Downloader
                             downloader.retryRequestPermission();
                             if (downloadBtnTxt == 'Download') {
-                              downloader.requestDownload(
-                                  downloader.items[index].task);
+                              downloader.requestDownload(downloader.items[index].task);
                             } else if (downloadBtnTxt == 'Cancel Download') {
-                              downloader
-                                  .cancelDownload(downloader.items[index].task);
+                              downloader.cancelDownload(downloader.items[index].task);
                             } else if (downloadBtnTxt == 'Resume Download') {
-                              downloader
-                                  .resumeDownload(downloader.items[index].task);
+                              downloader.resumeDownload(downloader.items[index].task);
                             } else if (downloadBtnTxt == 'Delete Download') {
                               // show the delete dialog
                               showDialog(
@@ -449,15 +408,13 @@ class _PlayListScreenState extends State<PlayListScreen>
                                       translate("Are_you_sure"),
                                       style: TextStyle(color: Colors.red),
                                     ),
-                                    content: Text(translate(
-                                        "Do_you_want_to_delete_download")),
+                                    content: Text(translate("Do_you_want_to_delete_download")),
                                     actions: [
                                       // ignore: deprecated_member_use
                                       FlatButton(
                                         child: Text(translate("OK_")),
                                         onPressed: () {
-                                          downloader.delete(
-                                              downloader.items[index].task);
+                                          downloader.delete(downloader.items[index].task);
                                           Navigator.of(context).pop();
                                         },
                                       ),
@@ -491,8 +448,7 @@ class _PlayListScreenState extends State<PlayListScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    if (downloadBtnTxt == 'Cancel Download' ||
-                        downloadBtnTxt == 'Delete Download')
+                    if (downloadBtnTxt == 'Cancel Download' || downloadBtnTxt == 'Delete Download')
                       LinearPercentIndicator(
                         width: MediaQuery.of(context).size.width - 110,
                         lineHeight: 10.0,
@@ -516,8 +472,7 @@ class _PlayListScreenState extends State<PlayListScreen>
           ),
           onTap: () {
             if (lessClip.dateTime != null) {
-              if (lessClip.dateTime.millisecondsSinceEpoch <=
-                  DateTime.now().millisecondsSinceEpoch) {
+              if (lessClip.dateTime.millisecondsSinceEpoch <= DateTime.now().millisecondsSinceEpoch) {
                 setState(() {
                   _playingIndex = index;
                 });
@@ -528,21 +483,13 @@ class _PlayListScreenState extends State<PlayListScreen>
               });
             }
 
-            if (downloadBtnTxt == 'Delete Download' &&
-                downloader.items[index].task.fileName != null) {
-              String theFile = downloader.items[index].task.savedDir +
-                  Platform.pathSeparator +
-                  downloader.items[index].task.fileName;
+            if (downloadBtnTxt == 'Delete Download' && downloader.items[index].task.fileName != null) {
+              String theFile = downloader.items[index].task.savedDir + Platform.pathSeparator + downloader.items[index].task.fileName;
 
               if (theFile.split(".").last == 'pdf') {
                 print('PDF File : $theFile');
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            PdfViewer(filePath: theFile, isLocal: true)));
-              } else if (lessClip.parent.split(".").last == 'wav' ||
-                  lessClip.parent.split(".").last == 'mp3') {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PdfViewer(filePath: theFile, isLocal: true)));
+              } else if (lessClip.parent.split(".").last == 'wav' || lessClip.parent.split(".").last == 'mp3') {
                 print('Audio File : $theFile');
                 playAudio(theFile);
               } else {
@@ -551,34 +498,18 @@ class _PlayListScreenState extends State<PlayListScreen>
               }
             } else if (downloadBtnTxt == '') {
               if (lessClip.dateTime != null) {
-                if (lessClip.dateTime.millisecondsSinceEpoch <=
-                    DateTime.now().millisecondsSinceEpoch) {
-                  onlineVideoPlayer(lessClip.parent,
-                      isIframe: lessClip.isIframe);
+                if (lessClip.dateTime.millisecondsSinceEpoch <= DateTime.now().millisecondsSinceEpoch) {
+                  onlineVideoPlayer(lessClip.parent, isIframe: lessClip.isIframe);
                 } else {
-                  Fluttertoast.showToast(
-                      msg: translate("Starts_at") +
-                          " " +
-                          DateFormat("dd/MM/yyyy hh:mm a")
-                              .format(lessClip.dateTime),
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.CENTER,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0);
+                  Fluttertoast.showToast(msg: translate("Starts_at") + " " + DateFormat("dd/MM/yyyy hh:mm a").format(lessClip.dateTime), toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
                 }
               } else {
                 onlineVideoPlayer(lessClip.parent, isIframe: lessClip.isIframe);
               }
             } else {
               if (lessClip.parent.split(".").last == 'pdf') {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            PdfViewer(filePath: lessClip.parent)));
-              } else if (lessClip.parent.split(".").last == 'wav' ||
-                  lessClip.parent.split(".").last == 'mp3') {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PdfViewer(filePath: lessClip.parent)));
+              } else if (lessClip.parent.split(".").last == 'wav' || lessClip.parent.split(".").last == 'mp3') {
                 playAudio(lessClip.parent);
               } else {
                 onlineVideoPlayer(lessClip.parent, isIframe: lessClip.isIframe);
@@ -609,13 +540,7 @@ class _PlayListScreenState extends State<PlayListScreen>
       _controller.pause();
     } else if (url.substring(0, 24) == 'https://drive.google.com') {
       _betterPlayerController.pause();
-    } else if (checkUrl == "mp4" ||
-        checkUrl == "mpd" ||
-        checkUrl == "webm" ||
-        checkUrl == "mkv" ||
-        checkUrl == "m3u8" ||
-        checkUrl == "ogg" ||
-        checkUrl == "wav") {
+    } else if (checkUrl == "mp4" || checkUrl == "mpd" || checkUrl == "webm" || checkUrl == "mkv" || checkUrl == "m3u8" || checkUrl == "ogg" || checkUrl == "wav") {
       print("Pause");
       _betterPlayerController.pause();
     }
@@ -628,13 +553,7 @@ class _PlayListScreenState extends State<PlayListScreen>
       _controller.play();
     } else if (url.substring(0, 24) == 'https://drive.google.com') {
       _betterPlayerController.play();
-    } else if (checkUrl == "mp4" ||
-        checkUrl == "mpd" ||
-        checkUrl == "webm" ||
-        checkUrl == "mkv" ||
-        checkUrl == "m3u8" ||
-        checkUrl == "ogg" ||
-        checkUrl == "wav") {
+    } else if (checkUrl == "mp4" || checkUrl == "mpd" || checkUrl == "webm" || checkUrl == "mkv" || checkUrl == "m3u8" || checkUrl == "ogg" || checkUrl == "wav") {
       _betterPlayerController.play();
     }
   }
@@ -678,21 +597,18 @@ class _PlayListScreenState extends State<PlayListScreen>
           builder: (context) => IFramePlayerScreen(url),
         ),
       );
-    } else if (url.substring(0, 18) == "https://vimeo.com" ||
-        url.substring(0, 25) == "https://player.vimeo.com/") {
+    } else if (url.substring(0, 18) == "https://vimeo.com" || url.substring(0, 25) == "https://player.vimeo.com/") {
       print("Vimeo Video");
 
       setState(() {
         urlType = "VIMEO";
         vimeo = '$url';
       });
-    } else if (url.substring(0, 23) == 'https://www.youtube.com' ||
-        url.substring(0, 17) == 'https://youtu.be/') {
+    } else if (url.substring(0, 23) == 'https://www.youtube.com' || url.substring(0, 17) == 'https://youtu.be/') {
       print("YouTube Video");
 
       var youId;
-      if (url.length >= 30 &&
-          url.substring(0, 30) == 'https://www.youtube.com/embed/') {
+      if (url.length >= 30 && url.substring(0, 30) == 'https://www.youtube.com/embed/') {
         youId = url.split("/").last;
       } else if (url.substring(0, 23) == 'https://www.youtube.com') {
         youId = url.split("v=").last;
@@ -775,28 +691,21 @@ class _PlayListScreenState extends State<PlayListScreen>
         if (matchIFrameUrl == 'https://drive.google.com') {
           var rep = url.split('/d/').last;
           rep = rep.split('/preview').first;
-          gUrl =
-              "https://www.googleapis.com/drive/v3/files/$rep?alt=media&key=${APIData.googleDriveApi}";
+          gUrl = "https://www.googleapis.com/drive/v3/files/$rep?alt=media&key=${APIData.googleDriveApi}";
         }
         // This player supports all format mentioned in following URL
         // https://exoplayer.dev/supported-formats.html
         var dataSource = BetterPlayerDataSource(
           BetterPlayerDataSourceType.network,
           "$gUrl",
-          subtitles: BetterPlayerSubtitlesSource.single(
-              type: BetterPlayerSubtitlesSourceType.network,
-              url: subtitle ??
-                  "http://www.storiesinflight.com/js_videosub/jellies.srt"),
+          subtitles: BetterPlayerSubtitlesSource.single(type: BetterPlayerSubtitlesSourceType.network, url: subtitle ?? "http://www.storiesinflight.com/js_videosub/jellies.srt"),
         );
         betterPlayerConfiguration = BetterPlayerConfiguration(
           autoPlay: true,
           looping: isLoop,
           fullScreenByDefault: false,
           aspectRatio: 16 / 9,
-          subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
-              fontSize: 20,
-              fontColor: Colors.white,
-              backgroundColor: Colors.black),
+          subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(fontSize: 20, fontColor: Colors.white, backgroundColor: Colors.black),
           controlsConfiguration: BetterPlayerControlsConfiguration(
             textColor: Colors.white,
             iconsColor: Colors.white,
@@ -813,8 +722,7 @@ class _PlayListScreenState extends State<PlayListScreen>
         if (matchIFrameUrl == 'https://drive.google.com') {
           var rep = url.split('/d/').last;
           rep = rep.split('/preview').first;
-          gUrl =
-              "https://www.googleapis.com/drive/v3/files/$rep?alt=media&key=${APIData.googleDriveApi}";
+          gUrl = "https://www.googleapis.com/drive/v3/files/$rep?alt=media&key=${APIData.googleDriveApi}";
         }
 
         // This player supports all format mentioned in following URL
@@ -822,20 +730,14 @@ class _PlayListScreenState extends State<PlayListScreen>
         var dataSource = BetterPlayerDataSource(
           BetterPlayerDataSourceType.network,
           "$gUrl",
-          subtitles: BetterPlayerSubtitlesSource.single(
-              type: BetterPlayerSubtitlesSourceType.network,
-              url: subtitle ??
-                  "http://www.storiesinflight.com/js_videosub/jellies.srt"),
+          subtitles: BetterPlayerSubtitlesSource.single(type: BetterPlayerSubtitlesSourceType.network, url: subtitle ?? "http://www.storiesinflight.com/js_videosub/jellies.srt"),
         );
         betterPlayerConfiguration = BetterPlayerConfiguration(
           autoPlay: true,
           looping: isLoop,
           fullScreenByDefault: false,
           aspectRatio: 16 / 9,
-          subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
-              fontSize: 20,
-              fontColor: Colors.white,
-              backgroundColor: Colors.black),
+          subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(fontSize: 20, fontColor: Colors.white, backgroundColor: Colors.black),
           controlsConfiguration: BetterPlayerControlsConfiguration(
             textColor: Colors.white,
             iconsColor: Colors.white,
@@ -847,13 +749,7 @@ class _PlayListScreenState extends State<PlayListScreen>
         );
         _betterPlayerController.play();
       }
-    } else if (checkUrl == "mp4" ||
-        checkUrl == "mpd" ||
-        checkUrl == "webm" ||
-        checkUrl == "mkv" ||
-        checkUrl == "m3u8" ||
-        checkUrl == "ogg" ||
-        checkUrl == "wav") {
+    } else if (checkUrl == "mp4" || checkUrl == "mpd" || checkUrl == "webm" || checkUrl == "mkv" || checkUrl == "m3u8" || checkUrl == "ogg" || checkUrl == "wav") {
       print("Custom Video");
 
       setState(() {
@@ -876,20 +772,14 @@ class _PlayListScreenState extends State<PlayListScreen>
         var dataSource = BetterPlayerDataSource(
           BetterPlayerDataSourceType.network,
           "$url",
-          subtitles: BetterPlayerSubtitlesSource.single(
-              type: BetterPlayerSubtitlesSourceType.network,
-              url: subtitle ??
-                  "http://www.storiesinflight.com/js_videosub/jellies.srt"),
+          subtitles: BetterPlayerSubtitlesSource.single(type: BetterPlayerSubtitlesSourceType.network, url: subtitle ?? "http://www.storiesinflight.com/js_videosub/jellies.srt"),
         );
         betterPlayerConfiguration = BetterPlayerConfiguration(
           autoPlay: true,
           looping: isLoop,
           fullScreenByDefault: false,
           aspectRatio: 16 / 9,
-          subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
-              fontSize: 20,
-              fontColor: Colors.white,
-              backgroundColor: Colors.black),
+          subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(fontSize: 20, fontColor: Colors.white, backgroundColor: Colors.black),
           controlsConfiguration: BetterPlayerControlsConfiguration(
             textColor: Colors.white,
             iconsColor: Colors.white,
@@ -904,20 +794,14 @@ class _PlayListScreenState extends State<PlayListScreen>
         var dataSource = BetterPlayerDataSource(
           BetterPlayerDataSourceType.network,
           "$url",
-          subtitles: BetterPlayerSubtitlesSource.single(
-              type: BetterPlayerSubtitlesSourceType.network,
-              url: subtitle ??
-                  "http://www.storiesinflight.com/js_videosub/jellies.srt"),
+          subtitles: BetterPlayerSubtitlesSource.single(type: BetterPlayerSubtitlesSourceType.network, url: subtitle ?? "http://www.storiesinflight.com/js_videosub/jellies.srt"),
         );
         betterPlayerConfiguration = BetterPlayerConfiguration(
           autoPlay: true,
           looping: isLoop,
           fullScreenByDefault: false,
           aspectRatio: 16 / 9,
-          subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
-              fontSize: 20,
-              fontColor: Colors.white,
-              backgroundColor: Colors.black),
+          subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(fontSize: 20, fontColor: Colors.white, backgroundColor: Colors.black),
           controlsConfiguration: BetterPlayerControlsConfiguration(
             textColor: Colors.white,
             iconsColor: Colors.white,
@@ -961,10 +845,7 @@ class _PlayListScreenState extends State<PlayListScreen>
         looping: isLoop,
         fullScreenByDefault: false,
         aspectRatio: 16 / 9,
-        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
-            fontSize: 20,
-            fontColor: Colors.white,
-            backgroundColor: Colors.black),
+        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(fontSize: 20, fontColor: Colors.white, backgroundColor: Colors.black),
         controlsConfiguration: BetterPlayerControlsConfiguration(
           textColor: Colors.white,
           iconsColor: Colors.white,
@@ -989,10 +870,7 @@ class _PlayListScreenState extends State<PlayListScreen>
         looping: isLoop,
         fullScreenByDefault: false,
         aspectRatio: 16 / 9,
-        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
-            fontSize: 20,
-            fontColor: Colors.white,
-            backgroundColor: Colors.black),
+        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(fontSize: 20, fontColor: Colors.white, backgroundColor: Colors.black),
         controlsConfiguration: BetterPlayerControlsConfiguration(
           textColor: Colors.white,
           iconsColor: Colors.white,
@@ -1070,22 +948,19 @@ class _PlayListScreenState extends State<PlayListScreen>
           builder: (context) => IFramePlayerScreen(url),
         ),
       );
-    } else if (url.substring(0, 18) == "https://vimeo.com/" ||
-        url.substring(0, 25) == "https://player.vimeo.com/") {
+    } else if (url.substring(0, 18) == "https://vimeo.com/" || url.substring(0, 25) == "https://player.vimeo.com/") {
       print('vimeo $url');
       setState(() {
         urlType = "VIMEO";
         vimeo = '$url';
       });
-    } else if (url.substring(0, 23) == 'https://www.youtube.com' ||
-        containe == true) {
+    } else if (url.substring(0, 23) == 'https://www.youtube.com' || containe == true) {
       var youId = '';
       if (containe == true) {
         var pos = url.lastIndexOf('/');
         String result = (pos != -1) ? url.substring(0, pos) : url;
         youId = url.replaceAll('$result/', '');
-      } else if (url.length >= 30 &&
-          url.substring(0, 30) == 'https://www.youtube.com/embed/') {
+      } else if (url.length >= 30 && url.substring(0, 30) == 'https://www.youtube.com/embed/') {
         youId = url.split("/").last;
       } else {
         youId = url.split("v=").last;
@@ -1129,8 +1004,7 @@ class _PlayListScreenState extends State<PlayListScreen>
       if (matchIFrameUrl == 'https://drive.google.com') {
         var rep = url.split('/d/').last;
         rep = rep.split('/preview').first;
-        gUrl =
-            "https://www.googleapis.com/drive/v3/files/$rep?alt=media&key=${APIData.googleDriveApi}";
+        gUrl = "https://www.googleapis.com/drive/v3/files/$rep?alt=media&key=${APIData.googleDriveApi}";
       }
 
       // This player supports all format mentioned in following URL
@@ -1138,20 +1012,14 @@ class _PlayListScreenState extends State<PlayListScreen>
       var dataSource = BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
         "$gUrl",
-        subtitles: BetterPlayerSubtitlesSource.single(
-            type: BetterPlayerSubtitlesSourceType.network,
-            url: subtitle ??
-                "http://www.storiesinflight.com/js_videosub/jellies.srt"),
+        subtitles: BetterPlayerSubtitlesSource.single(type: BetterPlayerSubtitlesSourceType.network, url: subtitle ?? "http://www.storiesinflight.com/js_videosub/jellies.srt"),
       );
       betterPlayerConfiguration = BetterPlayerConfiguration(
         autoPlay: false,
         looping: isLoop,
         fullScreenByDefault: false,
         aspectRatio: 16 / 9,
-        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
-            fontSize: 20,
-            fontColor: Colors.white,
-            backgroundColor: Colors.black),
+        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(fontSize: 20, fontColor: Colors.white, backgroundColor: Colors.black),
         controlsConfiguration: BetterPlayerControlsConfiguration(
           textColor: Colors.white,
           iconsColor: Colors.white,
@@ -1161,33 +1029,21 @@ class _PlayListScreenState extends State<PlayListScreen>
         betterPlayerConfiguration,
         betterPlayerDataSource: dataSource,
       );
-    } else if (checkUrl == "mp4" ||
-        checkUrl == "mpd" ||
-        checkUrl == "webm" ||
-        checkUrl == "mkv" ||
-        checkUrl == "m3u8" ||
-        checkUrl == "ogg" ||
-        checkUrl == "wav") {
+    } else if (checkUrl == "mp4" || checkUrl == "mpd" || checkUrl == "webm" || checkUrl == "mkv" || checkUrl == "m3u8" || checkUrl == "ogg" || checkUrl == "wav") {
       setState(() {
         urlType = "CUSTOM";
       });
       var dataSource = BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
         "$url",
-        subtitles: BetterPlayerSubtitlesSource.single(
-            type: BetterPlayerSubtitlesSourceType.network,
-            url: subtitle ??
-                "http://www.storiesinflight.com/js_videosub/jellies.srt"),
+        subtitles: BetterPlayerSubtitlesSource.single(type: BetterPlayerSubtitlesSourceType.network, url: subtitle ?? "http://www.storiesinflight.com/js_videosub/jellies.srt"),
       );
       betterPlayerConfiguration = BetterPlayerConfiguration(
         autoPlay: false,
         looping: isLoop,
         fullScreenByDefault: false,
         aspectRatio: 16 / 9,
-        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(
-            fontSize: 20,
-            fontColor: Colors.white,
-            backgroundColor: Colors.black),
+        subtitlesConfiguration: BetterPlayerSubtitlesConfiguration(fontSize: 20, fontColor: Colors.white, backgroundColor: Colors.black),
         controlsConfiguration: BetterPlayerControlsConfiguration(
           textColor: Colors.white,
           iconsColor: Colors.white,
@@ -1204,8 +1060,7 @@ class _PlayListScreenState extends State<PlayListScreen>
     T.Theme mode = Provider.of<T.Theme>(context);
     List<Widget> list = [];
     for (int i = 0; i < zoomMeetings.length; i++) {
-      if ("${zoomMeetings[i].courseId}" ==
-          "${widget.courseDetails.course.id}") {
+      if ("${zoomMeetings[i].courseId}" == "${widget.courseDetails.course.id}") {
         list.add(Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1219,8 +1074,7 @@ class _PlayListScreenState extends State<PlayListScreen>
                       translate("Zoom_Meeting"),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
@@ -1229,79 +1083,64 @@ class _PlayListScreenState extends State<PlayListScreen>
                 child: Container(
                   height: 120,
                   padding: EdgeInsets.all(15.0),
-                  margin:
-                      EdgeInsets.only(right: 15.0, bottom: 10.0, left: 15.0),
+                  margin: EdgeInsets.only(right: 15.0, bottom: 10.0, left: 15.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color(0x1c2464).withOpacity(0.30),
-                          blurRadius: 25.0,
-                          offset: Offset(0.0, 20.0),
-                          spreadRadius: -15.0)
-                    ],
+                    boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 25.0, offset: Offset(0.0, 20.0), spreadRadius: -15.0)],
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(zoomMeetings[i].meetingTitle,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: mode.titleTextColor,
-                                )),
-                            Row(
-                              children: [
-                                Padding(
-                                  child: Text(translate("Starts_at"),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: mode.titleTextColor
-                                            .withOpacity(0.8),
-                                      )),
-                                  padding: EdgeInsets.only(top: 3),
-                                ),
-                                Padding(
-                                  child: Text(
-                                      "${DateFormat('dd-MM-yyyy | hh:mm aa').format(zoomMeetings[i].startTime)}",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: mode.titleTextColor
-                                            .withOpacity(0.8),
-                                      )),
-                                  padding: EdgeInsets.only(top: 3),
-                                ),
-                              ],
+                      Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                        Text(zoomMeetings[i].meetingTitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: mode.titleTextColor,
+                            )),
+                        Row(
+                          children: [
+                            Padding(
+                              child: Text(translate("Starts_at"),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: mode.titleTextColor.withOpacity(0.8),
+                                  )),
+                              padding: EdgeInsets.only(top: 3),
                             ),
-                          ]),
+                            Padding(
+                              child: Text("${DateFormat('dd-MM-yyyy | hh:mm aa').format(zoomMeetings[i].startTime)}",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: mode.titleTextColor.withOpacity(0.8),
+                                  )),
+                              padding: EdgeInsets.only(top: 3),
+                            ),
+                          ],
+                        ),
+                      ]),
                     ],
                   ),
                 ),
                 onTap: () {
-                  liveClassAttendance(
-                      meetingType: "1", meetingId: zoomMeetings[i].id);
+                  liveClassAttendance(meetingType: "1", meetingId: zoomMeetings[i].id);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => JoinWidget(
-                        meetingId: zoomMeetings[i].meetingId,
-                      ),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => JoinWidget(
+                  //       meetingId: zoomMeetings[i].meetingId,
+                  //     ),
+                  //   ),
+                  // );
                 },
               ),
             ],
@@ -1313,16 +1152,13 @@ class _PlayListScreenState extends State<PlayListScreen>
   }
 
   Future<void> liveClassAttendance({String meetingType, int meetingId}) async {
-    final res = await post(
-        Uri.parse("${APIData.liveClassAttendance}${APIData.secretKey}"),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer $authToken",
-          "Accept": "application/json"
-        },
-        body: {
-          "meeting_type": meetingType,
-          "meeting_id": meetingId,
-        });
+    final res = await post(Uri.parse("${APIData.liveClassAttendance}${APIData.secretKey}"), headers: {
+      HttpHeaders.authorizationHeader: "Bearer $authToken",
+      "Accept": "application/json"
+    }, body: {
+      "meeting_type": meetingType,
+      "meeting_id": meetingId,
+    });
 
     if (res.statusCode == 200) {
       print("Attendance Done!");
@@ -1333,18 +1169,15 @@ class _PlayListScreenState extends State<PlayListScreen>
 
   Future<void> initClass() async {
     if (widget.defaultIndex == 0) {
-      if (await storage.containsKey(
-          key: 'courseId : ${widget.courseDetails.course.id}'))
-        newIndex = int.parse(await storage.read(
-            key: 'courseId : ${widget.courseDetails.course.id}'));
+      if (await storage.containsKey(key: 'courseId : ${widget.courseDetails.course.id}'))
+        newIndex = int.parse(await storage.read(key: 'courseId : ${widget.courseDetails.course.id}'));
       else
         newIndex = widget.defaultIndex;
     } else {
       newIndex = widget.defaultIndex;
     }
     _playingIndex = newIndex;
-    fetchURLType(widget.clips[newIndex].parent,
-        isIframe: widget.clips[newIndex].isIframe);
+    fetchURLType(widget.clips[newIndex].parent, isIframe: widget.clips[newIndex].isIframe);
   }
 
   bool isLoop = false;
@@ -1358,8 +1191,7 @@ class _PlayListScreenState extends State<PlayListScreen>
   bool isSubtitle = false;
   Future<void> initSubtitle() async {
     if (await storage.containsKey(key: 'isSubtitle')) {
-      isSubtitle =
-          await storage.read(key: 'isSubtitle') == 'true' ? true : false;
+      isSubtitle = await storage.read(key: 'isSubtitle') == 'true' ? true : false;
       setState(() {});
     }
   }
@@ -1374,8 +1206,7 @@ class _PlayListScreenState extends State<PlayListScreen>
     downloader.initStates(context);
     downloader.setStateFn = setStateCallback;
     WidgetsBinding.instance.addObserver(this);
-    WatchlistProvider()
-        .addToWatchList(courseId: widget.courseDetails.course.id);
+    WatchlistProvider().addToWatchList(courseId: widget.courseDetails.course.id);
     dbHandler.openDB();
     Wakelock.enable();
   }
@@ -1403,9 +1234,7 @@ class _PlayListScreenState extends State<PlayListScreen>
     }
 
     T.Theme mode = Provider.of<T.Theme>(context);
-    bool firstTime = Provider.of<CoursesProvider>(context, listen: false)
-        .checkPurchaedProgressStatus(
-            widget.sections[0].sectionDetails.courseId);
+    bool firstTime = Provider.of<CoursesProvider>(context, listen: false).checkPurchaedProgressStatus(widget.sections[0].sectionDetails.courseId);
     return Scaffold(
       key: _scaffoldKey,
       appBar: customAppBar(context, translate("Playlist_")),
@@ -1419,17 +1248,13 @@ class _PlayListScreenState extends State<PlayListScreen>
                 pinned: true,
                 forceElevated: innerBoxIsScrolled,
                 bottom: PreferredSize(
-                  preferredSize: urlType == "CUSTOM"
-                      ? Size.fromHeight(212.0)
-                      : Size.fromHeight(292.0),
+                  preferredSize: urlType == "CUSTOM" ? Size.fromHeight(212.0) : Size.fromHeight(292.0),
                   child: Column(
                     children: [
                       if (urlType == "CUSTOM")
                         Container(
                           height: 220.0,
-                          child: _betterPlayerController != null
-                              ? CustomPlayer(_betterPlayerController)
-                              : null,
+                          child: _betterPlayerController != null ? CustomPlayer(_betterPlayerController) : null,
                         ),
                       if (urlType == "VIMEO")
                         Container(
@@ -1442,17 +1267,12 @@ class _PlayListScreenState extends State<PlayListScreen>
                         Container(
                           height: 300.0,
                           alignment: Alignment.center,
-                          child: _controller != null
-                              ? YoutubePlayerScreen(_controller)
-                              : null,
+                          child: _controller != null ? YoutubePlayerScreen(_controller) : null,
                         ),
                       TabBar(
                         unselectedLabelColor: Colors.grey,
                         indicatorColor: Colors.green,
-                        labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700),
+                        labelStyle: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700),
                         labelColor: Colors.black,
                         tabs: [
                           Tab(
@@ -1491,20 +1311,10 @@ class _PlayListScreenState extends State<PlayListScreen>
                                 res = await updateProgressBool(fChecked);
 
                               if (x != null || res) {
-                                Provider.of<CoursesProvider>(context,
-                                        listen: false)
-                                    .setProgress(
-                                        int.parse(widget.sections[0]
-                                            .sectionDetails.courseId),
-                                        fChecked,
-                                        x);
-                                _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                    content: Text(translate(
-                                        "Sections_Marking_Completed"))));
+                                Provider.of<CoursesProvider>(context, listen: false).setProgress(int.parse(widget.sections[0].sectionDetails.courseId), fChecked, x);
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Sections_Marking_Completed"))));
                               } else {
-                                _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                    content: Text(
-                                        translate("Sections_Marking_Failed"))));
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Sections_Marking_Failed"))));
                               }
                               setState(() {
                                 isLoadingMark = false;
@@ -1513,8 +1323,7 @@ class _PlayListScreenState extends State<PlayListScreen>
                             label: Text(translate("Mark_As_Complete")),
                           )
                         : SizedBox.shrink(),
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerFloat,
+                floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
                 body: _listViewt(),
               ),
               MoreScreen(widget.courseDetails),
@@ -1557,8 +1366,7 @@ class _PlayListScreenState extends State<PlayListScreen>
         break;
       case AppLifecycleState.resumed:
         log("Resumed App"); // Called when app maximized.
-        WatchlistProvider()
-            .addToWatchList(courseId: widget.courseDetails.course.id);
+        WatchlistProvider().addToWatchList(courseId: widget.courseDetails.course.id);
         Wakelock.enable();
         break;
       case AppLifecycleState.detached:

@@ -23,23 +23,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var token = await storage.read(key: "token");
       authToken = token;
-      HomeDataProvider homeData =
-          Provider.of<HomeDataProvider>(context, listen: false);
+      HomeDataProvider homeData = Provider.of<HomeDataProvider>(context, listen: false);
       await homeData.getHomeDetails(context);
-
-      if (await storage.containsKey(key: 'selectedCurrency') &&
-          await storage.containsKey(key: 'selectedCurrencyRate')) {
+      var selectedCurrency1 = await storage.containsKey(key: 'selectedCurrency');
+      var selectedCurrencyRate1 = await storage.containsKey(key: 'selectedCurrencyRate');
+      var r = await storage.read(key: 'selectedCurrencyRate');
+      if (selectedCurrency1 && selectedCurrencyRate1 && r.toString() != 'null') {
+        print('loading screeenn :' + selectedCurrencyRate1.toString());
         selectedCurrency = await storage.read(key: 'selectedCurrency');
-        selectedCurrencyRate =
-            int.parse(await storage.read(key: 'selectedCurrencyRate'));
+        selectedCurrencyRate = int.parse(await storage.read(key: 'selectedCurrencyRate'));
       } else {
         selectedCurrency = homeData.homeModel.currency.currency;
         selectedCurrencyRate = 1;
       }
 
       // Loading Languages
-      LanguageProvider languageProvider =
-          Provider.of<LanguageProvider>(context, listen: false);
+      LanguageProvider languageProvider = Provider.of<LanguageProvider>(context, listen: false);
       await languageProvider.loadData(context, loadScreen: false);
       changeLocale(context, languageProvider.languageCode);
 

@@ -15,7 +15,6 @@ class TrustedList extends StatefulWidget {
 }
 
 class _TrustedListState extends State<TrustedList> {
-
   Widget showShimmer() {
     return Container(
         margin: EdgeInsets.only(top: 10, left: 12.0),
@@ -56,7 +55,7 @@ class _TrustedListState extends State<TrustedList> {
   Widget showTrusted(List<Trusted> trustedList) {
     return Container(
         margin: EdgeInsets.only(top: 10, left: 12.0),
-        height: 70,
+        height: 80,
         child: Center(
           child: ListView.builder(
             shrinkWrap: true,
@@ -67,15 +66,14 @@ class _TrustedListState extends State<TrustedList> {
                 height: 70,
                 width: 70,
                 child: CachedNetworkImage(
-                  imageUrl:
-                      APIData.trustedImages + "${trustedList[index].image}",
+                  imageUrl: APIData.trustedImages + "${trustedList[index].image}",
                   imageBuilder: (context, imageProvider) => Container(
                     height: 70,
                     width: 70,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ),

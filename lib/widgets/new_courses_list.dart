@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import '../common/global.dart';
 import '../common/theme.dart' as T;
 
 // ignore: must_be_immutable
@@ -56,20 +57,12 @@ class _NewCoursesListState extends State<NewCoursesList> {
   Widget newCourseTile(BuildContext context, details, bgColor, txtColor) {
     return widget._visible == true
         ? Container(
-            width: MediaQuery.of(context).orientation == Orientation.landscape
-                ? 300
-                : MediaQuery.of(context).size.width / 1.32,
+            width: MediaQuery.of(context).orientation == Orientation.landscape ? 300 : MediaQuery.of(context).size.width / 1.32,
             margin: EdgeInsets.fromLTRB(0.0, 0.0, 18.0, 0.0),
             decoration: BoxDecoration(
               color: bgColor,
               borderRadius: BorderRadius.circular(15.0),
-              boxShadow: [
-                BoxShadow(
-                    color: Color(0x1c2464).withOpacity(0.30),
-                    blurRadius: 15.0,
-                    offset: Offset(0.0, 20.5),
-                    spreadRadius: -15.0)
-              ],
+              boxShadow: boxShadow1,
             ),
             child: Material(
               color: Colors.transparent,
@@ -96,10 +89,8 @@ class _NewCoursesListState extends State<NewCoursesList> {
                                   ),
                                 )
                               : CachedNetworkImage(
-                                  imageUrl:
-                                      "${APIData.courseImages}${details.previewImage}",
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
+                                  imageUrl: "${APIData.courseImages}${details.previewImage}",
+                                  imageBuilder: (context, imageProvider) => Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.0),
                                       image: DecorationImage(
@@ -112,14 +103,12 @@ class _NewCoursesListState extends State<NewCoursesList> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15.0),
                                       image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/placeholder/new_course.png'),
+                                        image: AssetImage('assets/placeholder/new_course.png'),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
                                 ),
                         ),
                       ),
@@ -154,17 +143,13 @@ class _NewCoursesListState extends State<NewCoursesList> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed("/courseDetails",
-                      arguments: DataSend(details.userId, false, details.id,
-                          details.categoryId, details.type));
+                  Navigator.of(context).pushNamed("/courseDetails", arguments: DataSend(details.userId, false, details.id, details.categoryId, details.type));
                 },
               ),
             ),
           )
         : Container(
-            width: MediaQuery.of(context).orientation == Orientation.landscape
-                ? 300
-                : MediaQuery.of(context).size.width / 1.32,
+            width: MediaQuery.of(context).orientation == Orientation.landscape ? 300 : MediaQuery.of(context).size.width / 1.32,
             height: 300,
             margin: EdgeInsets.fromLTRB(0.0, 0.0, 18.0, 0.0),
             child: Shimmer.fromColors(
@@ -186,8 +171,7 @@ class _NewCoursesListState extends State<NewCoursesList> {
 
   @override
   Widget build(BuildContext context) {
-    var newCourses =
-        Provider.of<RecentCourseProvider>(context).recentCourseList;
+    var newCourses = Provider.of<RecentCourseProvider>(context).recentCourseList;
     T.Theme mode = Provider.of<T.Theme>(context);
     return SliverToBoxAdapter(
       child: Container(
@@ -196,14 +180,10 @@ class _NewCoursesListState extends State<NewCoursesList> {
           padding: EdgeInsets.only(left: 18.0, bottom: 24.0, top: 5.0),
           itemBuilder: (BuildContext context, int index) {
             if (widget._visible)
-              return newCourseTile(
-                  context, newCourses[index], mode.tilecolor, mode.txtcolor);
+              return newCourseTile(context, newCourses[index], mode.tilecolor, mode.txtcolor);
             else
               return Container(
-                width:
-                    MediaQuery.of(context).orientation == Orientation.landscape
-                        ? 300
-                        : MediaQuery.of(context).size.width / 1.32,
+                width: MediaQuery.of(context).orientation == Orientation.landscape ? 300 : MediaQuery.of(context).size.width / 1.32,
                 height: 135.0,
                 margin: EdgeInsets.fromLTRB(0.0, 0.0, 18.0, 0.0),
                 child: Shimmer.fromColors(

@@ -29,23 +29,16 @@ class _TestimonialListState extends State<TestimonialList> {
 
   String timeAgo(DateTime d) {
     Duration diff = DateTime.now().difference(d);
-    if (diff.inDays > 365)
-      return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? translate("year_") : translate("years_")} ${translate("ago_")}";
-    if (diff.inDays > 30)
-      return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? translate("month_") : translate("months_")} ${translate("ago_")}";
-    if (diff.inDays > 7)
-      return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? translate("week_") : translate("weeks_")} ${translate("ago_")}";
-    if (diff.inDays > 0)
-      return "${diff.inDays} ${diff.inDays == 1 ? "d" : "d"} ${translate("ago_")}";
-    if (diff.inHours > 0)
-      return "${diff.inHours} ${diff.inHours == 1 ? "h" : "h"} ${translate("ago_")}";
-    if (diff.inMinutes > 0)
-      return "${diff.inMinutes} ${diff.inMinutes == 1 ? "m" : "m"} ${translate("ago_")}";
+    if (diff.inDays > 365) return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? translate("year_") : translate("years_")} ${translate("ago_")}";
+    if (diff.inDays > 30) return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? translate("month_") : translate("months_")} ${translate("ago_")}";
+    if (diff.inDays > 7) return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? translate("week_") : translate("weeks_")} ${translate("ago_")}";
+    if (diff.inDays > 0) return "${diff.inDays} ${diff.inDays == 1 ? "d" : "d"} ${translate("ago_")}";
+    if (diff.inHours > 0) return "${diff.inHours} ${diff.inHours == 1 ? "h" : "h"} ${translate("ago_")}";
+    if (diff.inMinutes > 0) return "${diff.inMinutes} ${diff.inMinutes == 1 ? "m" : "m"} ${translate("ago_")}";
     return "just now";
   }
 
-  Widget _BuildCarousel(Color bgcolor, Color txtcolor, bool th, Color spcl,
-      List<Testimonial> testimonials, mode) {
+  Widget _BuildCarousel(Color bgcolor, Color txtcolor, bool th, Color spcl, List<Testimonial> testimonials, mode) {
     List<Widget> list = [];
     for (int i = 0; i < testimonials.length; i++) {
       list.add(
@@ -55,23 +48,14 @@ class _TestimonialListState extends State<TestimonialList> {
           decoration: BoxDecoration(
             color: bgcolor,
             borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
-              BoxShadow(
-                  color: Color(0x1c2464).withOpacity(0.30),
-                  blurRadius: 15.0,
-                  offset: Offset(0.0, 15.0),
-                  spreadRadius: -15.0)
-            ],
+            boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 15.0, offset: Offset(0.0, 15.0), spreadRadius: -15.0)],
           ),
           child: Row(children: [
             Align(
               alignment: Alignment.topCenter,
               child: CircleAvatar(
                 radius: 35,
-                backgroundImage: testimonials[i].image == null
-                    ? AssetImage("assets/placeholder/avatar.png")
-                    : CachedNetworkImageProvider(
-                        "${APIData.testimonialImages}" + testimonials[i].image),
+                backgroundImage: testimonials[i].image == null ? AssetImage("assets/placeholder/avatar.png") : CachedNetworkImageProvider("${APIData.testimonialImages}" + testimonials[i].image),
               ),
             ),
             SizedBox(
@@ -90,10 +74,7 @@ class _TestimonialListState extends State<TestimonialList> {
                         htmlUnescape.convert(testimonials[i].clientName),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF3F4654)),
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Color(0xFF3F4654)),
                       ),
                     ),
                     Padding(
@@ -120,20 +101,10 @@ class _TestimonialListState extends State<TestimonialList> {
                                 InkWell(
                                   child: Text(
                                     translate("Read_More"),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16.0,
-                                        color: mode.easternBlueColor),
+                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0, color: mode.easternBlueColor),
                                   ),
                                   onTap: () {
-                                    showPopup(
-                                        context,
-                                        _popupBody(
-                                            testimonials[i],
-                                            testimonials[i].updatedAt == null
-                                                ? null
-                                                : testimonials[i].updatedAt),
-                                        "${testimonials[i].clientName}");
+                                    showPopup(context, _popupBody(testimonials[i], testimonials[i].updatedAt == null ? null : testimonials[i].updatedAt), "${testimonials[i].clientName}");
                                   },
                                 )
                               ],
@@ -146,16 +117,10 @@ class _TestimonialListState extends State<TestimonialList> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
-                        testimonials[i].updatedAt == null
-                            ? ""
-                            : timeAgo(
-                                DateTime.parse(testimonials[i].updatedAt)),
+                        testimonials[i].updatedAt == null ? "" : timeAgo(DateTime.parse(testimonials[i].updatedAt)),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: th ? Color(0xffA8ABAF) : spcl),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: th ? Color(0xffA8ABAF) : spcl),
                       ),
                     ),
                   ],
@@ -201,8 +166,7 @@ class _TestimonialListState extends State<TestimonialList> {
     );
   }
 
-  showPopup(BuildContext context, Widget widget, String title,
-      {BuildContext popupContext}) {
+  showPopup(BuildContext context, Widget widget, String title, {BuildContext popupContext}) {
     Navigator.push(
       context,
       PopupLayout(
@@ -250,25 +214,18 @@ class _TestimonialListState extends State<TestimonialList> {
               child: CircleAvatar(
                 radius: 35.0,
                 backgroundColor: Color(0xFFF44A4A),
-                backgroundImage: testimonial.image == null
-                    ? AssetImage("assets/placeholder/avatar.png")
-                    : CachedNetworkImageProvider(
-                        "${APIData.testimonialImages}" + testimonial.image),
+                backgroundImage: testimonial.image == null ? AssetImage("assets/placeholder/avatar.png") : CachedNetworkImageProvider("${APIData.testimonialImages}" + testimonial.image),
               ),
             ),
             title: Text(
               htmlUnescape.convert(testimonial.clientName),
-              style: TextStyle(
-                  color: Color(0xFF3F4654),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 22),
+              style: TextStyle(color: Color(0xFF3F4654), fontWeight: FontWeight.w700, fontSize: 22),
             ),
             subtitle: Padding(
               padding: EdgeInsets.only(left: 4.0),
               child: Text(
                 date == null ? "" : timeAgo(DateTime.parse(date)),
-                style: TextStyle(
-                    color: Color(0xFF3F4654).withOpacity(0.7), fontSize: 14),
+                style: TextStyle(color: Color(0xFF3F4654).withOpacity(0.7), fontSize: 14),
               ),
             ),
           ),
@@ -299,8 +256,7 @@ class _TestimonialListState extends State<TestimonialList> {
   @override
   Widget build(BuildContext context) {
     T.Theme mode = Provider.of<T.Theme>(context);
-    var testimonialList =
-        Provider.of<HomeDataProvider>(context).testimonialList;
+    var testimonialList = Provider.of<HomeDataProvider>(context).testimonialList;
 
     languageProvider = Provider.of<LanguageProvider>(context, listen: false);
 
@@ -308,8 +264,7 @@ class _TestimonialListState extends State<TestimonialList> {
       child: widget._visible == true
           ? Container(
               height: 185,
-              child: _BuildCarousel(mode.tilecolor, mode.testimonialTextColor,
-                  mode.lighttheme, spcl, testimonialList, mode),
+              child: _BuildCarousel(mode.tilecolor, mode.testimonialTextColor, mode.lighttheme, spcl, testimonialList, mode),
             )
           : showShimmer(),
     );
@@ -334,8 +289,7 @@ class PopupLayout extends ModalRoute {
   bool get barrierDismissible => false;
 
   @override
-  Color get barrierColor =>
-      bgColor == null ? Colors.black.withOpacity(0.5) : bgColor;
+  Color get barrierColor => bgColor == null ? Colors.black.withOpacity(0.5) : bgColor;
 
   @override
   String get barrierLabel => null;
@@ -343,14 +297,7 @@ class PopupLayout extends ModalRoute {
   @override
   bool get maintainState => false;
 
-  PopupLayout(
-      {Key key,
-      this.bgColor,
-      @required this.child,
-      this.top,
-      this.bottom,
-      this.left,
-      this.right});
+  PopupLayout({Key key, this.bgColor, @required this.child, this.top, this.bottom, this.left, this.right});
 
   @override
   Widget buildPage(
@@ -382,18 +329,13 @@ class PopupLayout extends ModalRoute {
 
   Widget _buildOverlayContent(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-          bottom: this.bottom,
-          left: this.left,
-          right: this.right,
-          top: this.top),
+      margin: EdgeInsets.only(bottom: this.bottom, left: this.left, right: this.right, top: this.top),
       child: child,
     );
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
     // You can add your own animations for the overlay content
     return FadeTransition(
       opacity: animation,

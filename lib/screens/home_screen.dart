@@ -63,10 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               translate("Hi_"),
-                              style: TextStyle(
-                                  fontSize: 28.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFF3F4654)),
+                              style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700, color: Color(0xFF3F4654)),
                             ),
                             Text(
                               name + "!",
@@ -84,10 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         translate("What_would_you_like_to_search_today"),
-                        style: TextStyle(
-                            color: Color(0xFF3F4654),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
+                        style: TextStyle(color: Color(0xFF3F4654), fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -97,10 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CircleAvatar(
                     radius: 35.0,
                     backgroundColor: Color(0xFFF44A4A),
-                    backgroundImage: imageUrl == null
-                        ? AssetImage("assets/placeholder/avatar.png")
-                        : CachedNetworkImageProvider(
-                            APIData.userImage + imageUrl),
+                    backgroundImage: imageUrl == null ? AssetImage("assets/placeholder/avatar.png") : CachedNetworkImageProvider(APIData.userImage + imageUrl),
                   ),
                 ),
               ],
@@ -183,20 +174,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Color(0x1c2464).withOpacity(0.30),
-                      blurRadius: 25.0,
-                      offset: Offset(0.0, 20.0),
-                      spreadRadius: -15.0)
-                ],
+                boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 25.0, offset: Offset(0.0, 20.0), spreadRadius: -15.0)],
                 borderRadius: BorderRadius.circular(10.0),
               ),
               margin: EdgeInsets.symmetric(horizontal: 18.0),
-              height:
-                  MediaQuery.of(context).orientation == Orientation.landscape
-                      ? 70
-                      : MediaQuery.of(context).size.height / 11,
+              height: MediaQuery.of(context).orientation == Orientation.landscape ? 70 : MediaQuery.of(context).size.height / 11,
               padding: EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,16 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       height: 63,
                       width: 60,
-                      decoration: BoxDecoration(
-                          color: Color(0xffF44A4A),
-                          borderRadius: BorderRadius.circular(10.0),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0xffE3E6ED).withOpacity(0.20),
-                                blurRadius: 10,
-                                spreadRadius: 1,
-                                offset: Offset(0, 4))
-                          ]),
+                      decoration: BoxDecoration(color: Color(0xffF44A4A), borderRadius: BorderRadius.circular(10.0), boxShadow: [BoxShadow(color: Color(0xffE3E6ED).withOpacity(0.20), blurRadius: 10, spreadRadius: 1, offset: Offset(0, 4))]),
                       child: Icon(
                         Icons.search,
                         size: 37,
@@ -252,10 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
         : SliverToBoxAdapter(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 18.0),
-              height:
-                  MediaQuery.of(context).orientation == Orientation.landscape
-                      ? 70
-                      : MediaQuery.of(context).size.height / 11,
+              height: MediaQuery.of(context).orientation == Orientation.landscape ? 70 : MediaQuery.of(context).size.height / 11,
               child: Shimmer.fromColors(
                 baseColor: Color(0xFFd3d7de),
                 highlightColor: Color(0xFFe2e4e9),
@@ -270,10 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 18.0),
-                    height: MediaQuery.of(context).orientation ==
-                            Orientation.landscape
-                        ? 70
-                        : MediaQuery.of(context).size.height / 11,
+                    height: MediaQuery.of(context).orientation == Orientation.landscape ? 70 : MediaQuery.of(context).size.height / 11,
                   ),
                 ),
               ),
@@ -288,15 +255,12 @@ class _HomeScreenState extends State<HomeScreen> {
     bundleCourses,
   ) {
     List<Course> featuredCoursesList = course.getFeaturedCourses();
-    var zoomMeetingList =
-        Provider.of<HomeDataProvider>(context).zoomMeetingList;
-    var testimonialList =
-        Provider.of<HomeDataProvider>(context).testimonialList;
+    var zoomMeetingList = Provider.of<HomeDataProvider>(context).zoomMeetingList;
+    var testimonialList = Provider.of<HomeDataProvider>(context).testimonialList;
     var trustedList = Provider.of<HomeDataProvider>(context).trustedList;
     var factSliderList = Provider.of<HomeDataProvider>(context).sliderFactList;
     var sliderList = Provider.of<HomeDataProvider>(context).sliderList;
-    var newCourses =
-        Provider.of<RecentCourseProvider>(context).recentCourseList;
+    var newCourses = Provider.of<RecentCourseProvider>(context).recentCourseList;
     return CustomScrollView(slivers: [
       SliverToBoxAdapter(
         child: Container(
@@ -304,8 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
           margin: EdgeInsets.only(top: 15.0, bottom: 15.0),
           child: Column(
             children: [
-              welcomeText(user.profileInstance.fname,
-                  user.profileInstance.userImg, context),
+              welcomeText(user.profileInstance.fname, user.profileInstance.userImg, context),
             ],
           ),
         ),
@@ -383,7 +346,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ? SliverToBoxAdapter(
               child: SizedBox.shrink(),
             )
-          : ZoomMeetingList(_visible),
+          : Container(),
+      // : ZoomMeetingList(_visible),
       testimonialList.length == 0
           ? SliverToBoxAdapter(
               child: SizedBox.shrink(),
@@ -448,18 +412,12 @@ class _HomeScreenState extends State<HomeScreen> {
       Timer(Duration(milliseconds: 10), () {
         visiblePro.toggleVisible(false);
       });
-      CoursesProvider coursesProvider =
-          Provider.of<CoursesProvider>(context, listen: false);
-      HomeDataProvider homeDataProvider =
-          Provider.of<HomeDataProvider>(context, listen: false);
-      RecentCourseProvider recentCourseProvider =
-          Provider.of<RecentCourseProvider>(context, listen: false);
-      BundleCourseProvider bundleCourseProvider =
-          Provider.of<BundleCourseProvider>(context, listen: false);
-      UserProfile userProfile =
-          Provider.of<UserProfile>(context, listen: false);
-      WishListProvider wish =
-          Provider.of<WishListProvider>(context, listen: false);
+      CoursesProvider coursesProvider = Provider.of<CoursesProvider>(context, listen: false);
+      HomeDataProvider homeDataProvider = Provider.of<HomeDataProvider>(context, listen: false);
+      RecentCourseProvider recentCourseProvider = Provider.of<RecentCourseProvider>(context, listen: false);
+      BundleCourseProvider bundleCourseProvider = Provider.of<BundleCourseProvider>(context, listen: false);
+      UserProfile userProfile = Provider.of<UserProfile>(context, listen: false);
+      WishListProvider wish = Provider.of<WishListProvider>(context, listen: false);
       await coursesProvider.getAllCourse(context);
       await homeDataProvider.getHomeDetails(context);
       await recentCourseProvider.fetchRecentCourse(context);
@@ -485,10 +443,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     T.Theme mode = Provider.of<T.Theme>(context, listen: false);
     UserProfile user = Provider.of<UserProfile>(context, listen: false);
-    CoursesProvider course =
-        Provider.of<CoursesProvider>(context, listen: false);
-    List<BundleCourses> bundleCourses =
-        Provider.of<BundleCourseProvider>(context, listen: false).bundleCourses;
+    CoursesProvider course = Provider.of<CoursesProvider>(context, listen: false);
+    List<BundleCourses> bundleCourses = Provider.of<BundleCourseProvider>(context, listen: false).bundleCourses;
     _visible = Provider.of<Visible>(context).globalVisible;
 
     languageProvider = Provider.of<LanguageProvider>(context, listen: false);
@@ -505,10 +461,5 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 final Shader linearGradient = LinearGradient(
-  colors: <Color>[
-    Color(0xff790055),
-    Color(0xffF81D46),
-    Color(0xffF81D46),
-    Color(0xffFA4E62)
-  ],
+  colors: <Color>[Color(0xff790055), Color(0xffF81D46), Color(0xffF81D46), Color(0xffFA4E62)],
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));

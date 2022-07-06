@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:eclass/common/global.dart';
 import 'package:eclass/localization/language_provider.dart';
 import 'package:eclass/provider/recent_course_provider.dart';
 import 'package:eclass/provider/watchlist_provider.dart';
@@ -51,16 +52,11 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   getHomePageData() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      CoursesProvider coursesProvider =
-          Provider.of<CoursesProvider>(context, listen: false);
-      HomeDataProvider homeDataProvider =
-          Provider.of<HomeDataProvider>(context, listen: false);
-      RecentCourseProvider recentCourseProvider =
-          Provider.of<RecentCourseProvider>(context, listen: false);
-      BundleCourseProvider bundleCourseProvider =
-          Provider.of<BundleCourseProvider>(context, listen: false);
-      UserProfile userProfile =
-          Provider.of<UserProfile>(context, listen: false);
+      CoursesProvider coursesProvider = Provider.of<CoursesProvider>(context, listen: false);
+      HomeDataProvider homeDataProvider = Provider.of<HomeDataProvider>(context, listen: false);
+      RecentCourseProvider recentCourseProvider = Provider.of<RecentCourseProvider>(context, listen: false);
+      BundleCourseProvider bundleCourseProvider = Provider.of<BundleCourseProvider>(context, listen: false);
+      UserProfile userProfile = Provider.of<UserProfile>(context, listen: false);
       Visible visiblePro = Provider.of<Visible>(context, listen: false);
       await coursesProvider.getAllCourse(context);
       await homeDataProvider.getHomeDetails(context);
@@ -69,11 +65,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       await bundleCourseProvider.getbundles();
       await userProfile.fetchUserProfile();
 
-      await Provider.of<WatchlistProvider>(context, listen: false)
-          .removeFromWatchList();
+      await Provider.of<WatchlistProvider>(context, listen: false).removeFromWatchList();
 
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
       if (sharedPreferences.containsKey("giftUserId")) {
         await sharedPreferences.remove("giftUserId");
@@ -106,14 +100,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         title: Text(
           translate("Confirm_Exit"),
-          style: TextStyle(
-              fontFamily: 'Mada',
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF0284A2)),
+          style: TextStyle(fontFamily: 'Mada', fontWeight: FontWeight.w700, color: Color(0xFF0284A2)),
         ),
         content: Text(
           translate("Are_you_sure_that_you_want_to_exit"),
@@ -126,8 +116,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
               },
               child: Text(
                 translate("Cancel_").toUpperCase(),
-                style: TextStyle(
-                    color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
+                style: TextStyle(color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
               )),
           SizedBox(height: 16),
           FlatButton(
@@ -137,8 +126,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
               },
               child: Text(
                 translate("Yes_").toUpperCase(),
-                style: TextStyle(
-                    color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
+                style: TextStyle(color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
               )),
         ],
       ),
@@ -148,16 +136,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   Widget navigationBar() {
     return Container(
-      height: 70,
+      height: 90,
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x1c2464).withOpacity(0.30),
-              blurRadius: 25.0,
-              offset: Offset(0.0, -10.0),
-              spreadRadius: -15.0)
-        ],
+        boxShadow: boxShadow1,
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: BottomNavigationBar(

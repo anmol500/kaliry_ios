@@ -123,7 +123,7 @@ class FeaturedListItem extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: Text(
-                                  "$category",
+                                  category == null ? 'Course' : "$category",
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -153,7 +153,7 @@ class FeaturedListItem extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: Text(
-                                  "$category",
+                                  category.isEmpty ? 'Course' : "$category",
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextStyle(

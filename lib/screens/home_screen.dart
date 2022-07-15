@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eclass/Widgets/zoom_meeting_list.dart';
+// import 'package:eclass/Widgets/zoom_meeting_list.dart';
 import 'package:eclass/common/facebook_ads.dart';
 import 'package:eclass/localization/language_provider.dart';
 import 'package:eclass/provider/home_data_provider.dart';
 import 'package:eclass/provider/recent_course_provider.dart';
 import 'package:eclass/provider/wish_list_provider.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import '../widgets/zoom_meeting_list.dart';
 import 'fact_slider.dart';
 import 'image_swiper.dart';
 import 'search_result_screen.dart';
@@ -346,8 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ? SliverToBoxAdapter(
               child: SizedBox.shrink(),
             )
-          : Container(),
-      // : ZoomMeetingList(_visible),
+          : ZoomMeetingList(_visible),
       testimonialList.length == 0
           ? SliverToBoxAdapter(
               child: SizedBox.shrink(),
@@ -394,9 +394,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
 
-      SliverToBoxAdapter(
-        child: showNativeAd_(),
-      ),
+      // SliverToBoxAdapter(
+      //   child: showNativeAd_(),
+      // ),
 
       SliverToBoxAdapter(
         child: SizedBox(

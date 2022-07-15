@@ -33,16 +33,11 @@ class CourseListItem extends StatelessWidget {
     if (data == null) {
       return null;
     } else {
-      if (data.length > 0)
-        calcAsInt = checkDatatype(data[0].learn) == 0 ? true : false;
+      if (data.length > 0) calcAsInt = checkDatatype(data[0].learn) == 0 ? true : false;
 
       data.forEach((element) {
         if (!calcAsInt)
-          ans += (int.parse(element.price) +
-                      int.parse(element.value) +
-                      int.parse(element.learn))
-                  .toDouble() /
-              3.0;
+          ans += (int.parse(element.price) + int.parse(element.value) + int.parse(element.learn)).toDouble() / 3.0;
         else {
           ans += (element.price + element.value + element.learn) / 3.0;
         }
@@ -55,9 +50,7 @@ class CourseListItem extends StatelessWidget {
   Widget showShimmer(BuildContext context) {
     return Container(
         margin: EdgeInsets.fromLTRB(0, 0.0, 18.0, 0.0),
-        width: MediaQuery.of(context).orientation == Orientation.landscape
-            ? 260
-            : MediaQuery.of(context).size.width / 1.8,
+        width: MediaQuery.of(context).orientation == Orientation.landscape ? 260 : MediaQuery.of(context).size.width / 1.8,
         child: Shimmer.fromColors(
             baseColor: Color(0xFFd3d7de),
             highlightColor: Color(0xFFe2e4e9),
@@ -75,10 +68,7 @@ class CourseListItem extends StatelessWidget {
 
   Widget showImage(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height /
-          (MediaQuery.of(context).orientation == Orientation.landscape
-              ? 5.0
-              : 8.0),
+      height: MediaQuery.of(context).size.height / (MediaQuery.of(context).orientation == Orientation.landscape ? 5.0 : 8.0),
       child: CachedNetworkImage(
         imageUrl: "${APIData.courseImages}${courseDetail.previewImage}",
         imageBuilder: (context, imageProvider) => Container(
@@ -119,8 +109,7 @@ class CourseListItem extends StatelessWidget {
     );
   }
 
-  Widget itemDetails(BuildContext context, bool isPurchased, String currency,
-      T.Theme mode, String rating, String category) {
+  Widget itemDetails(BuildContext context, bool isPurchased, String currency, T.Theme mode, String rating, String category) {
     return Material(
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
@@ -136,7 +125,7 @@ class CourseListItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        category,
+                        category == 'N/A' ? 'Course' : category,
                         style: TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.bold,
@@ -149,10 +138,7 @@ class CourseListItem extends StatelessWidget {
                               ? SizedBox.shrink()
                               : Text(
                                   "$selectedCurrency ${(num.parse(courseDetail.discountPrice.toString()) * selectedCurrencyRate)}",
-                                  style: TextStyle(
-                                      color: mode.txtcolor,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(color: mode.txtcolor, fontSize: 16.0, fontWeight: FontWeight.bold),
                                 ),
                         ],
                       ),
@@ -164,10 +150,7 @@ class CourseListItem extends StatelessWidget {
                         ? SizedBox.shrink()
                         : Text(
                             "$selectedCurrency ${(num.parse(courseDetail.price.toString()) * selectedCurrencyRate)}",
-                            style: TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                fontSize: 12.0,
-                                color: Colors.grey),
+                            style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 12.0, color: Colors.grey),
                           ),
                   ),
                   Container(
@@ -182,10 +165,7 @@ class CourseListItem extends StatelessWidget {
                             courseDetail.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: mode.txtcolor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
+                            style: TextStyle(color: mode.txtcolor, fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                         ),
                         SizedBox(
@@ -194,11 +174,10 @@ class CourseListItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            category,
+                            category == 'N/A' ? '' : category,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style:
-                                TextStyle(color: mode.txtcolor, fontSize: 12.0),
+                            style: TextStyle(color: mode.txtcolor, fontSize: 12.0),
                           ),
                         )
                       ],
@@ -227,9 +206,7 @@ class CourseListItem extends StatelessWidget {
         ),
         onTap: () {
           Course details = courseDetail;
-          Navigator.of(context).pushNamed("/courseDetails",
-              arguments: DataSend(details.userId, isPurchased, details.id,
-                  details.categoryId, details.type));
+          Navigator.of(context).pushNamed("/courseDetails", arguments: DataSend(details.userId, isPurchased, details.id, details.categoryId, details.type));
         },
       ),
     );
@@ -237,34 +214,22 @@ class CourseListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String currency =
-        Provider.of<HomeDataProvider>(context).homeModel.currency.currency;
+    String currency = Provider.of<HomeDataProvider>(context).homeModel.currency.currency;
     T.Theme mode = Provider.of<T.Theme>(context);
-    bool isPurchased =
-        Provider.of<CoursesProvider>(context).isPurchased(courseDetail.id);
-    String category = Provider.of<HomeDataProvider>(context)
-        .getCategoryName(courseDetail.categoryId);
+    bool isPurchased = Provider.of<CoursesProvider>(context).isPurchased(courseDetail.id);
+    String category = Provider.of<HomeDataProvider>(context).getCategoryName(courseDetail.categoryId);
     if (category == null) category = "N/A";
     String rating = getRating(courseDetail.review);
     return _visible == true
         ? Container(
             margin: EdgeInsets.fromLTRB(0, 0.0, 18.0, 0.0),
-            width: MediaQuery.of(context).orientation == Orientation.landscape
-                ? 260
-                : MediaQuery.of(context).size.width / 1.8,
+            width: MediaQuery.of(context).orientation == Orientation.landscape ? 260 : MediaQuery.of(context).size.width / 1.8,
             decoration: BoxDecoration(
               color: mode.tilecolor,
               borderRadius: BorderRadius.circular(10.0),
-              boxShadow: [
-                BoxShadow(
-                    color: Color(0x1c2464).withOpacity(0.30),
-                    blurRadius: 16.0,
-                    offset: Offset(-13.0, 20.5),
-                    spreadRadius: -15.0)
-              ],
+              boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 16.0, offset: Offset(-13.0, 20.5), spreadRadius: -15.0)],
             ),
-            child: itemDetails(context, isPurchased, currency, mode,
-                rating == null ? "0" : rating, category),
+            child: itemDetails(context, isPurchased, currency, mode, rating == null ? "0" : rating, category),
           )
         : showShimmer(context);
   }

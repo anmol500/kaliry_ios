@@ -30,24 +30,15 @@ class HomeModel {
   factory HomeModel.fromJson(Map<String, dynamic> json) => HomeModel(
       settings: Settings.fromJson(json["settings"]),
       currency: Currency.fromJson(json["currency"]),
-      slider:
-          List<MySlider>.from(json["slider"].map((x) => MySlider.fromJson(x))),
-      sliderfacts: List<SliderFact>.from(
-          json["sliderfacts"].map((x) => SliderFact.fromJson(x))),
-      trusted:
-          List<Trusted>.from(json["trusted"].map((x) => Trusted.fromJson(x))),
-      testimonial: List<Testimonial>.from(
-          json["testimonial"].map((x) => Testimonial.fromJson(x))),
-      category: List<MyCategory>.from(
-          json["category"].map((x) => MyCategory.fromJson(x))),
-      subcategory: List<SubCategory>.from(
-          json["subcategory"].map((x) => SubCategory.fromJson(x))),
-      childcategory: List<ChildCategory>.from(
-          json["childcategory"].map((x) => ChildCategory.fromJson(x))),
-      featuredCate: List<MyCategory>.from(
-          json["featured_cate"].map((x) => MyCategory.fromJson(x))),
-      zoomMeeting: List<ZoomMeeting>.from(
-          json["meeting"].map((x) => ZoomMeeting.fromJson(x))));
+      slider: List<MySlider>.from(json["slider"].map((x) => MySlider.fromJson(x))),
+      sliderfacts: List<SliderFact>.from(json["sliderfacts"].map((x) => SliderFact.fromJson(x))),
+      trusted: List<Trusted>.from(json["trusted"].map((x) => Trusted.fromJson(x))),
+      testimonial: List<Testimonial>.from(json["testimonial"].map((x) => Testimonial.fromJson(x))),
+      category: List<MyCategory>.from(json["category"].map((x) => MyCategory.fromJson(x))),
+      subcategory: List<SubCategory>.from(json["subcategory"].map((x) => SubCategory.fromJson(x))),
+      childcategory: List<ChildCategory>.from(json["childcategory"].map((x) => ChildCategory.fromJson(x))),
+      featuredCate: List<MyCategory>.from(json["featured_cate"].map((x) => MyCategory.fromJson(x))),
+      zoomMeeting: List<ZoomMeeting>.from(json["meeting"].map((x) => ZoomMeeting.fromJson(x))));
 
   Map<String, dynamic> toJson() => {
         "settings": settings.toJson(),
@@ -58,10 +49,8 @@ class HomeModel {
         "testimonial": List<dynamic>.from(testimonial.map((x) => x.toJson())),
         "category": List<dynamic>.from(category.map((x) => x.toJson())),
         "subcategory": List<dynamic>.from(subcategory.map((x) => x.toJson())),
-        "childcategory":
-            List<dynamic>.from(childcategory.map((x) => x.toJson())),
-        "featured_cate":
-            List<dynamic>.from(featuredCate.map((x) => x.toJson())),
+        "childcategory": List<dynamic>.from(childcategory.map((x) => x.toJson())),
+        "featured_cate": List<dynamic>.from(featuredCate.map((x) => x.toJson())),
       };
 }
 
@@ -98,9 +87,7 @@ class MyCategory {
         featured: json["featured"],
         status: json["status"],
         position: json["position"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         catImage: json["cat_image"] == null ? null : json["cat_image"],
       );
@@ -141,9 +128,7 @@ class Currency {
         icon: json["icon"],
         currency: json["currency"],
         currencyDefault: json["default"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -604,9 +589,7 @@ class MySlider {
         status: json["status"],
         image: json["image"],
         position: json["position"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -646,9 +629,7 @@ class SliderFact {
         icon: json["icon"],
         heading: json["heading"],
         subHeading: json["sub_heading"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -724,9 +705,7 @@ class Trusted {
         url: json["url"],
         image: json["image"],
         status: json["status"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -771,9 +750,7 @@ class FeaturedCate {
         featured: json["featured"],
         status: json["status"],
         position: json["position"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -821,9 +798,7 @@ class ChildCategory {
         icon: json["icon"],
         slug: json["slug"],
         status: json["status"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -868,9 +843,7 @@ class SubCategory {
         icon: json["icon"],
         slug: json["slug"],
         status: json["status"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 

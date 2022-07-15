@@ -38,8 +38,7 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      CartProvider cartProvider =
-          Provider.of<CartProvider>(context, listen: false);
+      CartProvider cartProvider = Provider.of<CartProvider>(context, listen: false);
       await cartProvider.fetchCart(context);
       setState(() {
         _visible = true;
@@ -52,13 +51,10 @@ class _CartScreenState extends State<CartScreen> {
     super.dispose();
   }
 
-  int getDiscount(String type, String amount, String minAmount, String maxUsage,
-      int tPrice) {
+  int getDiscount(String type, String amount, String minAmount, String maxUsage, int tPrice) {
     if (tPrice < int.parse(minAmount)) return -1;
     if (type == "fix") {
-      return tPrice - int.parse(amount) > int.parse(maxUsage)
-          ? int.parse(maxUsage)
-          : tPrice - int.parse(amount);
+      return tPrice - int.parse(amount) > int.parse(maxUsage) ? int.parse(maxUsage) : tPrice - int.parse(amount);
     } else {
       int dis = ((tPrice * int.parse(amount)) ~/ 100).toInt();
 
@@ -104,8 +100,7 @@ class _CartScreenState extends State<CartScreen> {
     setState(() {
       couponApplyLoading = true;
     });
-    final res = await http
-        .post(Uri.parse("${APIData.applyCoupon}${APIData.secretKey}"), body: {
+    final res = await http.post(Uri.parse("${APIData.applyCoupon}${APIData.secretKey}"), body: {
       "coupon": "$coupon",
     }, headers: {
       HttpHeaders.authorizationHeader: "Bearer $authToken"
@@ -114,8 +109,7 @@ class _CartScreenState extends State<CartScreen> {
       var response = json.decode(res.body);
       setState(() {
         couponApplyLoading = false;
-        couponDis =
-            double.parse(response['discount_amount'].toString()).toInt();
+        couponDis = double.parse(response['discount_amount'].toString()).toInt();
         couponName = couponCtrl.text;
         isCouponApplied = true;
       });
@@ -129,9 +123,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   removeCoupon() async {
-    final res = await http.post(
-        Uri.parse("${APIData.removeCoupon}${APIData.secretKey}"),
-        headers: {HttpHeaders.authorizationHeader: "Bearer $authToken"});
+    final res = await http.post(Uri.parse("${APIData.removeCoupon}${APIData.secretKey}"), headers: {HttpHeaders.authorizationHeader: "Bearer $authToken"});
     if (res.statusCode == 200) {
       setState(() {
         couponCtrl.text = "";
@@ -170,11 +162,8 @@ class _CartScreenState extends State<CartScreen> {
       margin: EdgeInsets.all(12.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.grey[200])),
-          width: (3 * MediaQuery.of(context).size.width) / 4 -
-              (isCouponApplied ? 20 : 40),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: Colors.grey[200])),
+          width: (3 * MediaQuery.of(context).size.width) / 4 - (isCouponApplied ? 20 : 40),
           child: TextField(
             controller: couponCtrl,
             maxLines: 1,
@@ -198,24 +187,16 @@ class _CartScreenState extends State<CartScreen> {
                 child: Container(
                   width: 100,
                   height: 50,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: couponApplyLoading ? 35 : 0,
-                      vertical: couponApplyLoading ? 10 : 0),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey[200]),
-                      borderRadius: BorderRadius.circular(15.0)),
+                  padding: EdgeInsets.symmetric(horizontal: couponApplyLoading ? 35 : 0, vertical: couponApplyLoading ? 10 : 0),
+                  decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.grey[200]), borderRadius: BorderRadius.circular(15.0)),
                   child: Center(
                     child: couponApplyLoading
                         ? CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.black),
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                           )
                         : Text(
                             translate("Apply_"),
-                            style: TextStyle(
-                                color: Colors.grey[700],
-                                fontWeight: FontWeight.w600),
+                            style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.w600),
                           ),
                   ),
                 ))
@@ -235,35 +216,24 @@ class _CartScreenState extends State<CartScreen> {
           Container(
               child: Text(
             translate("Total_Price") + cartTotal.toString(),
-            style: TextStyle(
-                fontSize: 16,
-                color: Color(0xff686F7A),
-                fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 16, color: Color(0xff686F7A), fontWeight: FontWeight.w600),
           )),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                child: Text(translate("Coupon_Name") + couponName,
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xff686F7A),
-                        fontWeight: FontWeight.w600)),
+                child: Text(translate("Coupon_Name") + couponName, style: TextStyle(fontSize: 16, color: Color(0xff686F7A), fontWeight: FontWeight.w600)),
               ),
               IconButton(
                 onPressed: deleteCoupon,
-                icon: Icon(FontAwesomeIcons.timesCircle,
-                    color: Color(0xFFF44A4A), size: 20),
+                icon: Icon(FontAwesomeIcons.timesCircle, color: Color(0xFFF44A4A), size: 20),
               )
             ],
           ),
           Container(
               child: Text(
             translate("Coupon_Discount") + couponDis.toString(),
-            style: TextStyle(
-                fontSize: 16,
-                color: Color(0xff686F7A),
-                fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 16, color: Color(0xff686F7A), fontWeight: FontWeight.w600),
           ))
         ],
       ),
@@ -277,52 +247,34 @@ class _CartScreenState extends State<CartScreen> {
         height: couponDis > 0 ? 250 : 150,
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Color(0x1c2464).withOpacity(0.30),
-                blurRadius: 15.0,
-                offset: Offset(0.0, -20.5),
-                spreadRadius: -15.0)
-          ],
+          boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 15.0, offset: Offset(0.0, -20.5), spreadRadius: -15.0)],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             couponSection(),
-            if (couponDis > 0)
-              calculationSection(cart.cartTotal)
-            else
-              SizedBox.shrink(),
+            if (couponDis > 0) calculationSection(cart.cartTotal) else SizedBox.shrink(),
             Container(
               padding: EdgeInsets.only(left: 15, right: 5),
               margin: EdgeInsets.all(12.0),
               height: 50.0,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFF6E1A52),
-                        Color(0xFFF44A4A),
-                      ]),
+                  gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
+                    Color(0xFF6E1A52),
+                    Color(0xFFF44A4A),
+                  ]),
                   borderRadius: BorderRadius.circular(15.0)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    translate("Total_") +
-                        (cart.cartTotal - couponDis).toString(),
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w600),
+                    translate("Total_") + (cart.cartTotal - couponDis).toString(),
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
                   ),
                   FlatButton(
                     onPressed: () async {
-                      await Provider.of<UserProfile>(context, listen: false)
-                          .fetchUserProfile();
-                      String email =
-                          Provider.of<UserProfile>(context, listen: false)
-                              .profileInstance
-                              .email;
+                      await Provider.of<UserProfile>(context, listen: false).fetchUserProfile();
+                      String email = Provider.of<UserProfile>(context, listen: false).profileInstance.email;
                       if (!email.contains('guest_')) {
                         if (isCouponApplied == true) {
                           var disCountedAmount = cart.cartTotal - couponDis;
@@ -330,8 +282,7 @@ class _CartScreenState extends State<CartScreen> {
                             context,
                             PageTransition(
                               type: PageTransitionType.rightToLeft,
-                              child: PaymentGateway(
-                                  cart.cartTotal, disCountedAmount),
+                              child: PaymentGateway(cart.cartTotal, disCountedAmount),
                             ),
                           );
                         } else {
@@ -339,8 +290,7 @@ class _CartScreenState extends State<CartScreen> {
                             context,
                             PageTransition(
                               type: PageTransitionType.rightToLeft,
-                              child: PaymentGateway(
-                                  cart.cartTotal, cart.cartTotal),
+                              child: PaymentGateway(cart.cartTotal, cart.cartTotal),
                             ),
                           );
                         }
@@ -350,27 +300,23 @@ class _CartScreenState extends State<CartScreen> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Information'),
-                              content: Text(
-                                  "Please create an account to buy courses."),
+                              content: Text("Please create an account to buy courses."),
                             );
                           },
                         );
                         await Future.delayed(Duration(seconds: 3));
                         bool result = await HttpService().logout();
                         if (result) {
-                          Provider.of<Visible>(context, listen: false)
-                              .toggleVisible(false);
+                          Provider.of<Visible>(context, listen: false).toggleVisible(false);
                           Navigator.of(context).pushNamed('/SignIn');
                         } else {
-                          _scaffoldKey.currentState.showSnackBar(SnackBar(
-                              content: Text(translate("Logout_failed"))));
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
                         }
                       }
                     },
                     child: Text(
                       translate("Proceed_To_Pay") + ">>",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
                     ),
                   )
                 ],
@@ -387,16 +333,7 @@ class _CartScreenState extends State<CartScreen> {
     CartApiCall crt = new CartApiCall();
     return Container(
       height: 125,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          boxShadow: [
-            BoxShadow(
-                color: Color(0x1c2464).withOpacity(0.30),
-                blurRadius: 15.0,
-                offset: Offset(0.0, 20.5),
-                spreadRadius: -15.0)
-          ],
-          color: Colors.white),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0), boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 15.0, offset: Offset(0.0, 20.5), spreadRadius: -15.0)], color: Colors.white),
       margin: EdgeInsets.only(
         bottom: 25.0,
       ),
@@ -407,13 +344,7 @@ class _CartScreenState extends State<CartScreen> {
           onTap: () {
             bool useAsInt = false;
             if (detail.courseId is int) useAsInt = true;
-            Navigator.of(context).pushNamed("/courseDetails",
-                arguments: DataSend(
-                    detail.userId,
-                    false,
-                    useAsInt ? detail.courseId : int.parse(detail.courseId),
-                    detail.categoryId,
-                    detail.type));
+            Navigator.of(context).pushNamed("/courseDetails", arguments: DataSend(detail.userId, false, useAsInt ? detail.courseId : int.parse(detail.courseId), detail.categoryId, detail.type));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -469,17 +400,10 @@ class _CartScreenState extends State<CartScreen> {
                               Text(
                                 "$currency ${detail.cprice}",
                                 style: TextStyle(
-                                  color: detail.cdisprice != null
-                                      ? Colors.black.withOpacity(0.3)
-                                      : null,
-                                  fontSize:
-                                      detail.cdisprice != null ? 13 : null,
-                                  decoration: detail.cdisprice != null
-                                      ? TextDecoration.lineThrough
-                                      : null,
-                                  fontWeight: detail.cdisprice != null
-                                      ? FontWeight.w600
-                                      : FontWeight.w700,
+                                  color: detail.cdisprice != null ? Colors.black.withOpacity(0.3) : null,
+                                  fontSize: detail.cdisprice != null ? 13 : null,
+                                  decoration: detail.cdisprice != null ? TextDecoration.lineThrough : null,
+                                  fontWeight: detail.cdisprice != null ? FontWeight.w600 : FontWeight.w700,
                                 ),
                               ),
                               if (detail.cdisprice != null)
@@ -494,13 +418,9 @@ class _CartScreenState extends State<CartScreen> {
                                 setState(() {
                                   isLoadingDelItemId = detail.id;
                                 });
-                                bool val = await crt.removeFromCart(
-                                    detail.courseId, context);
+                                bool val = await crt.removeFromCart(detail.courseId, context);
                                 if (val) {
-                                  _scaffoldKey.currentState.showSnackBar(
-                                      SnackBar(
-                                          content: Text(translate(
-                                              "Item_deleted_from_your_cart"))));
+                                  _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
                                 }
                                 setState(() {
                                   isLoadingDelItemId = -1;
@@ -508,16 +428,12 @@ class _CartScreenState extends State<CartScreen> {
                                 });
                               },
                               child: Container(
-                                padding: isLoadingDelItemId == detail.id
-                                    ? EdgeInsets.all(10)
-                                    : EdgeInsets.all(0),
+                                padding: isLoadingDelItemId == detail.id ? EdgeInsets.all(10) : EdgeInsets.all(0),
                                 height: 40,
                                 width: 40,
                                 child: isLoadingDelItemId == detail.id
                                     ? CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Color(0xffF44A4A)),
+                                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xffF44A4A)),
                                       )
                                     : Icon(
                                         FontAwesomeIcons.trashAlt,
@@ -566,8 +482,7 @@ class _CartScreenState extends State<CartScreen> {
               child: Text(
                 translate("Looks_like_you_have_no_course_in_your_cart"),
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 15, color: Colors.black.withOpacity(0.7)),
+                style: TextStyle(fontSize: 15, color: Colors.black.withOpacity(0.7)),
               ),
             ),
             SizedBox(
@@ -594,10 +509,8 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget getCartItems(
-      List<Course> cartCourseList, List<BundleCourses> cartBundleList) {
-    String currency =
-        Provider.of<HomeDataProvider>(context).homeModel.currency.currency;
+  Widget getCartItems(List<Course> cartCourseList, List<BundleCourses> cartBundleList) {
+    String currency = Provider.of<HomeDataProvider>(context).homeModel.currency.currency;
     T.Theme mode = Provider.of<T.Theme>(context);
     List<Widget> list1 = new List<Widget>();
     List<Widget> list2 = new List<Widget>();
@@ -606,16 +519,7 @@ class _CartScreenState extends State<CartScreen> {
     for (int i = 0; i < cartCourseList.length; i++) {
       list1.add(Container(
         height: 125,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            boxShadow: [
-              BoxShadow(
-                  color: Color(0x1c2464).withOpacity(0.30),
-                  blurRadius: 15.0,
-                  offset: Offset(0.0, 20.5),
-                  spreadRadius: -15.0)
-            ],
-            color: Colors.white),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0), boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 15.0, offset: Offset(0.0, 20.5), spreadRadius: -15.0)], color: Colors.white),
         margin: EdgeInsets.only(
           bottom: 25.0,
         ),
@@ -626,13 +530,7 @@ class _CartScreenState extends State<CartScreen> {
             onTap: () {
               bool useAsInt = false;
               if (cartCourseList[i].id is int) useAsInt = true;
-              Navigator.of(context).pushNamed("/courseDetails",
-                  arguments: DataSend(
-                      cartCourseList[i].userId,
-                      false,
-                      useAsInt ? cartCourseList[i].id : cartCourseList[i].id,
-                      cartCourseList[i].categoryId,
-                      cartCourseList[i].type));
+              Navigator.of(context).pushNamed("/courseDetails", arguments: DataSend(cartCourseList[i].userId, false, useAsInt ? cartCourseList[i].id : cartCourseList[i].id, cartCourseList[i].categoryId, cartCourseList[i].type));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -641,8 +539,7 @@ class _CartScreenState extends State<CartScreen> {
                   flex: 2,
                   child: Container(
                     child: CachedNetworkImage(
-                      imageUrl:
-                          "${APIData.courseImages}${cartCourseList[i].previewImage}",
+                      imageUrl: "${APIData.courseImages}${cartCourseList[i].previewImage}",
                       imageBuilder: (context, imageProvider) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -689,31 +586,15 @@ class _CartScreenState extends State<CartScreen> {
                                 Text(
                                   "$currency ${cartCourseList[i].price}",
                                   style: TextStyle(
-                                      color: cartCourseList[i].discountPrice !=
-                                              null
-                                          ? Colors.black.withOpacity(0.3)
-                                          : null,
-                                      fontSize:
-                                          cartCourseList[i].discountPrice !=
-                                                  null
-                                              ? 13
-                                              : null,
-                                      decoration:
-                                          cartCourseList[i].discountPrice !=
-                                                  null
-                                              ? TextDecoration.lineThrough
-                                              : null,
-                                      fontWeight:
-                                          cartCourseList[i].discountPrice !=
-                                                  null
-                                              ? FontWeight.w600
-                                              : FontWeight.w700),
+                                      color: cartCourseList[i].discountPrice != null ? Colors.black.withOpacity(0.3) : null,
+                                      fontSize: cartCourseList[i].discountPrice != null ? 13 : null,
+                                      decoration: cartCourseList[i].discountPrice != null ? TextDecoration.lineThrough : null,
+                                      fontWeight: cartCourseList[i].discountPrice != null ? FontWeight.w600 : FontWeight.w700),
                                 ),
                                 if (cartCourseList[i].discountPrice != null)
                                   Text(
                                     "$currency ${cartCourseList[i].discountPrice}",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w700),
+                                    style: TextStyle(fontWeight: FontWeight.w700),
                                   ),
                               ],
                             ),
@@ -722,15 +603,10 @@ class _CartScreenState extends State<CartScreen> {
                                   setState(() {
                                     isLoadingDelItemId = cartCourseList[i].id;
                                   });
-                                  bool val = await crt.removeFromCart(
-                                      cartCourseList[i].id, context);
+                                  bool val = await crt.removeFromCart(cartCourseList[i].id, context);
                                   if (val) {
-                                    cartCourseList.removeWhere((element) =>
-                                        element.id == cartCourseList[i].id);
-                                    _scaffoldKey.currentState.showSnackBar(
-                                        SnackBar(
-                                            content: Text(translate(
-                                                "Item_deleted_from_your_cart"))));
+                                    cartCourseList.removeWhere((element) => element.id == cartCourseList[i].id);
+                                    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
                                   }
                                   setState(() {
                                     isLoadingDelItemId = -1;
@@ -738,24 +614,18 @@ class _CartScreenState extends State<CartScreen> {
                                   });
                                 },
                                 child: Container(
-                                  padding:
-                                      isLoadingDelItemId == cartCourseList[i].id
-                                          ? EdgeInsets.all(10)
-                                          : EdgeInsets.all(0),
+                                  padding: isLoadingDelItemId == cartCourseList[i].id ? EdgeInsets.all(10) : EdgeInsets.all(0),
                                   height: 40,
                                   width: 40,
-                                  child:
-                                      isLoadingDelItemId == cartCourseList[i].id
-                                          ? CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      Color(0xffF44A4A)),
-                                            )
-                                          : Icon(
-                                              FontAwesomeIcons.trashAlt,
-                                              size: 22,
-                                              color: Colors.red,
-                                            ),
+                                  child: isLoadingDelItemId == cartCourseList[i].id
+                                      ? CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xffF44A4A)),
+                                        )
+                                      : Icon(
+                                          FontAwesomeIcons.trashAlt,
+                                          size: 22,
+                                          color: Colors.red,
+                                        ),
                                 ))
                           ],
                         ),
@@ -773,16 +643,7 @@ class _CartScreenState extends State<CartScreen> {
     for (int i = 0; i < cartBundleList.length; i++) {
       list2.add(Container(
         height: 125,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            boxShadow: [
-              BoxShadow(
-                  color: Color(0x1c2464).withOpacity(0.30),
-                  blurRadius: 15.0,
-                  offset: Offset(0.0, 20.5),
-                  spreadRadius: -15.0)
-            ],
-            color: Colors.white),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0), boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 15.0, offset: Offset(0.0, 20.5), spreadRadius: -15.0)], color: Colors.white),
         margin: EdgeInsets.only(
           bottom: 23.0,
         ),
@@ -791,8 +652,7 @@ class _CartScreenState extends State<CartScreen> {
           child: InkWell(
             borderRadius: BorderRadius.circular(15.0),
             onTap: () {
-              Navigator.of(context).pushNamed("/bundleCourseDetail",
-                  arguments: cartBundleList[i]);
+              Navigator.of(context).pushNamed("/bundleCourseDetail", arguments: cartBundleList[i]);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -802,8 +662,7 @@ class _CartScreenState extends State<CartScreen> {
                   flex: 2,
                   child: CachedNetworkImage(
                     height: 125,
-                    imageUrl:
-                        "${APIData.bundleImages}${cartBundleList[i].previewImage}",
+                    imageUrl: "${APIData.bundleImages}${cartBundleList[i].previewImage}",
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -816,10 +675,8 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                     ),
-                    placeholder: (context, url) =>
-                        Image.asset("assets/placeholder/new_course.png"),
-                    errorWidget: (context, url, error) =>
-                        Image.asset("assets/placeholder/new_course.png"),
+                    placeholder: (context, url) => Image.asset("assets/placeholder/new_course.png"),
+                    errorWidget: (context, url, error) => Image.asset("assets/placeholder/new_course.png"),
                   ),
                 ),
                 Expanded(
@@ -845,31 +702,15 @@ class _CartScreenState extends State<CartScreen> {
                                 Text(
                                   "$currency ${cartBundleList[i].price}",
                                   style: TextStyle(
-                                      color: cartBundleList[i].discountPrice !=
-                                              null
-                                          ? Colors.black.withOpacity(0.3)
-                                          : null,
-                                      fontSize:
-                                          cartBundleList[i].discountPrice !=
-                                                  null
-                                              ? 13
-                                              : null,
-                                      decoration:
-                                          cartBundleList[i].discountPrice !=
-                                                  null
-                                              ? TextDecoration.lineThrough
-                                              : null,
-                                      fontWeight:
-                                          cartBundleList[i].discountPrice !=
-                                                  null
-                                              ? FontWeight.w600
-                                              : FontWeight.w700),
+                                      color: cartBundleList[i].discountPrice != null ? Colors.black.withOpacity(0.3) : null,
+                                      fontSize: cartBundleList[i].discountPrice != null ? 13 : null,
+                                      decoration: cartBundleList[i].discountPrice != null ? TextDecoration.lineThrough : null,
+                                      fontWeight: cartBundleList[i].discountPrice != null ? FontWeight.w600 : FontWeight.w700),
                                 ),
                                 if (cartBundleList[i].discountPrice != null)
                                   Text(
                                     "$currency ${cartBundleList[i].discountPrice} ",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w700),
+                                    style: TextStyle(fontWeight: FontWeight.w700),
                                   ),
                               ],
                             ),
@@ -878,18 +719,10 @@ class _CartScreenState extends State<CartScreen> {
                                   setState(() {
                                     isLoadingDelItemId = cartBundleList[i].id;
                                   });
-                                  bool val = await CartApiCall()
-                                      .removeBundleFromCart(
-                                          cartBundleList[i].id.toString(),
-                                          context,
-                                          cartBundleList[i]);
+                                  bool val = await CartApiCall().removeBundleFromCart(cartBundleList[i].id.toString(), context, cartBundleList[i]);
                                   if (val) {
-                                    cartBundleList.removeWhere((element) =>
-                                        element.id == cartBundleList[i].id);
-                                    _scaffoldKey.currentState.showSnackBar(
-                                        SnackBar(
-                                            content: Text(translate(
-                                                "Item_deleted_from_your_cart"))));
+                                    cartBundleList.removeWhere((element) => element.id == cartBundleList[i].id);
+                                    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
                                   }
                                   setState(() {
                                     isLoadingDelItemId = -1;
@@ -897,24 +730,18 @@ class _CartScreenState extends State<CartScreen> {
                                   });
                                 },
                                 child: Container(
-                                  padding:
-                                      isLoadingDelItemId == cartBundleList[i].id
-                                          ? EdgeInsets.all(10)
-                                          : EdgeInsets.all(0),
+                                  padding: isLoadingDelItemId == cartBundleList[i].id ? EdgeInsets.all(10) : EdgeInsets.all(0),
                                   height: 40,
                                   width: 40,
-                                  child:
-                                      isLoadingDelItemId == cartBundleList[i].id
-                                          ? CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      Colors.black),
-                                            )
-                                          : Icon(
-                                              FontAwesomeIcons.trashAlt,
-                                              size: 22,
-                                              color: Colors.red,
-                                            ),
+                                  child: isLoadingDelItemId == cartBundleList[i].id
+                                      ? CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                                        )
+                                      : Icon(
+                                          FontAwesomeIcons.trashAlt,
+                                          size: 22,
+                                          color: Colors.red,
+                                        ),
                                 ))
                           ],
                         ),

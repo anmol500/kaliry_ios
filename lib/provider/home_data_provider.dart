@@ -23,8 +23,7 @@ class HomeDataProvider with ChangeNotifier {
   Map categoryMap = {};
 
   void generateLists(HomeModel homeData, BuildContext context) {
-    CoursesProvider courses =
-        Provider.of<CoursesProvider>(context, listen: false);
+    CoursesProvider courses = Provider.of<CoursesProvider>(context, listen: false);
     List<Course> allCourses = courses.allCourses;
 
     generateSliderFactList(homeData.sliderfacts);
@@ -41,8 +40,7 @@ class HomeDataProvider with ChangeNotifier {
   Future<HomeModel> getHomeDetails(context) async {
     String url = "${APIData.home}${APIData.secretKey}";
     Response res = await get(Uri.parse(url));
-    print(res.statusCode);
-    print(res.body);
+
     if (res.statusCode == 200) {
       homeModel = HomeModel.fromJson(json.decode(res.body));
       generateLists(homeModel, context);
@@ -142,8 +140,7 @@ class HomeDataProvider with ChangeNotifier {
     );
   }
 
-  void generateFeaturedCategoryList(
-      HomeModel homeModels, List<Course> allCourses) {
+  void generateFeaturedCategoryList(HomeModel homeModels, List<Course> allCourses) {
     featuredCategoryList = List.generate(
       homeModels.featuredCate.length,
       (index) => MyCategory(

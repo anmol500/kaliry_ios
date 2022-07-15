@@ -24,7 +24,7 @@ class Theme with ChangeNotifier {
 
   Color backgroundColorSec = Color(0xff29303b);
 
-  Color backgroundColorlight = Color(0xFFF1F3F8);
+  Color backgroundColorlight = Color(0xFFF7FAFC);
   Color backgroundColordark = Color(0xff221436);
 
   Color tilecolorlight = Colors.white;

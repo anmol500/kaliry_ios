@@ -31,25 +31,14 @@ class StudyListItem extends StatelessWidget {
     return isPresentAt;
   }
 
-  Widget courseItem(BuildContext context, Color tileColor, Color txtColor,
-      int done, int total, double progress, String category) {
+  Widget courseItem(BuildContext context, Color tileColor, Color txtColor, int done, int total, double progress, String category) {
     return Container(
-      margin: index >= totalLen - 1
-          ? EdgeInsets.all(0.0)
-          : EdgeInsets.fromLTRB(0.0, 0.0, 18.0, 0.0),
-      width: MediaQuery.of(context).orientation == Orientation.landscape
-          ? 300
-          : MediaQuery.of(context).size.width / 1.32,
+      margin: index >= totalLen - 1 ? EdgeInsets.all(0.0) : EdgeInsets.fromLTRB(0.0, 0.0, 18.0, 0.0),
+      width: MediaQuery.of(context).orientation == Orientation.landscape ? 300 : MediaQuery.of(context).size.width / 1.32,
       decoration: BoxDecoration(
         color: tileColor,
         borderRadius: BorderRadius.circular(15.0),
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x1c2464).withOpacity(0.30),
-              blurRadius: 20.0,
-              offset: Offset(0.0, 15.0),
-              spreadRadius: -15.0)
-        ],
+        boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 20.0, offset: Offset(0.0, 15.0), spreadRadius: -15.0)],
       ),
       child: Material(
         borderRadius: BorderRadius.circular(15.0),
@@ -59,15 +48,11 @@ class StudyListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height /
-                    (MediaQuery.of(context).orientation == Orientation.landscape
-                        ? 4.8
-                        : 7.8),
+                height: MediaQuery.of(context).size.height / (MediaQuery.of(context).orientation == Orientation.landscape ? 4.8 : 7.8),
                 child: mycourse.course.previewImage == null
                     ? Image.asset("assets/placeholder/studying.png")
                     : CachedNetworkImage(
-                        imageUrl:
-                            APIData.courseImages + mycourse.course.previewImage,
+                        imageUrl: APIData.courseImages + mycourse.course.previewImage,
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -87,8 +72,7 @@ class StudyListItem extends StatelessWidget {
                             topRight: Radius.circular(15.0),
                           ),
                           image: DecorationImage(
-                            image:
-                                AssetImage('assets/placeholder/studying.png'),
+                            image: AssetImage('assets/placeholder/studying.png'),
                             fit: BoxFit.cover,
                           ),
                         )),
@@ -104,7 +88,7 @@ class StudyListItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "$category",
+                          category == 'N/A' ? 'Course' : "$category",
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w700,
@@ -127,10 +111,7 @@ class StudyListItem extends StatelessWidget {
                               mycourse.course.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: txtColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20),
+                              style: TextStyle(color: txtColor, fontWeight: FontWeight.w700, fontSize: 20),
                             ),
                           ),
                           SizedBox(
@@ -162,8 +143,7 @@ class StudyListItem extends StatelessWidget {
                         children: [
                           Text(
                             "$done / $total ${translate("lessons_")}",
-                            style:
-                                TextStyle(fontSize: 16.0, color: Colors.grey),
+                            style: TextStyle(fontSize: 16.0, color: Colors.grey),
                           ),
                           cusprogressbar(120, progress)
                         ],
@@ -175,13 +155,7 @@ class StudyListItem extends StatelessWidget {
             ],
           ),
           onTap: () {
-            Navigator.of(context).pushNamed("/courseDetails",
-                arguments: DataSend(
-                    mycourse.course.userId,
-                    true,
-                    mycourse.course.id,
-                    mycourse.course.categoryId,
-                    mycourse.course.type));
+            Navigator.of(context).pushNamed("/courseDetails", arguments: DataSend(mycourse.course.userId, true, mycourse.course.id, mycourse.course.categoryId, mycourse.course.type));
           },
         ),
       ),
@@ -190,12 +164,8 @@ class StudyListItem extends StatelessWidget {
 
   Widget shimmerTile(BuildContext context) {
     return Container(
-      margin: index >= totalLen - 1
-          ? EdgeInsets.all(0.0)
-          : EdgeInsets.fromLTRB(0.0, 0.0, 18.0, 0.0),
-      width: MediaQuery.of(context).orientation == Orientation.landscape
-          ? 300
-          : MediaQuery.of(context).size.width / 1.32,
+      margin: index >= totalLen - 1 ? EdgeInsets.all(0.0) : EdgeInsets.fromLTRB(0.0, 0.0, 18.0, 0.0),
+      width: MediaQuery.of(context).orientation == Orientation.landscape ? 300 : MediaQuery.of(context).size.width / 1.32,
       child: Shimmer.fromColors(
         baseColor: Color(0xFFd3d7de),
         highlightColor: Color(0xFFe2e4e9),
@@ -218,11 +188,9 @@ class StudyListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     T.Theme mode = Provider.of<T.Theme>(context);
-    int progressInd =
-        adjustProgress(mycourse.course.progress, mycourse.enroll.userId);
+    int progressInd = adjustProgress(mycourse.course.progress, mycourse.enroll.userId);
     int done = 0, total = 0;
-    String category = Provider.of<HomeDataProvider>(context)
-        .getCategoryName(mycourse.course.categoryId);
+    String category = Provider.of<HomeDataProvider>(context).getCategoryName(mycourse.course.categoryId);
     languageProvider = Provider.of<LanguageProvider>(context, listen: false);
     if (category == null) category = "N/A";
     double progress = 0.0;
@@ -231,10 +199,7 @@ class StudyListItem extends StatelessWidget {
       total = mycourse.course.progress[progressInd].allChapterId.length;
       progress = (done * 1.0) / total;
     }
-    return _visible == true
-        ? courseItem(context, mode.tilecolor, mode.shortTextColor, done, total,
-            progress, category)
-        : shimmerTile(context);
+    return _visible == true ? courseItem(context, mode.tilecolor, mode.shortTextColor, done, total, progress, category) : shimmerTile(context);
   }
 }
 

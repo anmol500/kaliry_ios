@@ -15,7 +15,7 @@ class ImageSwiper extends StatelessWidget {
   Widget detailsOnImage(String heading, String subHeading) {
     return Positioned(
       child: Container(
-        padding: EdgeInsets.only( left: 10,right: 5),
+        padding: EdgeInsets.only(left: 10, right: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -25,10 +25,7 @@ class ImageSwiper extends StatelessWidget {
                 heading,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.w800),
+                style: TextStyle(color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.w800),
               ),
             ),
             SizedBox(
@@ -70,10 +67,7 @@ class ImageSwiper extends StatelessWidget {
             ),
             clipBehavior: Clip.antiAliasWithSaveLayer,
             child: Container(
-              height:
-                  MediaQuery.of(context).orientation == Orientation.landscape
-                      ? 70
-                      : MediaQuery.of(context).size.height / 11,
+              height: MediaQuery.of(context).orientation == Orientation.landscape ? 70 : MediaQuery.of(context).size.height / 11,
             ),
           ),
         ),
@@ -102,7 +96,7 @@ class ImageSwiper extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.0),
                 image: DecorationImage(
                   image: AssetImage('assets/placeholder/slider.png'),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               )),
               errorWidget: (context, url, error) => Icon(Icons.error),
@@ -110,17 +104,13 @@ class ImageSwiper extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
-                gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    stops: [
-                      0.0,
-                      0.6
-                    ],
-                    colors: [
-                      Colors.black,
-                      Colors.black.withOpacity(0.0),
-                    ]),
+                gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, stops: [
+                  0.0,
+                  0.6
+                ], colors: [
+                  Colors.black,
+                  Colors.black.withOpacity(0.0),
+                ]),
               ),
             )
           ],
@@ -133,13 +123,7 @@ class ImageSwiper extends StatelessWidget {
         height: 250,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
-          boxShadow: [
-            BoxShadow(
-                color: Color(0x1c2464).withOpacity(0.30),
-                blurRadius: 25.0,
-                offset: Offset(0.0, 20.0),
-                spreadRadius: -25.0)
-          ],
+          boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 25.0, offset: Offset(0.0, 20.0), spreadRadius: -25.0)],
         ),
         child: Swiper(
           duration: 800,
@@ -147,13 +131,11 @@ class ImageSwiper extends StatelessWidget {
           autoplayDisableOnInteraction: true,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding:
-                  EdgeInsets.only(bottom: 15.0, top: 5.0, left: 18, right: 18),
+              padding: EdgeInsets.only(bottom: 15.0, top: 5.0, left: 18, right: 18),
               child: Stack(
                 children: [
                   showImage(orientation, slider.sliderList[index].image),
-                  detailsOnImage(slider.sliderList[index].heading,
-                      slider.sliderList[index].subHeading),
+                  detailsOnImage(slider.sliderList[index].heading, slider.sliderList[index].subHeading),
                 ],
               ),
             );
@@ -170,8 +152,6 @@ class ImageSwiper extends StatelessWidget {
   Widget build(BuildContext context) {
     var slider = Provider.of<HomeDataProvider>(context);
     Orientation orientation = MediaQuery.of(context).orientation;
-    return _visible == true
-        ? showSlider(orientation, slider)
-        : showShimmer(context);
+    return _visible == true ? showSlider(orientation, slider) : showShimmer(context);
   }
 }

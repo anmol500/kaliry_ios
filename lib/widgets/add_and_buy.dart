@@ -37,14 +37,11 @@ class _AddAndBuyState extends State<AddAndBuy> {
             });
             setState(() {});
             if (!inCart) {
-              bool success =
-                  await crt.addtocart(widget.courseId.toString(), context);
+              bool success = await crt.addtocart(widget.courseId.toString(), context);
               if (success) {
-                widget._scaffoldKey.currentState.showSnackBar(SnackBar(
-                    content: Text(translate("Course_added_to_your_cart"))));
+                widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Course_added_to_your_cart"))));
               } else {
-                widget._scaffoldKey.currentState.showSnackBar(
-                    SnackBar(content: Text(translate("Go_to_Cart_Section"))));
+                widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Go_to_Cart_Section"))));
               }
             } else
               Navigator.push(
@@ -61,26 +58,16 @@ class _AddAndBuyState extends State<AddAndBuy> {
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             height: 55.0,
             width: MediaQuery.of(context).size.width - 50,
-            decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(width: 1.0, color: Colors.black12),
-                borderRadius: BorderRadius.circular(10.0)),
+            decoration: BoxDecoration(color: Colors.transparent, border: Border.all(width: 1.0, color: Colors.black12), borderRadius: BorderRadius.circular(10.0)),
             child: Stack(
               children: [
                 Center(
                   child: isloading
-                      ? CircularProgressIndicator(
-                          valueColor:
-                              new AlwaysStoppedAnimation<Color>(Colors.white))
+                      ? CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.white))
                       : Text(
-                          inCart
-                              ? translate("GO_TO_CART")
-                              : translate("ADD_TO_CART"),
+                          inCart ? translate("GO_TO_CART") : translate("ADD_TO_CART"),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
                         ),
                 ),
                 Positioned(
@@ -90,8 +77,7 @@ class _AddAndBuyState extends State<AddAndBuy> {
                     margin: EdgeInsets.all(3.0),
                     height: 40.0,
                     width: 40.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.00)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.00)),
                     child: Image.asset(
                       "assets/icons/addtocart.png",
                       color: Colors.white,
@@ -115,8 +101,7 @@ class _AddAndBuyState extends State<AddAndBuy> {
             this.buynowLoading = true;
           });
           if (!inCart) {
-            bool success =
-                await crt.addtocart(widget.courseId.toString(), context);
+            bool success = await crt.addtocart(widget.courseId.toString(), context);
             if (success) {
               Navigator.push(
                   context,
@@ -125,8 +110,7 @@ class _AddAndBuyState extends State<AddAndBuy> {
                             pageInd: 3,
                           )));
             } else {
-              widget._scaffoldKey.currentState.showSnackBar(
-                  SnackBar(content: Text(translate("Go_to_Cart_Section"))));
+              widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Go_to_Cart_Section"))));
             }
           } else
             Navigator.push(
@@ -156,10 +140,7 @@ class _AddAndBuyState extends State<AddAndBuy> {
                       )
                     : Text(
                         translate("BUY_NOW"),
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
                       ),
               ),
               Positioned(
@@ -169,8 +150,7 @@ class _AddAndBuyState extends State<AddAndBuy> {
                   margin: EdgeInsets.all(3.0),
                   height: 40.0,
                   width: 40.0,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(25.00)),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.00)),
                   child: Image.asset(
                     "assets/icons/buynow.png",
                     color: Colors.grey,
@@ -214,25 +194,23 @@ class _AddAndBuyState extends State<AddAndBuy> {
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: widget.cprice != null
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                        addToCart(inCart),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        buyNowButton(inCart),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          widget.details.course.policy == null
-                              ? ''
-                              : "${widget.details.course.policy.days}-${translate("day_MoneyBack_Guarantee")}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.grey, fontSize: 12.0),
-                        )
-                      ])
+                ? Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                    addToCart(inCart),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    buyNowButton(inCart),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    // Text(
+                    //   widget.details.course.policy == null
+                    //       ? ''
+                    //       : "${widget.details.course.policy.days}-${translate("day_MoneyBack_Guarantee")}",
+                    //   textAlign: TextAlign.center,
+                    //   style: TextStyle(color: Colors.grey, fontSize: 12.0),
+                    // )
+                  ])
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -267,31 +245,13 @@ class _AddAndBuyState extends State<AddAndBuy> {
       );
     } catch (e) {
       print('Exception : $e');
-      Fluttertoast.showToast(
-          msg: translate("Failed_"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Failed_"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
     }
 
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: translate("Enrolled_Successfully"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.blue,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Enrolled_Successfully"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.blue, textColor: Colors.white, fontSize: 16.0);
     } else {
-      Fluttertoast.showToast(
-          msg: translate("Failed_"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Failed_"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
     }
   }
 
@@ -308,8 +268,7 @@ class _AddAndBuyState extends State<AddAndBuy> {
 
             await enrollInFreeCourse();
 
-            await Provider.of<CoursesProvider>(context, listen: false)
-                .initPurchasedCourses(context);
+            await Provider.of<CoursesProvider>(context, listen: false).initPurchasedCourses(context);
 
             setState(() {
               this.isloading = false;
@@ -321,24 +280,16 @@ class _AddAndBuyState extends State<AddAndBuy> {
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             height: 55.0,
             width: MediaQuery.of(context).size.width - 50,
-            decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(width: 1.0, color: Colors.black12),
-                borderRadius: BorderRadius.circular(10.0)),
+            decoration: BoxDecoration(color: Colors.transparent, border: Border.all(width: 1.0, color: Colors.black12), borderRadius: BorderRadius.circular(10.0)),
             child: Stack(
               children: [
                 Center(
                   child: isloading
-                      ? CircularProgressIndicator(
-                          valueColor:
-                              new AlwaysStoppedAnimation<Color>(Colors.white))
+                      ? CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.white))
                       : Text(
                           translate("ENROLL_NOW"),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
                         ),
                 ),
                 Positioned(
@@ -348,8 +299,7 @@ class _AddAndBuyState extends State<AddAndBuy> {
                     margin: EdgeInsets.all(3.0),
                     height: 40.0,
                     width: 40.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.00)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.00)),
                     child: Image.asset(
                       "assets/icons/buynow.png",
                       color: Colors.white,

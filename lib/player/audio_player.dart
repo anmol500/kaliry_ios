@@ -65,7 +65,7 @@ class _PlayAudioState extends State<PlayAudio> with SingleTickerProviderStateMix
 
     //this function will allow us to move the cursor of the slider while we are playing the song
     // ignore: deprecated_member_use
-    _player.onAudioPositionChanged.listen((p) {
+    _player.onPositionChanged.listen((p) {
       setState(() {
         position = p;
       });
@@ -100,10 +100,10 @@ class _PlayAudioState extends State<PlayAudio> with SingleTickerProviderStateMix
     final playPosition = (position != null && musicLength != null && position.inMilliseconds > 0 && position.inMilliseconds < musicLength.inMilliseconds) ? position : null;
     var result;
     if (url.contains('http'))
-      await _player.play(url, position: playPosition);
+      await _player.play(UrlSource(url), position: playPosition);
     else
       await _player.play(
-        url,
+        UrlSource(url),
         position: playPosition,
       );
 

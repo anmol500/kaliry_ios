@@ -11,7 +11,6 @@ import 'package:eclass/provider/user_profile.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import '../Widgets/utils.dart';
 import '../gateways/bank_payment.dart';
-import '../gateways/paystack_payment.dart';
 import '../gateways/paytm_payment_page1.dart';
 import '../gateways/razor_payments.dart';
 import '../provider/home_data_provider.dart';
@@ -42,13 +41,7 @@ class _PaymentGatewayState extends State<PaymentGateway> {
   Widget bottomFixed(payment, user) {
     var homeData = Provider.of<HomeDataProvider>(context);
     return Container(
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-            color: Color(0x1c2464).withOpacity(0.30),
-            blurRadius: 15.0,
-            offset: Offset(0.0, -20.5),
-            spreadRadius: -15.0)
-      ]),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 15.0, offset: Offset(0.0, -20.5), spreadRadius: -15.0)]),
       child: InkWell(
         child: Material(
           color: Colors.transparent,
@@ -60,13 +53,10 @@ class _PaymentGatewayState extends State<PaymentGateway> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4.0),
                 color: Color(0xFFF44A4A),
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFF6E1A52),
-                      Color(0xFFF44A4A),
-                    ]),
+                gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
+                  Color(0xFF6E1A52),
+                  Color(0xFFF44A4A),
+                ]),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,17 +64,11 @@ class _PaymentGatewayState extends State<PaymentGateway> {
                 children: [
                   Text(
                     "${translate("Amount_")}:  ${payAbleAmount.toString()}",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15),
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15),
                   ),
                   Text(
                     "${translate("Continue_to_payment")} >>",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15),
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15),
                   ),
                 ],
               )),
@@ -94,27 +78,15 @@ class _PaymentGatewayState extends State<PaymentGateway> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    StripePaymentScreen(amount: payAbleAmount),
+                builder: (context) => StripePaymentScreen(amount: payAbleAmount),
               ),
             );
           } else if (id == 2) {
             onPayWithPayPal(homeData, user);
           } else if (id == 3) {
-            if ("${homeData.homeModel.currency.currency}" == "NGN" ||
-                "${homeData.homeModel.currency.currency}" == "GHS") {
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  child: PayStackPage(
-                    amount: payAbleAmount,
-                  ),
-                ),
-              );
+            if ("${homeData.homeModel.currency.currency}" == "NGN" || "${homeData.homeModel.currency.currency}" == "GHS") {
             } else {
-              Fluttertoast.showToast(
-                  msg: translate("Supported_only_NGN_GHS_currency"));
+              Fluttertoast.showToast(msg: translate("Supported_only_NGN_GHS_currency"));
             }
           } else if (id == 4) {
             Fluttertoast.showToast(msg: translate("Supported_only_live_mode"));
@@ -145,7 +117,6 @@ class _PaymentGatewayState extends State<PaymentGateway> {
               ),
             );
           } else if (id == 7) {
-
           } else if (id == 71) {
             Navigator.push(
               context,
@@ -191,8 +162,7 @@ class _PaymentGatewayState extends State<PaymentGateway> {
               ),
             );
           } else {
-            Fluttertoast.showToast(
-                msg: translate("Please_select_payment_gateway"));
+            Fluttertoast.showToast(msg: translate("Please_select_payment_gateway"));
           }
         },
       ),
@@ -225,84 +195,38 @@ class _PaymentGatewayState extends State<PaymentGateway> {
     });
     payAbleAmount = widget.disCountedAmount;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      PaymentAPIProvider paymentAPIProvider =
-          Provider.of<PaymentAPIProvider>(context, listen: false);
+      PaymentAPIProvider paymentAPIProvider = Provider.of<PaymentAPIProvider>(context, listen: false);
       await paymentAPIProvider.fetchPaymentAPI(context);
 
-      manualPaymentProvider =
-          Provider.of<ManualPaymentProvider>(context, listen: false);
+      manualPaymentProvider = Provider.of<ManualPaymentProvider>(context, listen: false);
       await manualPaymentProvider.fetchData();
 
-      var manualPayment =
-          manualPaymentProvider.manualPaymentModel.manualPayment.isNotEmpty
-              ? "1"
-              : "0";
+      var manualPayment = manualPaymentProvider.manualPaymentModel.manualPayment.isNotEmpty ? "1" : "0";
 
-      var stripe = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .stripeEnable;
-      var paypal = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .paypalEnable;
-      var paystack = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .paystackEnable;
-      var paytm = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .paytmEnable;
-      var razorpay = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .razorpayEnable;
-      var instamojo = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .instamojoEnable;
-      var payhere = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .enablePayhere;
-      var rave = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .enableRave;
-      var payu = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .enablePayu;
-      var cashfree = Provider.of<HomeDataProvider>(context, listen: false)
-          .homeModel
-          .settings
-          .enableCashfree;
-      var bank = Provider.of<PaymentAPIProvider>(context, listen: false)
-                  .paymentApi
-                  .bankDetails ==
-              null
-          ? 0
-          : Provider.of<PaymentAPIProvider>(context, listen: false)
-              .paymentApi
-              .bankDetails
-              .bankEnable;
+      var stripe = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.stripeEnable;
+      var paypal = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.paypalEnable;
+      var paystack = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.paystackEnable;
+      var paytm = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.paytmEnable;
+      var razorpay = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.razorpayEnable;
+      var instamojo = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.instamojoEnable;
+      var payhere = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.enablePayhere;
+      var rave = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.enableRave;
+      var payu = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.enablePayu;
+      var cashfree = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.enableCashfree;
+      var bank = Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.bankDetails == null ? 0 : Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.bankDetails.bankEnable;
 
       if (stripe == 1 || stripe == "1") {
         listPayment.add(
-          PaymentGatewayModel(
-              1, "Stripe", "assets/placeholder/stripe.png", "1"),
+          PaymentGatewayModel(1, "Stripe", "assets/placeholder/stripe.png", "1"),
         );
       }
       if (paypal == 1 || paypal == "1") {
         listPayment.add(
-          PaymentGatewayModel(
-              2, "Paypal", "assets/placeholder/paypal.png", "1"),
+          PaymentGatewayModel(2, "Paypal", "assets/placeholder/paypal.png", "1"),
         );
       }
       if (paystack == 1 || paystack == "1") {
-        listPayment.add(PaymentGatewayModel(
-            3, "PayStack", "assets/placeholder/paystackwallets.png", "1"));
+        listPayment.add(PaymentGatewayModel(3, "PayStack", "assets/placeholder/paystackwallets.png", "1"));
       }
       if (paytm == 1 || paytm == "1") {
         listPayment.add(
@@ -311,20 +235,17 @@ class _PaymentGatewayState extends State<PaymentGateway> {
       }
       if (razorpay == 1 || razorpay == "1") {
         listPayment.add(
-          PaymentGatewayModel(
-              5, "RazorPay", "assets/placeholder/razorpay.png", "1"),
+          PaymentGatewayModel(5, "RazorPay", "assets/placeholder/razorpay.png", "1"),
         );
       }
       if (instamojo == 1 || instamojo == "1") {
         listPayment.add(
-          PaymentGatewayModel(
-              6, "Instamojo", "assets/placeholder/instamojo.png", "1"),
+          PaymentGatewayModel(6, "Instamojo", "assets/placeholder/instamojo.png", "1"),
         );
       }
       if (payhere == 1 || payhere == "1") {
         listPayment.add(
-          PaymentGatewayModel(
-              7, "PayHere", "assets/placeholder/payhere.png", "1"),
+          PaymentGatewayModel(7, "PayHere", "assets/placeholder/payhere.png", "1"),
         );
       }
       if (rave == 1 || rave == "1") {
@@ -334,26 +255,22 @@ class _PaymentGatewayState extends State<PaymentGateway> {
       }
       if (payu == 1 || payu == "1" || false) {
         listPayment.add(
-          PaymentGatewayModel(
-              72, "PayU", "assets/placeholder/payumoney.png", "1"),
+          PaymentGatewayModel(72, "PayU", "assets/placeholder/payumoney.png", "1"),
         );
       }
       if (cashfree == 1 || cashfree == "1") {
         listPayment.add(
-          PaymentGatewayModel(
-              73, "Cashfree", "assets/placeholder/cashfree.png", "1"),
+          PaymentGatewayModel(73, "Cashfree", "assets/placeholder/cashfree.png", "1"),
         );
       }
       if (bank == 1 || bank == "1") {
         listPayment.add(
-          PaymentGatewayModel(
-              8, "Bank Transfer", "assets/placeholder/bankwallets.png", "1"),
+          PaymentGatewayModel(8, "Bank Transfer", "assets/placeholder/bankwallets.png", "1"),
         );
       }
       if (manualPayment == 1 || manualPayment == "1") {
         listPayment.add(
-          PaymentGatewayModel(
-              9, "Manual Payment", "assets/placeholder/manualpayment.png", "1"),
+          PaymentGatewayModel(9, "Manual Payment", "assets/placeholder/manualpayment.png", "1"),
         );
       }
       setState(() {
@@ -370,9 +287,7 @@ class _PaymentGatewayState extends State<PaymentGateway> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border(
-              top: index == 0
-                  ? BorderSide(width: 1, color: Colors.grey.withOpacity(0.4))
-                  : BorderSide.none,
+              top: index == 0 ? BorderSide(width: 1, color: Colors.grey.withOpacity(0.4)) : BorderSide.none,
               bottom: BorderSide(
                 width: 1,
                 color: Colors.grey.withOpacity(0.4),
@@ -424,11 +339,9 @@ class _PaymentGatewayState extends State<PaymentGateway> {
     var payment = Provider.of<PaymentAPIProvider>(context).paymentApi;
     var user = Provider.of<UserProfile>(context);
     return Scaffold(
-        appBar: secondaryAppBar(
-            Colors.black, mode.bgcolor, context, translate("Checkout")),
+        appBar: secondaryAppBar(Colors.black, mode.bgcolor, context, translate("Checkout")),
         backgroundColor: mode.bgcolor,
-        bottomNavigationBar:
-            value == null ? SizedBox.shrink() : bottomFixed(payment, user),
+        bottomNavigationBar: value == null ? SizedBox.shrink() : bottomFixed(payment, user),
         body: loading == true
             ? Center(
                 child: CircularProgressIndicator(),

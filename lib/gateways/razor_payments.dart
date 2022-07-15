@@ -42,9 +42,7 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       leading: Container(
         padding: EdgeInsets.only(right: 20.0),
-        decoration: new BoxDecoration(
-            border: new Border(
-                right: new BorderSide(width: 1.0, color: Colors.white24))),
+        decoration: new BoxDecoration(border: new Border(right: new BorderSide(width: 1.0, color: Colors.white24))),
         child: Icon(
           FontAwesomeIcons.sortAmountDownAlt,
           color: Colors.white,
@@ -55,8 +53,7 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
         padding: EdgeInsets.only(top: 10.0),
         child: Text(
           '${widget.amount}',
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14.0),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14.0),
         ),
       ),
     );
@@ -214,10 +211,7 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
       'external': {
         'wallets': ['paytm']
       },
-      'prefill': {
-        'contact': "${user.profileInstance.mobile}",
-        'email': "${user.profileInstance.email}"
-      }
+      'prefill': {'contact': "${user.profileInstance.mobile}", 'email': "${user.profileInstance.email}"}
     };
 
     try {
@@ -232,8 +226,7 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
           barrierDismissible: false,
           builder: (context) => WillPopScope(
               child: AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25.0))),
                 backgroundColor: Colors.white,
                 title: Text(
                   "Saving Payment Info",
@@ -263,8 +256,7 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    Fluttertoast.showToast(
-        msg: "ERROR: " + response.code.toString() + " - " + response.message);
+    Fluttertoast.showToast(msg: "ERROR: " + response.code.toString() + " - " + response.message);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -281,11 +273,7 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SuccessTicket(
-                        msgResponse: "Your Transaction successful",
-                        purchaseDate: subdate,
-                        time: time,
-                        transactionAmount: widget.amount),
+                    SuccessTicket(msgResponse: "Your Transaction successful", purchaseDate: subdate, time: time, transactionAmount: widget.amount),
                     SizedBox(
                       height: 10.0,
                     ),
@@ -313,8 +301,7 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
   sendRazorDetails(transactionId, paymentMethod) async {
     try {
       goToDialog2();
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
       var sendResponse;
 

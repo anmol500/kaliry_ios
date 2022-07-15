@@ -44,8 +44,7 @@ class CourseDetailScreen extends StatefulWidget {
   _CourseDetailScreenState createState() => _CourseDetailScreenState();
 }
 
-class _CourseDetailScreenState extends State<CourseDetailScreen>
-    with TickerProviderStateMixin {
+class _CourseDetailScreenState extends State<CourseDetailScreen> with TickerProviderStateMixin {
   int tabIndex = 0;
 
   double textSize = 15.0;
@@ -54,8 +53,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
 
   var purchaseDate;
   Future<void> getPurchaseDate(int courseId) async {
-    List<Orderhistory> orderHistory =
-        await HttpService().fetchPurchaseHistory();
+    List<Orderhistory> orderHistory = await HttpService().fetchPurchaseHistory();
     if (orderHistory.isNotEmpty) {
       Orderhistory singleOrder;
       orderHistory.forEach((element) {
@@ -147,25 +145,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
       try {
         courseDetails = FullCourse.fromJson(body);
       } catch (e) {
-        Fluttertoast.showToast(
-            msg: translate("You_cant_access_this_course"),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        Fluttertoast.showToast(msg: translate("You_cant_access_this_course"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
         Future.delayed(Duration(seconds: 3));
         Navigator.pop(context);
       }
     } else {
       print("Can't get Course Details - Status Code : ${res.statusCode}");
-      Fluttertoast.showToast(
-          msg: translate("You_cant_access_this_course"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("You_cant_access_this_course"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
       Future.delayed(Duration(seconds: 3));
       Navigator.pop(context);
     }
@@ -184,21 +170,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
   String getRating(List<Review> data) {
     double ans = 0.0;
     bool calcAsInt = true;
-    if (data.length > 0)
-      calcAsInt = checkDatatype(data[0].learn) == 0 ? true : false;
+    if (data.length > 0) calcAsInt = checkDatatype(data[0].learn) == 0 ? true : false;
 
     data.forEach((element) {
       if (!calcAsInt)
-        ans += (int.parse(element.price) +
-                    int.parse(element.value) +
-                    int.parse(element.learn))
-                .toDouble() /
-            3.0;
+        ans += (int.parse(element.price) + int.parse(element.value) + int.parse(element.learn)).toDouble() / 3.0;
       else {
-        ans += (int.parse(element.price) +
-                int.parse(element.value) +
-                int.parse(element.learn)) /
-            3.0;
+        ans += (int.parse(element.price) + int.parse(element.value) + int.parse(element.learn)) / 3.0;
       }
     });
     if (ans == 0.0) return 0.toString();
@@ -262,8 +240,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
   var getinstdetails;
 
   void didChangeDependencies() {
-    Provider.of<WatchlistProvider>(context, listen: false)
-        .loadData(delayInSeconds: 2);
+    Provider.of<WatchlistProvider>(context, listen: false).loadData(delayInSeconds: 2);
     DataSend apiData = ModalRoute.of(context).settings.arguments;
     detail = getCourseDetails(apiData.id);
     getinstdetails = getinstdata(apiData.userId);
@@ -279,18 +256,15 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
     setState(() {});
   }
 
-  Route _menuRoute(
-      int id, bool isPurchased, FullCourse details, List<String> pro) {
+  Route _menuRoute(int id, bool isPurchased, FullCourse details, List<String> pro) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          CourseDetailMenuScreen(isPurchased, details, pro, purchaseDate),
+      pageBuilder: (context, animation, secondaryAnimation) => CourseDetailMenuScreen(isPurchased, details, pro, purchaseDate),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(0.0, 1.0);
         var end = Offset.zero;
         var curve = Curves.ease;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),
@@ -324,19 +298,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
               details.course.title,
               textAlign: TextAlign.center,
               maxLines: 2,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22.0,
-                  color: Color(0xff404455)),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Color(0xff404455)),
             ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               StarRating(
-                rating: details.review == null
-                    ? 0.0
-                    : double.parse(getRating(details.review)),
+                rating: details.review == null ? 0.0 : double.parse(getRating(details.review)),
                 size: 15.0,
                 color: Color(0xff0284a2),
               ),
@@ -344,9 +313,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                 height: 4.0,
               ),
               Text(
-                details.review == null
-                    ? "0 ${translate('Rating_')} ${translate('and_')} 0 ${translate('Review_')}"
-                    : "${getRating(details.review)} ${translate('Rating_')} ${translate('and_')} ${getLength(details.review)} ${translate('Review_')}",
+                details.review == null ? "0 ${translate('Rating_')} ${translate('and_')} 0 ${translate('Review_')}" : "${getRating(details.review)} ${translate('Rating_')} ${translate('and_')} ${getLength(details.review)} ${translate('Review_')}",
                 style: TextStyle(fontSize: 14.0, color: Colors.grey),
               ),
             ],
@@ -373,21 +340,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(
-                    child: fun(
-                        translate("Course_By"),
-                        "${details.course.user.fname}" +
-                            " " +
-                            "${details.course.user.lname}")),
-                Expanded(
-                    child: fun(translate("Last_Updated"),
-                        DateFormat.yMMMd().format(details.course.createdAt))),
-                Expanded(
-                    child: fun(
-                        translate("Language_"),
-                        details.course.language == null
-                            ? "N/A"
-                            : "${details.course.language.name}")),
+                Expanded(child: fun(translate("Course_By"), "${details.course.user.fname}" + " " + "${details.course.user.lname}")),
+                Expanded(child: fun(translate("Last_Updated"), DateFormat.yMMMd().format(details.course.createdAt))),
+                Expanded(child: fun(translate("Language_"), details.course.language == null ? "N/A" : "${details.course.language.name}")),
               ],
             ),
           ),
@@ -397,20 +352,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
   }
 
   String tMonth(String x) {
-    List<String> months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
+    List<String> months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
     return months[int.parse(x) - 1];
   }
 
@@ -428,17 +370,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Padding(
           padding: const EdgeInsets.only(left: 18.0, right: 18.0),
           child: Text(
             details.course.title,
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22.0,
-                color: Color(0xff404455)),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Color(0xff404455)),
           ),
         ),
 
@@ -447,39 +385,23 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (details.course.discountPrice != null)
-                Text(
-                    "$currency ${(num.parse(details.course.discountPrice.toString()) * selectedCurrencyRate)}",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22.0,
-                        color: Color(0xff404455))),
+              if (details.course.discountPrice != null) Text("$currency ${(num.parse(details.course.discountPrice.toString()) * selectedCurrencyRate)}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Color(0xff404455))),
               SizedBox(
                 width: 10.0,
               ),
               Text(
                 "$currency ${(num.parse(details.course.price.toString()) * selectedCurrencyRate)}",
                 style: TextStyle(
-                  color: details.course.discountPrice != null
-                      ? Color(0xff943f4654)
-                      : Color(0xff404455),
-                  fontWeight: details.course.discountPrice != null
-                      ? FontWeight.normal
-                      : FontWeight.bold,
+                  color: details.course.discountPrice != null ? Color(0xff943f4654) : Color(0xff404455),
+                  fontWeight: details.course.discountPrice != null ? FontWeight.normal : FontWeight.bold,
                   fontSize: details.course.discountPrice != null ? 16.0 : 22.0,
-                  decoration: details.course.discountPrice != null
-                      ? TextDecoration.lineThrough
-                      : null,
+                  decoration: details.course.discountPrice != null ? TextDecoration.lineThrough : null,
                 ),
               )
             ],
           )
         else
-          Text(translate("Free_"),
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 22.0,
-                  color: Colors.red)),
+          Text(translate("Free_"), style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22.0, color: Colors.red)),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
@@ -497,18 +419,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(
-                  child: funcol(
-                      translate("Course_By"), details.course.user.fname)),
-              Expanded(
-                  child: funcol(translate("Last_Updated"),
-                      DateFormat.yMMMd().format(details.course.createdAt))),
-              Expanded(
-                  child: funcol(
-                      translate("Language_"),
-                      details.course.language == null
-                          ? "N/A"
-                          : details.course.language.name)),
+              Expanded(child: funcol(translate("Course_By"), details.course.user.fname)),
+              Expanded(child: funcol(translate("Last_Updated"), DateFormat.yMMMd().format(details.course.createdAt))),
+              Expanded(child: funcol(translate("Language_"), details.course.language == null ? "N/A" : details.course.language.name)),
             ],
           ),
         ),
@@ -517,30 +430,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(
-                  child: func(
-                      details.studentEnrolled,
-                      translate("Students_"),
-                      1,
-                      "assets/icons/studentsicon.png",
-                      Color(0xff3f4654),
-                      0)),
-              Expanded(
-                  child: func(
-                      details.review == null ? "0" : getRating(details.review),
-                      translate("Rating_"),
-                      2,
-                      "assets/icons/star_icon.png",
-                      Color(0xff3f4654),
-                      0)),
-              Expanded(
-                  child: func(
-                      details.course.courseclass.length.toDouble(),
-                      translate("Lecture_"),
-                      4,
-                      "assets/icons/lecturesicon.png",
-                      Color(0xff3f4654),
-                      0)),
+              Expanded(child: func(details.studentEnrolled, translate("Students_"), 1, "assets/icons/studentsicon.png", Color(0xff3f4654), 0)),
+              Expanded(child: func(details.review == null ? "0" : getRating(details.review), translate("Rating_"), 2, "assets/icons/star_icon.png", Color(0xff3f4654), 0)),
+              Expanded(child: func(details.course.courseclass.length.toDouble(), translate("Lecture_"), 4, "assets/icons/lecturesicon.png", Color(0xff3f4654), 0)),
             ],
           ),
         )
@@ -548,14 +440,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
     );
   }
 
-  SliverAppBar appB(String category, FullCourse details,
-      List<String> markedChpIds, bool isPur) {
+  SliverAppBar appB(String category, FullCourse details, List<String> markedChpIds, bool isPur) {
     return SliverAppBar(
       elevation: 0,
       backgroundColor: Color(0xff29303b),
       centerTitle: true,
       title: Text(
-        "$category",
+        category == null ? 'Course' : "$category",
         style: TextStyle(fontSize: 16.0),
       ),
       leading: IconButton(
@@ -587,8 +478,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 12.0),
         height: 50.0,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -601,18 +491,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
               child: Container(
                 width: MediaQuery.of(context).size.width / 2 - 12,
                 height: 50.0,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15.0),
-                        topLeft: Radius.circular(15.0))),
+                decoration: BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15.0), topLeft: Radius.circular(15.0))),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
                     translate("LESSON_"),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color:
-                          tabIndex == 0 ? Color(0xfff44a4a) : Colors.grey[600],
+                      color: tabIndex == 0 ? Color(0xfff44a4a) : Colors.grey[600],
                     ),
                   ),
                 ),
@@ -636,11 +522,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                   alignment: Alignment.center,
                   child: Text(
                     translate("OVERVIEW_"),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: tabIndex == 1
-                            ? Color(0xfff44a4a)
-                            : Colors.grey[600]),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: tabIndex == 1 ? Color(0xfff44a4a) : Colors.grey[600]),
                   ),
                 ),
               ),
@@ -651,16 +533,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
     );
   }
 
-  Widget scaffoldBody(
-      String category,
-      List<String> markedChpIds,
-      bool purchased,
-      String type,
-      String currency,
-      double progress,
-      List<Course> relatedCourses) {
-    var recentCoursesList =
-        Provider.of<RecentCourseProvider>(context).recentCourseList;
+  Widget scaffoldBody(String category, List<String> markedChpIds, bool purchased, String type, String currency, double progress, List<Course> relatedCourses) {
+    var recentCoursesList = Provider.of<RecentCourseProvider>(context).recentCourseList;
     return FutureBuilder(
       future: detail,
       builder: (context, snapshot) {
@@ -675,21 +549,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                 detailsSection(purchased, details, currency, progress),
 
                 // if course is not free
-                if (!purchased && type == "1")
-                  AddAndBuy(details.course.id, details.course.price, details,
-                      _scaffoldKey),
+                if (!purchased && type == "1") AddAndBuy(details.course.id, details.course.price, details, _scaffoldKey),
                 // if course is free
-                if (!purchased && type == "0")
-                  AddAndBuy(details.course.id, details.course.price, details,
-                      _scaffoldKey),
-                if (purchased)
-                  ResumeAndStart(details, markedChpIds, purchaseDate),
+                if (!purchased && type == "0") AddAndBuy(details.course.id, details.course.price, details, _scaffoldKey),
+                if (purchased) ResumeAndStart(details, markedChpIds, purchaseDate),
 
-                if (details.course.url != null && details.course.video == null)
-                  previewVideoPlayer(details.course.url),
-                if (details.course.url == null && details.course.video != null)
-                  previewVideoPlayer(
-                      APIData.previewVideoLink + details.course.video),
+                if (details.course.url != null && details.course.video == null) previewVideoPlayer(details.course.url),
+                if (details.course.url == null && details.course.video != null) previewVideoPlayer(APIData.previewVideoLink + details.course.video),
 
                 // what will you learn
                 if (details.course.whatlearns.length == 0)
@@ -698,8 +564,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                   )
                 else
                   SliverToBoxAdapter(
-                    child: headingTitle(translate("What_will_you_learn"),
-                        Color(0xff404455), 20),
+                    child: headingTitle(translate("What_will_you_learn"), Color(0xff404455), 20),
                   ),
 
                 whatWillYouLearn(details.course.whatlearns),
@@ -711,8 +576,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                   )
                 else
                   SliverToBoxAdapter(
-                    child:
-                        headingTitle(translate("Requirements_"), txtcolor, 20),
+                    child: headingTitle(translate("Requirements_"), txtcolor, 20),
                   ),
 
                 //requirement text
@@ -753,12 +617,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                 ),
 
                 if (tabIndex == 1)
-                  overview(
-                      details.course.detail, txtcolor, details.course.include)
+                  overview(details.course.detail, txtcolor, details.course.include)
                 else if (tabIndex == 0)
                   // Changed
-                  Lessons(details, purchased, markedChpIds, type != "1",
-                      purchaseDate),
+                  Lessons(details, purchased, markedChpIds, type != "1", purchaseDate),
 
                 //RecentCourses
                 relatedCourses.length == 0
@@ -790,16 +652,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                       )
                     : SliverToBoxAdapter(
                         child: Container(
-                          height: MediaQuery.of(context).size.height /
-                              (MediaQuery.of(context).orientation ==
-                                      Orientation.landscape
-                                  ? 1.5
-                                  : 2.5),
+                          height: MediaQuery.of(context).size.height / (MediaQuery.of(context).orientation == Orientation.landscape ? 1.5 : 2.5),
                           child: ListView.builder(
-                            padding: EdgeInsets.only(
-                                left: 18.0, bottom: 24.0, top: 5.0),
-                            itemBuilder: (context, idx) =>
-                                CourseListItem(recentCoursesList[idx], true),
+                            padding: EdgeInsets.only(left: 18.0, bottom: 24.0, top: 5.0),
+                            itemBuilder: (context, idx) => CourseListItem(recentCoursesList[idx], true),
                             scrollDirection: Axis.horizontal,
                             itemCount: recentCoursesList.length,
                           ),
@@ -812,12 +668,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(12.0, 25.0, 12.0, 5.0),
-                    child: Text(translate("About_The_Instructor"),
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff0083A4))),
+                    child: Text(translate("About_The_Instructor"), textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xff0083A4))),
                   ),
                 ),
 
@@ -825,14 +676,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                     future: getinstdetails,
                     builder: (context, snap) {
                       if (snap.hasData)
-                        return SliverToBoxAdapter(
-                            child: InstructorWidget(snap.data));
+                        return SliverToBoxAdapter(child: InstructorWidget(snap.data));
                       else
                         return SliverToBoxAdapter(
                           child: Center(
                             child: CircularProgressIndicator(
-                              valueColor:
-                                  new AlwaysStoppedAnimation<Color>(Colors.red),
+                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
                             ),
                           ),
                         );
@@ -851,16 +700,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                           backgroundColor: MaterialStateProperty.all<Color>(
                             Color(0xfff44a4a),
                           ),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                             ),
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return RateCourseScreen(
                               courseName: details.course.title,
                               courseId: details.course.id,
@@ -890,12 +737,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(translate("Student_FeedBack"),
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff0083A4))),
+                              Text(translate("Student_FeedBack"), textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xff0083A4))),
                               Container(
                                 padding: EdgeInsets.only(top: 5.0),
                                 width: 50.0,
@@ -907,20 +749,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                                 child: Text(
                                   getLength(details.review).toString(),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
                                 ),
                               )
                             ],
                           ),
                           Row(
                             children: [
-                              Text(getRating(details.review),
-                                  style: TextStyle(
-                                      fontSize: 27.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff404455))),
+                              Text(getRating(details.review), style: TextStyle(fontSize: 27.0, fontWeight: FontWeight.bold, color: Color(0xff404455))),
                               SizedBox(
                                 width: 20.0,
                               ),
@@ -936,13 +772,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                     ),
                   ),
                 if (details.review != null)
-                  SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (context, idx) => Studentfeedback(
-                              details.review[idx], details.course.id),
-                          childCount: details.review.length > 3
-                              ? 3
-                              : details.review.length))
+                  SliverList(delegate: SliverChildBuilderDelegate((context, idx) => Studentfeedback(details.review[idx], details.course.id), childCount: details.review.length > 3 ? 3 : details.review.length))
                 else
                   SliverToBoxAdapter(
                     child: SizedBox(
@@ -952,14 +782,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
 
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 12.0),
-                    child: Text(translate("Related_Courses"),
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff0083A4))),
+                    padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                    child: Text(translate("Related_Courses"), textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xff0083A4))),
                   ),
                 ),
                 SliverGrid(
@@ -979,9 +803,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                     height: 40,
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: showNativeBannerAd_(),
-                ),
+                // SliverToBoxAdapter(
+                //   child: showNativeBannerAd_(),
+                // ),
               ],
             ),
           );
@@ -1011,24 +835,19 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
         : SliverToBoxAdapter(
             child: Container(
               padding: EdgeInsets.all(10.0),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: VideoPlayerScreen(url)),
+              child: ClipRRect(borderRadius: BorderRadius.circular(10.0), child: VideoPlayerScreen(url)),
             ),
           );
   }
 
-  Widget detailsSection(
-      bool purchased, FullCourse details, String currency, double progress) {
+  Widget detailsSection(bool purchased, FullCourse details, String currency, double progress) {
     return SliverToBoxAdapter(
       child: Stack(children: [
         Container(
           height: MediaQuery.of(context).size.height / (5.5),
           color: Color(0xff29303b),
         ),
-        !purchased
-            ? unPurchasedCourseDetails(details, currency)
-            : purchasedCourseDetails(details, progress),
+        !purchased ? unPurchasedCourseDetails(details, currency) : purchasedCourseDetails(details, progress),
       ]),
     );
   }
@@ -1046,10 +865,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
     CoursesProvider course = Provider.of<CoursesProvider>(context);
     bool useAsInt = false;
     if (apiData.categoryId is int) useAsInt = true;
-    List<Course> allCategory = course.getCategoryCourses(
-        useAsInt ? apiData.categoryId : int.parse(apiData.categoryId));
-    var category = Provider.of<HomeDataProvider>(context).getCategoryName(
-        !useAsInt ? apiData.categoryId : apiData.categoryId.toString());
+    List<Course> allCategory = course.getCategoryCourses(useAsInt ? apiData.categoryId : int.parse(apiData.categoryId));
+    var category = Provider.of<HomeDataProvider>(context).getCategoryName(!useAsInt ? apiData.categoryId : apiData.categoryId.toString());
     double progress = 0.0;
     Progress allProgress;
     bool isProgressEmpty = false;

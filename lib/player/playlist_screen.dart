@@ -1133,14 +1133,14 @@ class _PlayListScreenState extends State<PlayListScreen> with WidgetsBindingObse
                 onTap: () {
                   liveClassAttendance(meetingType: "1", meetingId: zoomMeetings[i].id);
 
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => JoinWidget(
-                  //       meetingId: zoomMeetings[i].meetingId,
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => JoinWidget(
+                        meetingId: zoomMeetings[i].meetingId,
+                      ),
+                    ),
+                  );
                 },
               ),
             ],

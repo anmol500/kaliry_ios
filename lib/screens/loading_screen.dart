@@ -59,12 +59,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("assets/images/logo.png"),
-          ],
+        Image.asset(
+          "assets/images/logo.png",
+          fit: BoxFit.contain,
         ),
         SizedBox(
           height: 20,

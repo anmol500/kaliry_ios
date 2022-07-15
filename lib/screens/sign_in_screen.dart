@@ -24,8 +24,7 @@ class SignInScreen extends StatefulWidget {
   _SignInScreenState createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen>
-    with TickerProviderStateMixin {
+class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   int _duration;
   bool _visible = false;
@@ -47,23 +46,19 @@ class _SignInScreenState extends State<SignInScreen>
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      HomeDataProvider homeData =
-          Provider.of<HomeDataProvider>(context, listen: false);
+      HomeDataProvider homeData = Provider.of<HomeDataProvider>(context, listen: false);
       await homeData.getHomeDetails(context);
 
-      if (await storage.containsKey(key: 'selectedCurrency') &&
-          await storage.containsKey(key: 'selectedCurrencyRate')) {
+      if (await storage.containsKey(key: 'selectedCurrency') && await storage.containsKey(key: 'selectedCurrencyRate')) {
         selectedCurrency = await storage.read(key: 'selectedCurrency');
-        selectedCurrencyRate =
-            int.parse(await storage.read(key: 'selectedCurrencyRate'));
+        selectedCurrencyRate = int.parse(await storage.read(key: 'selectedCurrencyRate'));
       } else {
         selectedCurrency = homeData.homeModel.currency.currency;
         selectedCurrencyRate = 1;
       }
 
       // Loading Languages
-      LanguageProvider languageProvider =
-          Provider.of<LanguageProvider>(context, listen: false);
+      LanguageProvider languageProvider = Provider.of<LanguageProvider>(context, listen: false);
       await languageProvider.loadData(context, loadScreen: false);
       changeLocale(context, languageProvider.languageCode);
 
@@ -76,18 +71,13 @@ class _SignInScreenState extends State<SignInScreen>
 
     _duration = 1200;
 
-    animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: _duration));
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: _duration));
 
     animation = Tween<double>(begin: 0, end: -165).animate(animationController)
       ..addListener(() {
         setState(() {});
       });
-    _controllerB = AnimationController(
-        vsync: this,
-        lowerBound: 1.0,
-        upperBound: 1.20,
-        duration: Duration(milliseconds: 3000));
+    _controllerB = AnimationController(vsync: this, lowerBound: 1.0, upperBound: 1.20, duration: Duration(milliseconds: 3000));
 
     _controllerB.addListener(() {
       setState(() {
@@ -102,14 +92,13 @@ class _SignInScreenState extends State<SignInScreen>
     super.initState();
   }
 
-// Alert dialog after clicking on login button
+  // Alert dialog after clicking on login button
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       content: new Row(
         children: [
           CircularProgressIndicator(),
-          Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Signing In ...")),
+          Container(margin: EdgeInsets.only(left: 7), child: Text("Signing In ...")),
         ],
       ),
     );
@@ -122,8 +111,8 @@ class _SignInScreenState extends State<SignInScreen>
     );
   }
 
-// Logo on login page
-  Widget logo(String img) {
+  // Logo on login page
+  Widget logo() {
     return Container(
       margin: EdgeInsets.only(top: 50.0),
       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 60.0),
@@ -150,8 +139,7 @@ class _SignInScreenState extends State<SignInScreen>
           padding: EdgeInsets.all(15.0),
           child: Text(
             "Sign In",
-            style: TextStyle(
-                fontFamily: "Mada", fontSize: 22.0, color: Color(0xFF181632)),
+            style: TextStyle(fontFamily: "Mada", fontSize: 22.0, color: Color(0xFF181632)),
           ),
           color: Colors.white,
           disabledColor: Colors.white.withOpacity(0.5),
@@ -159,11 +147,7 @@ class _SignInScreenState extends State<SignInScreen>
               ? () async {
                   FocusScope.of(context).requestFocus(FocusNode());
                   showLoaderDialog(context);
-                  bool login = await httpService.login(
-                      userDetails.getEmail.value,
-                      userDetails.getPass.value,
-                      context,
-                      scaffoldKey);
+                  bool login = await httpService.login(userDetails.getEmail.value, userDetails.getPass.value, context, scaffoldKey);
                   Navigator.pop(context);
                   if (login) {
                     userDetails.destroyLoginValues();
@@ -191,8 +175,7 @@ class _SignInScreenState extends State<SignInScreen>
     if (result.status == LoginStatus.success) {
       final AccessToken accessToken = result.accessToken;
 
-      var graphResponse = await http.get(Uri.parse(
-          'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,picture.height(200)&access_token=${accessToken.token}'));
+      var graphResponse = await http.get(Uri.parse('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,picture.height(200)&access_token=${accessToken.token}'));
 
       var profile = json.decode(graphResponse.body);
       setState(() {
@@ -240,8 +223,7 @@ class _SignInScreenState extends State<SignInScreen>
       await storage.write(key: "token", value: "$authToken");
       await storage.write(key: "refreshToken", value: "$refreshToken");
       authToken = await storage.read(key: "token");
-      HomeDataProvider homeData =
-          Provider.of<HomeDataProvider>(context, listen: false);
+      HomeDataProvider homeData = Provider.of<HomeDataProvider>(context, listen: false);
       await homeData.getHomeDetails(context);
       Navigator.pushReplacement(
         context,
@@ -272,8 +254,7 @@ class _SignInScreenState extends State<SignInScreen>
               title: Row(
                 children: [
                   CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).backgroundColor),
+                    valueColor: new AlwaysStoppedAnimation<Color>(Theme.of(context).backgroundColor),
                   ),
                   SizedBox(
                     width: 15.0,
@@ -323,8 +304,7 @@ class _SignInScreenState extends State<SignInScreen>
                       print("ID : " + code);
 
                       goToDialog();
-                      socialLogin(APIData.googleLoginApi, email, password, code,
-                          name, "uid");
+                      socialLogin(APIData.googleLoginApi, email, password, code, name, "uid");
                     }
                   });
                 },
@@ -374,8 +354,7 @@ class _SignInScreenState extends State<SignInScreen>
                       print("ID : " + code);
 
                       goToDialog();
-                      socialLogin(APIData.googleLoginApi, email, password, code,
-                          name, "uid");
+                      socialLogin(APIData.googleLoginApi, email, password, code, name, "uid");
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -402,33 +381,33 @@ class _SignInScreenState extends State<SignInScreen>
     );
   }
 
-  Widget fbLoginButton(width, scaffoldKey) {
-    var userDetails = Provider.of<UserDetailsProvider>(context, listen: false);
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        children: [
-          Expanded(
-              child: ButtonTheme(
-            height: 52.0,
-            child: RaisedButton.icon(
-                color: Color(0xFF4267B2),
-                icon: Icon(
-                  FontAwesomeIcons.facebook,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  "Sign in with Facebook",
-                  style: TextStyle(color: Colors.white, fontSize: 18.0),
-                ),
-                onPressed: () async {
-                  initiateFacebookLogin();
-                }),
-          )),
-        ],
-      ),
-    );
-  }
+  // Widget fbLoginButton(width, scaffoldKey) {
+  //   var userDetails = Provider.of<UserDetailsProvider>(context, listen: false);
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(horizontal: 8.0),
+  //     child: Row(
+  //       children: [
+  //         Expanded(
+  //             child: ButtonTheme(
+  //           height: 52.0,
+  //           child: RaisedButton.icon(
+  //               color: Color(0xFF4267B2),
+  //               icon: Icon(
+  //                 FontAwesomeIcons.facebook,
+  //                 color: Colors.white,
+  //               ),
+  //               label: Text(
+  //                 "Sign in with Facebook",
+  //                 style: TextStyle(color: Colors.white, fontSize: 18.0),
+  //               ),
+  //               onPressed: () async {
+  //                 initiateFacebookLogin();
+  //               }),
+  //         )),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   //  Sign up row
   Widget signUpRow() {
@@ -460,8 +439,7 @@ class _SignInScreenState extends State<SignInScreen>
             child: InkWell(
               child: Text(
                 "Sign Up",
-                style: TextStyle(
-                    fontFamily: "Mada", fontSize: 16, color: Colors.white),
+                style: TextStyle(fontFamily: "Mada", fontSize: 16, color: Colors.white),
               ),
               onTap: () {
                 return Navigator.of(context).pushNamed('/signUp');
@@ -474,27 +452,21 @@ class _SignInScreenState extends State<SignInScreen>
   //  Login View
   Widget loginFields(homeAPIData, scaffoldKey) {
     var width = MediaQuery.of(context).size.width;
-    var fb = Provider.of<HomeDataProvider>(context, listen: false)
-        .homeModel
-        .settings
-        .fbLoginEnable;
-    var googleLogin = Provider.of<HomeDataProvider>(context, listen: false)
-        .homeModel
-        .settings
-        .googleLoginEnable;
-    var guestLogin = Provider.of<HomeDataProvider>(context, listen: false)
-        .homeModel
-        .settings
-        .guestEnable;
+    var fb = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.fbLoginEnable;
+    var googleLogin = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.googleLoginEnable;
+    var guestLogin = Provider.of<HomeDataProvider>(context, listen: false).homeModel.settings.guestEnable;
     return Container(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            logo(homeAPIData.homeModel.settings.logo),
+            Image.asset(
+              "assets/images/logologin.png",
+              scale: 1.5,
+            ),
             SizedBox(
-              height: 30,
+              height: 80,
             ),
             EmailField(),
             SizedBox(
@@ -506,25 +478,19 @@ class _SignInScreenState extends State<SignInScreen>
             ),
             signInButton(width, scaffoldKey),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
-            "$googleLogin" == "1" || googleLogin == 1
-                ? googleLoginButton(width, scaffoldKey)
-                : SizedBox.shrink(),
+            "$googleLogin" == "1" || googleLogin == 1 ? googleLoginButton(width, scaffoldKey) : SizedBox.shrink(),
             SizedBox(
               height: 15,
             ),
-            "$fb" == "1"
-                ? fbLoginButton(width, scaffoldKey)
-                : SizedBox.shrink(),
+            // "$fb" == "1" ? fbLoginButton(width, scaffoldKey) : SizedBox.shrink(),
+            // SizedBox(
+            //   height: 15.0,
+            // ),
+            // guestLogin == "1" ? guestLoginButton(width, scaffoldKey) : SizedBox.shrink(),
             SizedBox(
-              height: 15.0,
-            ),
-            guestLogin == "1"
-                ? guestLoginButton(width, scaffoldKey)
-                : SizedBox.shrink(),
-            SizedBox(
-              height: 30.0,
+              height: 10.0,
             ),
             signUpRow(),
             SizedBox(
@@ -545,10 +511,7 @@ class _SignInScreenState extends State<SignInScreen>
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Forgot Password?",
-                      style: TextStyle(
-                          fontFamily: "Mada",
-                          fontSize: 14,
-                          color: Colors.white),
+                      style: TextStyle(fontFamily: "Mada", fontSize: 14, color: Colors.white),
                     ),
                   ),
                   onTap: () {
@@ -561,10 +524,7 @@ class _SignInScreenState extends State<SignInScreen>
                 padding: EdgeInsets.all(25.0),
                 child: Text(
                   homeAPIData.homeModel.settings.cpyTxt,
-                  style: TextStyle(
-                      fontFamily: "Mada",
-                      color: Colors.white.withOpacity(0.5),
-                      height: 1.5),
+                  style: TextStyle(fontFamily: "Mada", color: Colors.white.withOpacity(0.5), height: 1.5),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -600,20 +560,16 @@ class _SignInScreenState extends State<SignInScreen>
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    stops: [
-                      0.0,
-                      0.20,
-                      0.28,
-                      0.60
-                    ],
-                    colors: [
-                      Color(0xFF181632).withOpacity(0.3),
-                      Color(0xFF181632).withOpacity(0.7),
-                      Color(0xFF181632).withOpacity(0.9),
-                      Color(0xFF181632)
-                    ]),
+                  begin: Alignment.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                  stops: [0.0, 0.20, 0.45, 0.70],
+                  colors: [
+                    Color(0xFF181632).withOpacity(0.2),
+                    Color(0xFF181632).withOpacity(0.7),
+                    Color(0xFF181632).withOpacity(0.9),
+                    Color(0xFF181632),
+                  ],
+                ),
               ),
             ),
           ]),
@@ -627,9 +583,7 @@ class _SignInScreenState extends State<SignInScreen>
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Container(
-          height: MediaQuery.of(context).orientation == Orientation.landscape
-              ? 1.6 * MediaQuery.of(context).size.height
-              : MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).orientation == Orientation.landscape ? 1.6 * MediaQuery.of(context).size.height : MediaQuery.of(context).size.height,
           padding: EdgeInsets.all(16),
           child: Align(
             alignment: FractionalOffset.bottomCenter,
@@ -677,8 +631,7 @@ class _SignInScreenState extends State<SignInScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Color(0xFFF44A4A)),
+                            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF44A4A)),
                           ),
                         ],
                       )
@@ -695,16 +648,12 @@ class _SignInScreenState extends State<SignInScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         contentPadding: EdgeInsets.only(top: 5.0, left: 20.0, bottom: 0.0),
         title: Text(
           'Confirm Exit',
           textAlign: TextAlign.start,
-          style: TextStyle(
-              fontFamily: 'Mada',
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF0284A2)),
+          style: TextStyle(fontFamily: 'Mada', fontWeight: FontWeight.w700, color: Color(0xFF0284A2)),
         ),
         content: Text(
           'Are you sure that you want to exit',
@@ -717,8 +666,7 @@ class _SignInScreenState extends State<SignInScreen>
               },
               child: Text(
                 "Cancel".toUpperCase(),
-                style: TextStyle(
-                    color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
+                style: TextStyle(color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
               )),
           FlatButton(
               onPressed: () {
@@ -727,8 +675,7 @@ class _SignInScreenState extends State<SignInScreen>
               },
               child: Text(
                 "Yes".toUpperCase(),
-                style: TextStyle(
-                    color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
+                style: TextStyle(color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
               )),
         ],
       ),

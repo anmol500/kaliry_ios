@@ -1,5 +1,6 @@
 import 'package:eclass/common/global.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'edit_profile.dart';
 import '../model/user_profile_model.dart';
 import '../provider/visible_provider.dart';
@@ -18,38 +19,39 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   //Widget to render one support tile
   Widget supportTile(idx, icons, title, Color txtColor) {
-    return ListTile(
-      leading: Container(
-        width: 40,
-        height: 43,
-        decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
-        alignment: Alignment.center,
-        child: Icon(
-          icons,
-          size: 15,
-          color: Color(0xffb4bac6),
+    return GestureDetector(
+      onTap: () {
+        if (idx == 1) {
+          Navigator.pushNamed(context, "/aboutUs");
+        } else if (idx == 2) {
+          Navigator.pushNamed(context, "/contactUs");
+        } else if (idx == 3) {
+          Navigator.pushNamed(context, "/userFaq");
+        } else if (idx == 4) {
+          launchUrl(Uri.parse('https://kaliry.com/terms_condition'));
+        } else if (idx == 5) {
+          launchUrl(Uri.parse('https://kaliry.com/privacy_policy'));
+        }
+      },
+      child: ListTile(
+        leading: Container(
+          width: 40,
+          height: 43,
+          decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
+          alignment: Alignment.center,
+          child: Icon(
+            icons,
+            size: 15,
+            color: Color(0xffb4bac6),
+          ),
         ),
+        title: Text(
+          title,
+          maxLines: 2,
+          style: TextStyle(fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
+        ),
+        trailing: Icon(Icons.keyboard_arrow_right),
       ),
-      title: Text(
-        title,
-        maxLines: 2,
-        style: TextStyle(fontSize: 18.3, fontWeight: FontWeight.w600, color: txtColor),
-      ),
-      trailing: IconButton(
-          icon: Icon(Icons.keyboard_arrow_right),
-          onPressed: () {
-            if (idx == 0) {
-              Navigator.pushNamed(context, "/becameInstructor");
-            } else if (idx == 1) {
-              Navigator.pushNamed(context, "/aboutUs");
-            } else if (idx == 2) {
-              Navigator.pushNamed(context, "/contactUs");
-            } else if (idx == 3) {
-              Navigator.pushNamed(context, "/userFaq");
-            } else if (idx == 4) {
-              Navigator.pushNamed(context, "/instructorFaq");
-            }
-          }),
     );
   }
 
@@ -108,11 +110,11 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
         child: Column(
           children: [
-            supportTile(0, FontAwesomeIcons.questionCircle, translate("Become_an_Instructor"), txtColor),
-            supportTile(1, FontAwesomeIcons.shieldVirus, translate("About_Us"), txtColor),
+            // supportTile(1, FontAwesomeIcons.shieldVirus, translate("About_Us"), txtColor),
             supportTile(2, FontAwesomeIcons.facebookMessenger, translate("Contact_Us"), txtColor),
             supportTile(3, FontAwesomeIcons.handsHelping, translate("FAQ_"), txtColor),
-            supportTile(4, FontAwesomeIcons.handsHelping, translate("Instructor_FAQ"), txtColor),
+            supportTile(4, FontAwesomeIcons.fileCircleCheck, 'Terms And Conditions', txtColor),
+            supportTile(5, FontAwesomeIcons.solidCircleCheck, 'Privacy Policy', txtColor),
           ],
         ));
   }

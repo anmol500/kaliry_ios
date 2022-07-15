@@ -29,16 +29,11 @@ class CourseGridItem extends StatelessWidget {
   String getRating(List<Review> data) {
     double ans = 0.0;
     bool calcAsInt = true;
-    if (data.length > 0)
-      calcAsInt = checkDatatype(data[0].learn) == 0 ? true : false;
+    if (data.length > 0) calcAsInt = checkDatatype(data[0].learn) == 0 ? true : false;
 
     data.forEach((element) {
       if (!calcAsInt)
-        ans += (int.parse(element.price) +
-                    int.parse(element.value) +
-                    int.parse(element.learn))
-                .toDouble() /
-            3.0;
+        ans += (int.parse(element.price) + int.parse(element.value) + int.parse(element.learn)).toDouble() / 3.0;
       else {
         ans += (element.price + element.value + element.learn) / 3.0;
       }
@@ -47,23 +42,19 @@ class CourseGridItem extends StatelessWidget {
     return (ans / data.length).toStringAsPrecision(2);
   }
 
-  Widget itemDetails(BuildContext context, bool isPurchased, String currency,
-      String rating, String category) {
+  Widget itemDetails(BuildContext context, bool isPurchased, String currency, String rating, String category) {
     return Material(
         borderRadius: BorderRadius.circular(10.0),
         child: InkWell(
           borderRadius: BorderRadius.circular(10.0),
           onTap: () {
             Course details = courseDetail;
-            Navigator.of(context).pushNamed("/courseDetails",
-                arguments: DataSend(details.userId, isPurchased, details.id,
-                    details.categoryId, details.type));
+            Navigator.of(context).pushNamed("/courseDetails", arguments: DataSend(details.userId, isPurchased, details.id, details.categoryId, details.type));
           },
           child: Container(
             height: 360,
             width: MediaQuery.of(context).size.width / 3.5,
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
             child: Column(
               children: [
                 Expanded(
@@ -75,12 +66,10 @@ class CourseGridItem extends StatelessWidget {
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(
-                            imageUrl:
-                                "${APIData.courseImages}${courseDetail.previewImage}",
+                            imageUrl: "${APIData.courseImages}${courseDetail.previewImage}",
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(10.0)),
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
                                 image: DecorationImage(
                                   image: imageProvider,
                                   fit: BoxFit.cover,
@@ -101,8 +90,7 @@ class CourseGridItem extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
                     child: Column(
                       children: [
                         Row(
@@ -111,7 +99,7 @@ class CourseGridItem extends StatelessWidget {
                             Container(
                               width: 70,
                               child: Text(
-                                category,
+                                category == 'N/A' ? 'Course' : category,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -121,28 +109,21 @@ class CourseGridItem extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            if (courseDetail.discountPrice != null.toString() &&
-                                courseDetail.discountPrice != null)
+                            if (courseDetail.discountPrice != null.toString() && courseDetail.discountPrice != null)
                               Text(
                                 "${(num.parse(courseDetail.discountPrice.toString()) * selectedCurrencyRate)} $selectedCurrency",
-                                style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                               )
                             else
                               SizedBox.shrink(),
                           ],
                         ),
-                        if (courseDetail.price != null.toString() &&
-                            courseDetail.price != null)
+                        if (courseDetail.price != null.toString() && courseDetail.price != null)
                           Align(
                             alignment: Alignment.topRight,
                             child: Text(
                               "${(num.parse(courseDetail.price.toString()) * selectedCurrencyRate)} $selectedCurrency",
-                              style: TextStyle(
-                                  decoration: TextDecoration.lineThrough,
-                                  fontSize: 13.0,
-                                  color: Colors.grey),
+                              style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 13.0, color: Colors.grey),
                             ),
                           )
                         else
@@ -156,8 +137,7 @@ class CourseGridItem extends StatelessWidget {
                           courseDetail.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 17),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                         ),
                         SizedBox(
                           height: 2.0,
@@ -176,8 +156,7 @@ class CourseGridItem extends StatelessWidget {
                           children: [
                             Text(
                               translate("by_admin"),
-                              style:
-                                  TextStyle(fontSize: 14.0, color: Colors.grey),
+                              style: TextStyle(fontSize: 14.0, color: Colors.grey),
                             ),
                             StarRating(
                               rating: double.parse(rating),
@@ -197,13 +176,10 @@ class CourseGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String currency =
-        Provider.of<HomeDataProvider>(context).homeModel.currency.currency;
-    String category = Provider.of<HomeDataProvider>(context)
-        .getCategoryName(courseDetail.categoryId);
+    String currency = Provider.of<HomeDataProvider>(context).homeModel.currency.currency;
+    String category = Provider.of<HomeDataProvider>(context).getCategoryName(courseDetail.categoryId);
     if (category == null) category = "N/A";
-    bool isPurchased =
-        Provider.of<CoursesProvider>(context).isPurchased(courseDetail.id);
+    bool isPurchased = Provider.of<CoursesProvider>(context).isPurchased(courseDetail.id);
     T.Theme mode = Provider.of<T.Theme>(context);
     if (idx % 2 == 0)
       edgeInsets = EdgeInsets.only(left: 8.0);
@@ -214,13 +190,7 @@ class CourseGridItem extends StatelessWidget {
       margin: edgeInsets,
       decoration: BoxDecoration(
         color: mode.tilecolor,
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x1c2464).withOpacity(0.30),
-              blurRadius: 16.0,
-              offset: Offset(-13.0, 20.5),
-              spreadRadius: -15.0)
-        ],
+        boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 16.0, offset: Offset(-13.0, 20.5), spreadRadius: -15.0)],
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: itemDetails(context, isPurchased, currency, rating, category),

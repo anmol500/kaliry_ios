@@ -23,15 +23,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  facebook_audience_network: ^1.0.1
+
   intl_phone_number_input: ^0.7.0+2
   package_info: ^2.0.2
   upi_india: ^3.0.1
   share: ^2.0.4
   flutter_carousel_slider: ^1.0.9
-  flutter_facebook_auth: ^4.3.4+2
+
   cashfree_pg: ^2.0.10+30
-  wakelock: ^0.6.1+2
+  wakelock: ^0.5.6
   flutterwave_payment: ^0.0.4+2
   sqflite: ^2.0.3
   path: ^1.8.1
@@ -64,7 +64,7 @@ dependencies:
   youtube_player_flutter: ^8.1.0
   shimmer: ^2.0.0
   dio: ^4.0.0
-  flutter_widget_from_html: ^0.8.5
+  flutter_widget_from_html: ^0.7.0
   http_auth: ^1.0.1
   auto_size_text: ^3.0.0
   html_unescape: ^2.0.0
@@ -72,7 +72,8 @@ dependencies:
   paytm: ^3.0.1
   youtube_player_iframe: ^2.3.0
   flutter_inappwebview: ^5.4.3+7
-  better_player: 0.0.83
+  better_player:
+    path: local/better_player-0.0.79
   webview_flutter: ^3.0.4
   firebase_core: ^1.19.1
   firebase_auth: ^3.4.1
@@ -82,11 +83,10 @@ dependencies:
   permission_handler: ^10.0.0
   audioplayers: ^1.0.1
   flutter_zoom_sdk: ^1.1.0+4
-
   cupertino_icons: ^1.0.5
 
 dev_dependencies:
-  change_app_package_name: ^1.0.0
+  change_app_package_name: ^1.1.0
   flutter_launcher_icons: ^0.9.3
 
 

@@ -87,7 +87,7 @@ class ImageSwiper extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15.0),
                   image: DecorationImage(
                     image: imageProvider,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),

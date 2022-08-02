@@ -10,6 +10,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../common/theme.dart' as T;
 import 'package:intl/intl.dart';
 
@@ -217,14 +218,17 @@ class _ZoomMeetingListState extends State<ZoomMeetingList> {
                                           onPressed: () {
                                             liveClassAttendance(meetingType: "1", meetingId: zoomMeetingList[index].id);
 
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => JoinWidget(
-                                                  meetingId: zoomMeetingList[index].meetingId,
-                                                ),
-                                              ),
-                                            );
+                                            print(zoomMeetingList[index].zoomUrl);
+                                            // launchUrl(Uri.parse(zoomMeetingList[index].zoomUrl));
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) => JoinWidget(
+                                            //       meetingId: zoomMeetingList[index].meetingId,
+                                            //       url: zoomMeetingList[index].zoomUrl,
+                                            //     ),
+                                            //   ),
+                                            // );
                                           },
                                           child: Text(
                                             translate("Join_Meeting"),

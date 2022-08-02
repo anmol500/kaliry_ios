@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:eclass/Widgets/zoom_meeting_list.dart';
-import 'package:eclass/common/facebook_ads.dart';
-import 'package:eclass/localization/language_provider.dart';
+ import 'package:eclass/localization/language_provider.dart';
 import 'package:eclass/provider/home_data_provider.dart';
 import 'package:eclass/provider/recent_course_provider.dart';
 import 'package:eclass/provider/wish_list_provider.dart';
@@ -322,9 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           : FeaturedCoursesList(featuredCoursesList, _visible),
 
-      SliverToBoxAdapter(
-        child: showBannerAd_(),
-      ),
+
 
       bundleCourses.length == 0
           ? SliverToBoxAdapter(

@@ -232,7 +232,9 @@ class _SettingScreenState extends State<SettingScreen> {
               Provider.of<Visible>(context, listen: false).toggleVisible(false);
               Navigator.of(context).pushNamed('/SignIn');
             } else {
-              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
+              Provider.of<Visible>(context, listen: false).toggleVisible(false);
+              Navigator.of(context).pushNamed('/SignIn');
+              // _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
             }
           },
           child: logoutLoading

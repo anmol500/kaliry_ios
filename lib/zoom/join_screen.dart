@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:eclass/Widgets/appbar.dart';
 import 'package:eclass/provider/user_profile.dart';
-import 'package:eclass/zoom/zoom_meeting_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -15,8 +14,9 @@ import '../common/apidata.dart';
 import '../common/theme.dart' as T;
 
 class JoinWidget extends StatefulWidget {
-  JoinWidget({this.meetingId});
+  JoinWidget({this.meetingId, this.url});
   String meetingId;
+  String url;
   @override
   _JoinWidgetState createState() => _JoinWidgetState();
 }
@@ -44,7 +44,7 @@ class _JoinWidgetState extends State<JoinWidget> {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: TextFormField(
                   readOnly: true,
-                  obscureText: true,
+                  obscureText: false,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -150,7 +150,9 @@ class _JoinWidgetState extends State<JoinWidget> {
           noDisconnectAudio: "false");
 
       var zoom = ZoomView();
+
       zoom.initZoom(zoomOptions).then((results) {
+        print(results);
         if (results[0] == 0) {
           zoom.onMeetingStatus().listen((status) {
             if (kDebugMode) {
@@ -167,6 +169,7 @@ class _JoinWidgetState extends State<JoinWidget> {
             print("listen on event channel");
           }
           zoom.joinMeeting(meetingOptions).then((joinMeetingResult) {
+            print(joinMeetingResult);
             timer = Timer.periodic(const Duration(seconds: 2), (timer) {
               zoom.meetingStatus(meetingOptions.meetingId).then((status) {
                 if (kDebugMode) {

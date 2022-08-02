@@ -11,15 +11,13 @@ import 'my_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDownloader.initialize(
-      debug: true // optional: set false to disable printing logs to console
+  await FlutterDownloader.initialize(debug: true // optional: set false to disable printing logs to console
       );
   await Firebase.initializeApp();
   WidgetsFlutterBinding.ensureInitialized();
   authToken = await storage.read(key: "token");
 
-  var delegate = await LocalizationDelegate.create(
-      fallbackLocale: 'en', supportedLocales: ['en', 'ar', 'ur', 'hi']);
+  var delegate = await LocalizationDelegate.create(fallbackLocale: 'en', supportedLocales: ['en', 'ar', 'ur', 'hi']);
 
   // HttpOverrides.global = new MyHttpOverrides();
 

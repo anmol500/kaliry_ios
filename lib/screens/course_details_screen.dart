@@ -21,8 +21,7 @@ import '../Widgets/instructorwidget.dart';
 import '../Widgets/lessons.dart';
 import '../Widgets/utils.dart';
 import '../common/apidata.dart';
-import '../common/facebook_ads.dart';
-import '../common/theme.dart' as T;
+ import '../common/theme.dart' as T;
 import '../model/course.dart';
 import '../model/course_with_progress.dart';
 import '../model/include.dart';
@@ -244,7 +243,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with TickerProv
     DataSend apiData = ModalRoute.of(context).settings.arguments;
     detail = getCourseDetails(apiData.id);
     getinstdetails = getinstdata(apiData.userId);
-    loadInterstitialAd().then((value) => showInterstitialAd_());
+
     super.didChangeDependencies();
   }
 
@@ -661,9 +660,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with TickerProv
                           ),
                         ),
                       ),
-                SliverToBoxAdapter(
-                  child: showBannerAd_(),
-                ),
+
                 //AboutTheInstructor
                 SliverToBoxAdapter(
                   child: Padding(

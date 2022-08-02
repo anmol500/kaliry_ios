@@ -1,19 +1,5 @@
 class ZoomMeeting {
-  ZoomMeeting(
-      {this.id,
-      this.meetingId,
-      this.userId,
-      this.ownerId,
-      this.meetingTitle,
-      this.startTime,
-      this.zoomUrl,
-      this.linkBy,
-      this.courseId,
-      this.createdAt,
-      this.updatedAt,
-      this.type,
-      this.agenda,
-      this.image});
+  ZoomMeeting({this.id, this.meetingId, this.userId, this.ownerId, this.meetingTitle, this.startTime, this.zoomUrl, this.linkBy, this.courseId, this.createdAt, this.updatedAt, this.type, this.agenda, this.image});
 
   int id;
   String meetingId;
@@ -40,9 +26,7 @@ class ZoomMeeting {
         zoomUrl: json["zoom_url"],
         linkBy: json["link_by"] == null ? null : json["link_by"],
         courseId: json["course_id"] == null ? null : json["course_id"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         type: json["type"] == null ? null : json["type"],
         agenda: json["agenda"] == null ? null : json["agenda"],

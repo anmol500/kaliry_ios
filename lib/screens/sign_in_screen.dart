@@ -4,9 +4,7 @@ import 'package:eclass/common/global.dart';
 import 'package:eclass/localization/language_provider.dart';
 import 'package:eclass/services/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../provider/home_data_provider.dart';
 import 'bottom_navigation_screen.dart';
@@ -51,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
 
       if (await storage.containsKey(key: 'selectedCurrency') && await storage.containsKey(key: 'selectedCurrencyRate')) {
         selectedCurrency = await storage.read(key: 'selectedCurrency');
-        selectedCurrencyRate = int.parse(await storage.read(key: 'selectedCurrencyRate'));
+        selectedCurrencyRate = int.parse(await storage.read(key: 'selectedCurrencyRate') ?? '1');
       } else {
         selectedCurrency = homeData.homeModel.currency.currency;
         selectedCurrencyRate = 1;
@@ -89,6 +87,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
       animationController.forward();
       _controllerB.forward(from: 0.0);
     });
+
     super.initState();
   }
 
@@ -169,38 +168,6 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
     );
   }
 
-  void initiateFacebookLogin() async {
-    final LoginResult result = await FacebookAuth.instance.login();
-
-    if (result.status == LoginStatus.success) {
-      final AccessToken accessToken = result.accessToken;
-
-      var graphResponse = await http.get(Uri.parse('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,picture.height(200)&access_token=${accessToken.token}'));
-
-      var profile = json.decode(graphResponse.body);
-      setState(() {
-        isShowing = true;
-      });
-      var name = profile['name'];
-      var email = profile['email'];
-      var code = profile['id'];
-      var password = "password";
-
-      print("++Facebook SignIn++");
-      print("Name : " + name);
-      print("Email : " + email);
-      print("ID : " + code);
-
-      goToDialog();
-      socialLogin(APIData.fbLoginAPI, email, password, code, name, "code");
-
-      onLoginStatusChanged(true, profileData: profile);
-    } else {
-      print(result.status);
-      print(result.message);
-    }
-  }
-
   void onLoginStatusChanged(bool isLoggedIn, {profileData}) {
     setState(() {
       this.isLoggedIn = isLoggedIn;
@@ -238,7 +205,11 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
         isShowing = false;
       });
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Error in login");
+      scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("Please Login With Username And Password"),
+        action: SnackBarAction(label: "ok", onPressed: () {}),
+      ));
+      // Fluttertoast.showToast(msg: "Please Login With Username And Password");
     }
     return null;
   }
@@ -301,6 +272,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                       print("++Google SignIn++");
                       print("Name : " + name);
                       print("Email : " + email);
+                      print("Password : " + password);
                       print("ID : " + code);
 
                       goToDialog();
@@ -461,6 +433,9 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            SizedBox(
+              height: 50,
+            ),
             Image.asset(
               "assets/images/logologin.png",
               scale: 1.5,
@@ -484,6 +459,22 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
             SizedBox(
               height: 15,
             ),
+
+            // SignInWithAppleButton(
+            //   onPressed: () async {
+            //     final credential = await SignInWithApple.getAppleIDCredential(
+            //       scopes: [
+            //         AppleIDAuthorizationScopes.email,
+            //         AppleIDAuthorizationScopes.fullName,
+            //       ],
+            //     );
+            //
+            //     print(credential);
+            //
+            //     // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+            //     // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+            //   },
+            // ),
             // "$fb" == "1" ? fbLoginButton(width, scaffoldKey) : SizedBox.shrink(),
             // SizedBox(
             //   height: 15.0,
@@ -528,7 +519,10 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                   textAlign: TextAlign.center,
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 100,
+            ),
           ],
         ),
       ),
@@ -562,9 +556,9 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: FractionalOffset.bottomCenter,
-                  stops: [0.0, 0.20, 0.45, 0.70],
+                  stops: [0.0, 0.25, 0.45, 0.70],
                   colors: [
-                    Color(0xFF181632).withOpacity(0.2),
+                    Color(0xFF181632).withOpacity(0.03),
                     Color(0xFF181632).withOpacity(0.7),
                     Color(0xFF181632).withOpacity(0.9),
                     Color(0xFF181632),
@@ -616,12 +610,8 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/images/logo.png"),
-                        ],
+                      Image.asset(
+                        "assets/images/logo.png",
                       ),
                       SizedBox(
                         height: 20,

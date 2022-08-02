@@ -91,10 +91,9 @@ class HttpService {
       HomeDataProvider homeData =
           Provider.of<HomeDataProvider>(context, listen: false);
       await homeData.getHomeDetails(context);
-    }
-    if (res.statusCode == 200) {
       return true;
-    } else {
+    }
+   else {
       if (res.statusCode == 402) {
         _scaffoldKey.currentState.showSnackBar(SnackBar(
           content: Text("Verify email to continue."),
@@ -102,8 +101,9 @@ class HttpService {
         ));
         return false;
       } else {
+
         _scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text("Login Failed!"),
+          content: Text("Username or Password is Wrong"),
           action: SnackBarAction(label: "ok", onPressed: () {}),
         ));
         return false;

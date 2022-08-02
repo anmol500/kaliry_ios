@@ -5,8 +5,7 @@ import 'package:eclass/provider/recent_course_provider.dart';
 import 'package:eclass/provider/watchlist_provider.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../common/facebook_ads.dart';
-import '../provider/home_data_provider.dart';
+ import '../provider/home_data_provider.dart';
 import 'cart_screen.dart';
 import 'courses_screen.dart';
 import 'settings_screen.dart';
@@ -92,7 +91,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       getHomePageData();
     });
 
-    initializeFBAd();
+
   }
 
   Future<bool> onBackPressed() {

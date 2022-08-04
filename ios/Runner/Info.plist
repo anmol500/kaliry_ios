@@ -65,6 +65,8 @@
 	<string>$(PRODUCT_NAME) MyApp needs access to your microphone for meetings.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo Library Access To Get Profile Photo</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

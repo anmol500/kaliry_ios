@@ -87,41 +87,22 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
       );
     } catch (e) {
       print('Exception : $e');
-      Fluttertoast.showToast(
-          msg: translate("Failed_"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Failed_"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
       await Future.delayed(Duration(seconds: 3));
       Navigator.of(context).pop();
     }
 
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: translate("Review_Submitted_Successfully"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.blue,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Review_Submitted_Successfully"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.blue, textColor: Colors.white, fontSize: 16.0);
       await Future.delayed(Duration(seconds: 3));
       Navigator.of(context).pop();
     } else {
-      Fluttertoast.showToast(
-          msg: translate("Failed_"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Failed_"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
       await Future.delayed(Duration(seconds: 3));
       Navigator.of(context).pop();
     }
 
-    print(
-        "You have given $userRatingLearn star for Learning, $userRatingPrice star for Price & $userRatingValue star for Value for course ${widget.courseName} which ID is ${widget.courseId}. Your text review is ${controller.text}.");
+    print("You have given $userRatingLearn star for Learning, $userRatingPrice star for Price & $userRatingValue star for Value for course ${widget.courseName} which ID is ${widget.courseId}. Your text review is ${controller.text}.");
   }
 
   @override
@@ -238,8 +219,7 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                   maxLines: 2,
                 ),
                 Text(
-                  translate(
-                      "How_do_you_find_the_course_based_on_your_learning"),
+                  translate("How_do_you_find_the_course_based_on_your_learning"),
                   style: TextStyle(
                     fontSize: 14.0,
                   ),
@@ -252,16 +232,13 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                 // Star Pattern For LEARN Rating
                 Text(
                   translate("Learn_"),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 16.0),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16.0),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingLearn = 1;
@@ -277,8 +254,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: firstStarClrLearn,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingLearn = 2;
@@ -294,8 +271,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: secondStarClrLearn,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingLearn = 3;
@@ -311,8 +288,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: thirdStarClrLearn,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingLearn = 4;
@@ -328,8 +305,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: fourthStarClrLearn,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingLearn = 5;
@@ -353,16 +330,13 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                 // Star Pattern For PRICE Rating
                 Text(
                   translate("Price_"),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 16.0),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16.0),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingPrice = 1;
@@ -378,8 +352,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: firstStarClrPrice,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingPrice = 2;
@@ -395,8 +369,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: secondStarClrPrice,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingPrice = 3;
@@ -412,8 +386,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: thirdStarClrPrice,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingPrice = 4;
@@ -429,8 +403,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: fourthStarClrPrice,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingPrice = 5;
@@ -454,16 +428,13 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                 // Star Pattern For VALUE Rating
                 Text(
                   translate("Value_"),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 16.0),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16.0),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingValue = 1;
@@ -479,8 +450,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: firstStarClrValue,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingValue = 2;
@@ -496,8 +467,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: secondStarClrValue,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingValue = 3;
@@ -513,8 +484,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: thirdStarClrValue,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingValue = 4;
@@ -530,8 +501,8 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                         color: fourthStarClrValue,
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 10.0,
+                    TextButton(
+                      style: ElevatedButton.styleFrom(minimumSize: Size.fromWidth(10)),
                       onPressed: () {
                         setState(() {
                           userRatingValue = 5;
@@ -567,8 +538,7 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                        left: 15, bottom: 11, top: 11, right: 15),
+                    contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                     hintText: exampleText,
                   ),
                   controller: controller,
@@ -602,11 +572,10 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                               translate("Are_you_sure"),
                               style: TextStyle(color: Colors.red),
                             ),
-                            content: Text(
-                                translate("Do_you_want_to_the_submit_review")),
+                            content: Text(translate("Do_you_want_to_the_submit_review")),
                             actions: [
                               // ignore: deprecated_member_use
-                              FlatButton(
+                              TextButton(
                                 child: Text(translate("Yes_")),
                                 onPressed: () {
                                   setState(() {
@@ -617,7 +586,7 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                                 },
                               ),
                               // ignore: deprecated_member_use
-                              FlatButton(
+                              TextButton(
                                 child: Text(translate("No_")),
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -631,8 +600,7 @@ class _RateCourseScreenState extends State<RateCourseScreen> {
                   },
                   child: Text(
                     translate("Submit_Review"),
-                    style:
-                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

@@ -99,8 +99,7 @@ class _EditProfileState extends State<EditProfile> {
 
   String upfname = "", uplname = "", upmob = "", updetail = "", upaddress = "";
 
-  Widget inputField(BuildContext ctx, String hintTxt, String label, int idx,
-      double width, Color borderclr) {
+  Widget inputField(BuildContext ctx, String hintTxt, String label, int idx, double width, Color borderclr) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -147,10 +146,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              labelStyle: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey[500]),
+              labelStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.grey[500]),
             ),
           ),
         ],
@@ -175,17 +171,8 @@ class _EditProfileState extends State<EditProfile> {
         "detail": updetail.toString(),
       });
     } else {
-      _body = FormData.fromMap({
-        "email": email,
-        "current_password": pass,
-        "fname": upfname.toString(),
-        "lname": uplname.toString(),
-        "mobile": upmob.toString(),
-        "address": upaddress.toString(),
-        "detail": updetail.toString(),
-        "user_img":
-            await MultipartFile.fromFile(_image.path, filename: imagefileName)
-      });
+      _body = FormData.fromMap(
+          {"email": email, "current_password": pass, "fname": upfname.toString(), "lname": uplname.toString(), "mobile": upmob.toString(), "address": upaddress.toString(), "detail": updetail.toString(), "user_img": await MultipartFile.fromFile(_image.path, filename: imagefileName)});
     }
     Response res;
     try {
@@ -236,17 +223,7 @@ class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
   bool _hidePassword = true;
 
-  Widget form(
-      String img,
-      String fName,
-      String lName,
-      String mobileNum,
-      String detail,
-      String add,
-      double halfWi,
-      double fullWi,
-      Color bordercolor,
-      String email) {
+  Widget form(String img, String fName, String lName, String mobileNum, String detail, String add, double halfWi, double fullWi, Color bordercolor, String email) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
       child: Form(
@@ -260,14 +237,11 @@ class _EditProfileState extends State<EditProfile> {
               height: 20,
             ),
             //Name
-            inputField(context, fName, translate("First_Name"), 0, fullWi,
-                bordercolor),
-            inputField(
-                context, lName, translate("Last_Name"), 1, fullWi, bordercolor),
+            inputField(context, fName, translate("First_Name"), 0, fullWi, bordercolor),
+            inputField(context, lName, translate("Last_Name"), 1, fullWi, bordercolor),
 
             //mobile
-            inputField(context, mobileNum, translate("Mobile_No"), 2, fullWi,
-                bordercolor),
+            inputField(context, mobileNum, translate("Mobile_No"), 2, fullWi, bordercolor),
             TextFormField(
               initialValue: "",
               validator: (value) {
@@ -307,26 +281,22 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelStyle: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey[500]),
+                labelStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.grey[500]),
               ),
             ),
             //address
-            inputField(
-                context, add, translate("Address_"), 4, fullWi, bordercolor),
+            inputField(context, add, translate("Address_"), 4, fullWi, bordercolor),
             //detail
-            inputField(
-                context, detail, translate("Detail_"), 5, fullWi, bordercolor),
+            inputField(context, detail, translate("Detail_"), 5, fullWi, bordercolor),
             SizedBox(
               height: 15.0,
             ),
-            RaisedButton(
-              color: Colors.red,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+              ),
               onPressed: () async {
-                UserProfile user =
-                    Provider.of<UserProfile>(context, listen: false);
+                UserProfile user = Provider.of<UserProfile>(context, listen: false);
                 setState(() {
                   isloading = true;
                 });
@@ -339,11 +309,9 @@ class _EditProfileState extends State<EditProfile> {
                   await updateDetails(email).then((value) async {
                     if (value) {
                       await user.fetchUserProfile();
-                      scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content: Text(translate("Profile_Updated"))));
+                      scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Profile_Updated"))));
                     } else {
-                      scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content: Text(translate("Incorrect_Password"))));
+                      scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Incorrect_Password"))));
                     }
                   });
 
@@ -359,17 +327,13 @@ class _EditProfileState extends State<EditProfile> {
                 child: isloading
                     ? Center(
                         child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       )
                     : Center(
                         child: Text(
                           translate("Update_"),
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
+                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: Colors.white),
                         ),
                       ),
               ),
@@ -382,8 +346,7 @@ class _EditProfileState extends State<EditProfile> {
 
   void handleDropDownTap(String value) {
     if (value == translate('Change_Password')) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => PasswordReset(1)));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PasswordReset(1)));
     }
   }
 
@@ -428,25 +391,17 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
   Widget scaffoldView(user, halfwi, fullwi, mode) {
     return SingleChildScrollView(
       child: form(
-          user.profileInstance.userImg == null
-              ? ""
-              : user.profileInstance.userImg,
+          user.profileInstance.userImg == null ? "" : user.profileInstance.userImg,
           user.profileInstance.fname == null ? "" : user.profileInstance.fname,
           user.profileInstance.lname == null ? "" : user.profileInstance.lname,
-          user.profileInstance.mobile == null
-              ? ""
-              : user.profileInstance.mobile,
-          user.profileInstance.detail == null
-              ? ""
-              : user.profileInstance.detail,
-          user.profileInstance.address == null
-              ? ""
-              : user.profileInstance.address,
+          user.profileInstance.mobile == null ? "" : user.profileInstance.mobile,
+          user.profileInstance.detail == null ? "" : user.profileInstance.detail,
+          user.profileInstance.address == null ? "" : user.profileInstance.address,
           halfwi,
           fullwi,
           mode.notificationIconColor,
@@ -460,10 +415,6 @@ class _EditProfileState extends State<EditProfile> {
     double halfwi = (MediaQuery.of(context).size.width / 2) - 30;
     UserProfile user = Provider.of<UserProfile>(context);
     T.Theme mode = Provider.of<T.Theme>(context);
-    return Scaffold(
-        key: scaffoldKey,
-        backgroundColor: mode.bgcolor,
-        appBar: pappbar(mode.bgcolor, mode.notificationIconColor),
-        body: scaffoldView(user, halfwi, fullwi, mode));
+    return Scaffold(key: scaffoldKey, backgroundColor: mode.bgcolor, appBar: pappbar(mode.bgcolor, mode.notificationIconColor), body: scaffoldView(user, halfwi, fullwi, mode));
   }
 }

@@ -66,8 +66,7 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
                   topRight: Radius.circular(15.0),
                 ),
                 image: DecorationImage(
-                  image:
-                      AssetImage("assets/placeholder/bundle_place_holder.png"),
+                  image: AssetImage("assets/placeholder/bundle_place_holder.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -75,7 +74,7 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
           );
   }
 
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
 
   List<GoogleMeet> googleMeetList;
 
@@ -83,8 +82,7 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
   Widget build(BuildContext context) {
     T.Theme mode = Provider.of<T.Theme>(context);
 
-    ContentProvider contentProvider =
-        Provider.of<ContentProvider>(context, listen: false);
+    ContentProvider contentProvider = Provider.of<ContentProvider>(context, listen: false);
 
     googleMeetList = contentProvider.contentModel.googleMeet;
 
@@ -143,8 +141,7 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
               itemBuilder: (BuildContext context, int index) {
                 String dateTime;
                 try {
-                  dateTime =
-                      "${DateFormat('dd-MM-yyyy | hh:mm aa').format(DateTime.parse("${googleMeetList[index].startTime}"))}";
+                  dateTime = "${DateFormat('dd-MM-yyyy | hh:mm aa').format(DateTime.parse("${googleMeetList[index].startTime}"))}";
                 } catch (e) {
                   dateTime = "${googleMeetList[index].startTime}";
                 }
@@ -156,13 +153,7 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15.0),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0x1c2464).withOpacity(0.30),
-                            blurRadius: 16.0,
-                            offset: Offset(-13.0, 20.5),
-                            spreadRadius: -15.0)
-                      ],
+                      boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 16.0, offset: Offset(-13.0, 20.5), spreadRadius: -15.0)],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,10 +173,7 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
                                 "${googleMeetList[index].meetingTitle}",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    color: mode.txtcolor,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 20),
+                                style: TextStyle(color: mode.txtcolor, fontWeight: FontWeight.w700, fontSize: 20),
                               ),
                               SizedBox(
                                 height: 5.0,
@@ -196,10 +184,7 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
                                       "${googleMeetList[index].agenda}",
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: mode.txtcolor,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w600),
+                                      style: TextStyle(color: mode.txtcolor, fontSize: 18.0, fontWeight: FontWeight.w600),
                                     ),
                               SizedBox(
                                 height: 8.0,
@@ -208,20 +193,14 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
                                 children: [
                                   Text(
                                     translate("Starts_at"),
-                                    style: TextStyle(
-                                        color: mode.txtcolor,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w500),
+                                    style: TextStyle(color: mode.txtcolor, fontSize: 15.0, fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     width: 3,
                                   ),
                                   Text(
                                     dateTime,
-                                    style: TextStyle(
-                                        color: mode.easternBlueColor,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w600),
+                                    style: TextStyle(color: mode.easternBlueColor, fontSize: 15.0, fontWeight: FontWeight.w600),
                                   ),
                                 ],
                               ),
@@ -231,22 +210,16 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0)),
-                                      color: mode.easternBlueColor,
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: mode.easternBlueColor,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+                                      ),
                                       onPressed: () async {
-                                        liveClassAttendance(
-                                            meetingType: "2",
-                                            meetingId:
-                                                googleMeetList[index].id);
+                                        liveClassAttendance(meetingType: "2", meetingId: googleMeetList[index].id);
 
-                                        var _url =
-                                            googleMeetList[index].meetUrl;
-                                        await canLaunch(_url)
-                                            ? await launch(_url)
-                                            : throw 'Could not launch $_url';
+                                        var _url = googleMeetList[index].meetUrl;
+                                        await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
                                       },
                                       child: Text(
                                         translate("Join_Meeting"),
@@ -268,16 +241,13 @@ class _GoogleMeetScreenState extends State<GoogleMeetScreen> {
   }
 
   Future<void> liveClassAttendance({String meetingType, int meetingId}) async {
-    final res = await post(
-        Uri.parse("${APIData.liveClassAttendance}${APIData.secretKey}"),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer $authToken",
-          "Accept": "application/json"
-        },
-        body: {
-          "meeting_type": meetingType,
-          "meeting_id": meetingId,
-        });
+    final res = await post(Uri.parse("${APIData.liveClassAttendance}${APIData.secretKey}"), headers: {
+      HttpHeaders.authorizationHeader: "Bearer $authToken",
+      "Accept": "application/json"
+    }, body: {
+      "meeting_type": meetingType,
+      "meeting_id": meetingId,
+    });
 
     if (res.statusCode == 200) {
       print("Attendance Done!");

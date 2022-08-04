@@ -11,7 +11,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = new TextEditingController();
   TextEditingController mobileController = new TextEditingController();
@@ -181,8 +181,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "Sign Up and Start Learning",
         style: TextStyle(fontSize: 16),
       ),
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
     );
   }
 
@@ -198,21 +197,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             isloading = true;
           });
           bool signUp;
-          signUp = await httpService.signUp(
-              nameController.value.text,
-              emailController.value.text,
-              passwordController.value.text,
-              mobile,
-              context,
-              scaffoldKey);
+          signUp = await httpService.signUp(nameController.value.text, emailController.value.text, passwordController.value.text, mobile, context, scaffoldKey);
           if (signUp) {
             setState(() {
               isloading = false;
             });
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MyBottomNavigationBar(pageInd: 0)));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyBottomNavigationBar(pageInd: 0)));
           } else {
             setState(() {
               isloading = false;
@@ -230,8 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         margin: EdgeInsets.symmetric(vertical: 10.0),
         height: 65,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: Colors.red, borderRadius: BorderRadius.circular(3.0)),
+        decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(3.0)),
         child: !isloading
             ? Text(
                 "Sign Up",
@@ -291,11 +280,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             logopng(),
             Container(
               width: MediaQuery.of(context).size.width - 20,
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 15.0),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(5.0)),
+              margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 15.0),
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1), borderRadius: BorderRadius.circular(5.0)),
               child: Column(
                 children: [
                   signUpText(),
@@ -323,11 +309,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: customAppBar(context, ""),
-        key: scaffoldKey,
-        backgroundColor: Colors.white,
-        body: scaffoldBody(scaffoldKey));
+    return Scaffold(appBar: customAppBar(context, ""), key: scaffoldKey, backgroundColor: Colors.white, body: scaffoldBody(scaffoldKey));
   }
 
   //navigate back to login

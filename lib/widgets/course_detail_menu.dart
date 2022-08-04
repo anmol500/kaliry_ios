@@ -26,8 +26,7 @@ class CourseDetailMenuScreen extends StatefulWidget {
   final List<String> progress;
   final bool isPurchased;
   final DateTime purchaseDate;
-  CourseDetailMenuScreen(
-      this.isPurchased, this.details, this.progress, this.purchaseDate);
+  CourseDetailMenuScreen(this.isPurchased, this.details, this.progress, this.purchaseDate);
   @override
   _CourseDetailMenuScreenState createState() => _CourseDetailMenuScreenState();
 }
@@ -56,16 +55,12 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
   bool checkDrip({String dripType, String dripDays, String dripDate}) {
     if (dripType == "date") {
       if (dripDate != null)
-        return DateTime.parse(dripDate).millisecondsSinceEpoch <=
-            DateTime.now().millisecondsSinceEpoch;
+        return DateTime.parse(dripDate).millisecondsSinceEpoch <= DateTime.now().millisecondsSinceEpoch;
       else
         return false;
     } else if (dripType == "days") {
       if (dripDays != null) {
-        return widget.purchaseDate
-                .add(Duration(days: int.parse(dripDays)))
-                .millisecondsSinceEpoch <
-            DateTime.now().millisecondsSinceEpoch;
+        return widget.purchaseDate.add(Duration(days: int.parse(dripDays))).millisecondsSinceEpoch < DateTime.now().millisecondsSinceEpoch;
       } else
         return false;
     } else if (dripType == null) return true;
@@ -79,10 +74,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
 
     for (Chapter element in widget.details.course.chapter) {
       if (isDripEnabled) {
-        bool isDrip = checkDrip(
-            dripType: element.dripType,
-            dripDate: element.dripDate,
-            dripDays: element.dripDays);
+        bool isDrip = checkDrip(dripType: element.dripType, dripDate: element.dripDate, dripDays: element.dripDays);
         print("isDrip : $isDrip");
         if (isDrip) {
           dripFilteredChapters.add(element);
@@ -96,10 +88,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
 
     for (CourseClass element in widget.details.course.courseclass) {
       if (isDripEnabled) {
-        bool isDrip = checkDrip(
-            dripType: element.dripType,
-            dripDate: element.dripDate,
-            dripDays: element.dripDays);
+        bool isDrip = checkDrip(dripType: element.dripType, dripDate: element.dripDate, dripDays: element.dripDays);
         print("isDrip : $isDrip");
         if (isDrip) {
           dripFilteredClasses.add(element);
@@ -166,17 +155,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
           ));
         } else {
           if (element.iframeUrl != null) {
-            clips.add(VideoClip(
-                element.title,
-                translate("lecture_"),
-                "images/ForBiggerFun.jpg",
-                100,
-                element.iframeUrl,
-                element.id,
-                element.user,
-                element.dateTime,
-                null,
-                isIframe: true));
+            clips.add(VideoClip(element.title, translate("lecture_"), "images/ForBiggerFun.jpg", 100, element.iframeUrl, element.id, element.user, element.dateTime, null, isIframe: true));
           } else {
             clips.add(VideoClip(
               element.title,
@@ -253,21 +232,16 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
   List<VideoClip> getLessons(Chapter chap, List<CourseClass> allLessons) {
     List<CourseClass> less = [];
     allLessons.forEach((element) {
-      if (chap.id.toString() == element.coursechapterId &&
-          element.url != null) {
+      if (chap.id.toString() == element.coursechapterId && element.url != null) {
         less.add(element);
-      } else if (chap.id.toString() == element.coursechapterId &&
-          element.video != null) {
+      } else if (chap.id.toString() == element.coursechapterId && element.video != null) {
         less.add(element);
-      } else if (chap.id.toString() == element.coursechapterId &&
-          element.iframeUrl != null) {
+      } else if (chap.id.toString() == element.coursechapterId && element.iframeUrl != null) {
         less.add(element);
-      } else if (chap.id.toString() == element.coursechapterId &&
-          element.pdf != null) {
+      } else if (chap.id.toString() == element.coursechapterId && element.pdf != null) {
         // Added
         less.add(element);
-      } else if (chap.id.toString() == element.coursechapterId &&
-          element.audio != null) {
+      } else if (chap.id.toString() == element.coursechapterId && element.audio != null) {
         // Added
         less.add(element);
       }
@@ -288,8 +262,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
     return idx;
   }
 
-  List<Section> generateSections(
-      List<Chapter> sections, List<CourseClass> allLessons) {
+  List<Section> generateSections(List<Chapter> sections, List<CourseClass> allLessons) {
     List<Section> sectionList = [];
 
     sections.forEach((element) {
@@ -315,8 +288,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
               margin: EdgeInsets.all(10),
               child: Text(
                 translate("MENU_"),
-                style: TextStyle(
-                    fontWeight: FontWeight.w700, fontSize: 16, color: txtColor),
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: txtColor),
               )),
           IconButton(
               icon: Icon(
@@ -336,8 +308,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
     return InkWell(
       onTap: () async {
         if (idx == 0) {
-          List<String> marksSecs =
-              widget.progress == null ? [] : widget.progress;
+          List<String> marksSecs = widget.progress == null ? [] : widget.progress;
           int defaultIdx = findIndToResume(sections, marksSecs);
           defaultIdx = defaultIdx > _allClips.length - 1 ? 0 : defaultIdx;
 
@@ -345,9 +316,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
           print("_allClips.length > 0 : ${_allClips.length > 0}");
           // Resume course or start course
           if (_allClips != null && _allClips.length > 0) {
-            bool isWatching =
-                Provider.of<WatchlistProvider>(context, listen: false)
-                    .isWatching(widget.details.course.id);
+            bool isWatching = Provider.of<WatchlistProvider>(context, listen: false).isWatching(widget.details.course.id);
             if (!isWatching) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => PlayListScreen(
@@ -358,17 +327,10 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
                         courseDetails: widget.details,
                       )));
             } else {
-              Fluttertoast.showToast(
-                  msg: translate("Already_watching_from_another_device"),
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.CENTER,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              Fluttertoast.showToast(msg: translate("Already_watching_from_another_device"), toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
             }
           } else {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => EmptyVideosPage()));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmptyVideosPage()));
           }
         } else if (idx == 1) {
           setState(() {
@@ -385,9 +347,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
 
           if (x) courses.setProgress(widget.details.course.id, [], null);
           if (_allClips != null && _allClips.length > 0) {
-            bool isWatching =
-                Provider.of<WatchlistProvider>(context, listen: false)
-                    .isWatching(widget.details.course.id);
+            bool isWatching = Provider.of<WatchlistProvider>(context, listen: false).isWatching(widget.details.course.id);
             if (!isWatching) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => PlayListScreen(
@@ -398,17 +358,10 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
                         courseDetails: widget.details,
                       )));
             } else {
-              Fluttertoast.showToast(
-                  msg: translate("Already_watching_from_another_device"),
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.CENTER,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              Fluttertoast.showToast(msg: translate("Already_watching_from_another_device"), toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
             }
           } else {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => EmptyVideosPage()));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmptyVideosPage()));
           }
           setState(() {
             startFromBeginLoading = false;
@@ -416,19 +369,13 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
         } else if (idx == 4) {
           bool x = await flagInappropriateContent();
           if (x) {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-                content:
-                    Text(translate("Complaint_received_We_will_check_it"))));
+            _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Complaint_received_We_will_check_it"))));
           } else {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-                content:
-                    Text(translate("Complaint_sending_failed_Retry_later"))));
+            _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Complaint_sending_failed_Retry_later"))));
           }
         } else if (idx == 3) {
-          WishListProvider wishListProvider =
-              Provider.of<WishListProvider>(context, listen: false);
-          if (await wishListProvider.addWishList(widget.details.course.id) ==
-              false) {
+          WishListProvider wishListProvider = Provider.of<WishListProvider>(context, listen: false);
+          if (await wishListProvider.addWishList(widget.details.course.id) == false) {
             await wishListProvider.removeWishList(widget.details.course.id);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -447,12 +394,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
             MaterialPageRoute(
               builder: (context) => GiftCourseScreen(
                 courseId: widget.details.course.id,
-                coursePrice: widget.details.course.discountPrice != null
-                    ? (num.parse(
-                            widget.details.course.discountPrice.toString()) *
-                        selectedCurrencyRate)
-                    : (num.parse(widget.details.course.price.toString()) *
-                        selectedCurrencyRate),
+                coursePrice: widget.details.course.discountPrice != null ? (num.parse(widget.details.course.discountPrice.toString()) * selectedCurrencyRate) : (num.parse(widget.details.course.price.toString()) * selectedCurrencyRate),
               ),
             ),
           );
@@ -475,21 +417,19 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
           if (idx == 1)
             Text(
               startFromBeginLoading ? "${translate("Loading_")}" : title,
-              style: TextStyle(
-                  fontSize: 16, color: txtColor, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 16, color: txtColor, fontWeight: FontWeight.w600),
             )
           else
             Text(
               title,
-              style: TextStyle(
-                  fontSize: 16, color: txtColor, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 16, color: txtColor, fontWeight: FontWeight.w600),
             )
         ]),
       ),
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   String favouriteText;
   CoursesProvider courses;
   List<Section> sections;
@@ -499,11 +439,7 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
     _allClips.clear();
     courses = Provider.of<CoursesProvider>(context);
     sections = generateSections(dripFilteredChapters, dripFilteredClasses);
-    favouriteText = Provider.of<WishListProvider>(context)
-            .courseIds
-            .contains(widget.details.course.id)
-        ? translate("Remove_from_Favourite")
-        : translate("Add_to_Favourite");
+    favouriteText = Provider.of<WishListProvider>(context).courseIds.contains(widget.details.course.id) ? translate("Remove_from_Favourite") : translate("Add_to_Favourite");
 
     bool canUseProgress = widget.progress == null;
     T.Theme mode = Provider.of<T.Theme>(context);
@@ -533,17 +469,11 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
                   Icons.play_arrow,
                   0,
                   mode.txtcolor),
-            if (widget.isPurchased)
-              menutiles(translate("Start_From_Beginning"), Icons.replay, 1,
-                  mode.txtcolor),
-            if (!widget.isPurchased)
-              menutiles(favouriteText, Icons.favorite, 3, mode.txtcolor),
-            menutiles(translate("Flag_Inappropriate_Content"), Icons.block, 4,
-                mode.txtcolor),
-            menutiles(translate("Gift_Course"), Icons.card_giftcard_sharp, 5,
-                mode.txtcolor),
-            menutiles(
-                translate("Share Course"), Icons.share_sharp, 6, mode.txtcolor),
+            if (widget.isPurchased) menutiles(translate("Start_From_Beginning"), Icons.replay, 1, mode.txtcolor),
+            if (!widget.isPurchased) menutiles(favouriteText, Icons.favorite, 3, mode.txtcolor),
+            menutiles(translate("Flag_Inappropriate_Content"), Icons.block, 4, mode.txtcolor),
+            menutiles(translate("Gift_Course"), Icons.card_giftcard_sharp, 5, mode.txtcolor),
+            menutiles(translate("Share Course"), Icons.share_sharp, 6, mode.txtcolor),
           ],
         ),
       ),

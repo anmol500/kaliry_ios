@@ -17,35 +17,24 @@ class JSPlayer extends StatefulWidget {
 }
 
 class _JSPlayerState extends State<JSPlayer> with WidgetsBindingObserver {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
   WebViewController _controller1;
   var playerResponse;
   var status;
-  GlobalKey sc = new GlobalKey<ScaffoldState>();
+  GlobalKey sc = new GlobalKey<ScaffoldMessengerState>();
   DateTime currentBackPressTime;
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight
-    ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown, DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     super.initState();
     this.loadLocal();
   }
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight
-    ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown, DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -69,8 +58,7 @@ class _JSPlayerState extends State<JSPlayer> with WidgetsBindingObserver {
   //  Handle back press
   Future<bool> onWillPopS() {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+    if (currentBackPressTime == null || now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
       Navigator.pop(context);
       return Future.value(true);
@@ -88,12 +76,9 @@ class _JSPlayerState extends State<JSPlayer> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    var userDetails =
-        Provider.of<UserProfile>(context, listen: false).profileInstance;
-    var url = APIData.watchCourse +
-        '${userDetails.id}/${userDetails.code}/${widget.courseId}';
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+    var userDetails = Provider.of<UserProfile>(context, listen: false).profileInstance;
+    var url = APIData.watchCourse + '${userDetails.id}/${userDetails.code}/${widget.courseId}';
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     double width;
     double height;
     width = MediaQuery.of(context).size.width;
@@ -103,7 +88,7 @@ class _JSPlayerState extends State<JSPlayer> with WidgetsBindingObserver {
       return JavascriptChannel(
           name: 'Toaster',
           onMessageReceived: (JavascriptMessage message) {
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(message.message)),
             );
           });

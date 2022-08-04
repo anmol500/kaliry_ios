@@ -212,9 +212,11 @@ class _ZoomMeetingListState extends State<ZoomMeetingList> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        RaisedButton(
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-                                          color: mode.easternBlueColor,
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: mode.easternBlueColor,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+                                          ),
                                           onPressed: () {
                                             liveClassAttendance(meetingType: "1", meetingId: zoomMeetingList[index].id);
 

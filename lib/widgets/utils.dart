@@ -73,14 +73,13 @@ Widget whenEmptyWishlist(BuildContext context) {
                   child: Text(
                     translate("Looks_like_you_havent_browsed_courses"),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 15, color: Colors.black.withOpacity(0.7)),
+                    style: TextStyle(fontSize: 15, color: Colors.black.withOpacity(0.7)),
                   ),
                 ),
               ],
             ),
           ),
-          FlatButton(
+          TextButton(
               onPressed: () {
                 Navigator.push(
                     context,
@@ -92,16 +91,7 @@ Widget whenEmptyWishlist(BuildContext context) {
               child: Container(
                   width: 170,
                   height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.red,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0x1c2464).withOpacity(0.30),
-                            blurRadius: 15.0,
-                            offset: Offset(0.0, 20.5),
-                            spreadRadius: -15.0)
-                      ]),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.red, boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 15.0, offset: Offset(0.0, 20.5), spreadRadius: -15.0)]),
                   child: Center(
                       child: Text(
                     translate("Browse_Courses"),
@@ -144,8 +134,7 @@ Widget whenEmptyAllCourses(BuildContext context) {
                   child: Text(
                     translate("Your_admin_havent_uploaded_courses_on_servers"),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 15, color: Colors.black.withOpacity(0.7)),
+                    style: TextStyle(fontSize: 15, color: Colors.black.withOpacity(0.7)),
                   ),
                 ),
               ],
@@ -189,14 +178,13 @@ Widget whenEmptyStudying(BuildContext context) {
                   child: Text(
                     translate("Looks_like_you_havent_browsed_courses"),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 15, color: Colors.black.withOpacity(0.7)),
+                    style: TextStyle(fontSize: 15, color: Colors.black.withOpacity(0.7)),
                   ),
                 ),
               ],
             ),
           ),
-          FlatButton(
+          TextButton(
               onPressed: () {
                 Navigator.push(
                     context,
@@ -208,16 +196,7 @@ Widget whenEmptyStudying(BuildContext context) {
               child: Container(
                   width: 170,
                   height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.red,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0x1c2464).withOpacity(0.30),
-                            blurRadius: 15.0,
-                            offset: Offset(0.0, 20.5),
-                            spreadRadius: -15.0)
-                      ]),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.red, boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 15.0, offset: Offset(0.0, 20.5), spreadRadius: -15.0)]),
                   child: Center(
                       child: Text(
                     translate("Browse_Courses"),
@@ -239,8 +218,7 @@ Widget cusDivider(Color clr) {
   );
 }
 
-AppBar secondaryAppBar(
-    Color textclr, Color bgcolor, BuildContext context, String title) {
+AppBar secondaryAppBar(Color textclr, Color bgcolor, BuildContext context, String title) {
   return AppBar(
     elevation: 0.0,
     backgroundColor: bgcolor,
@@ -285,14 +263,11 @@ Widget func(var num, String tag, int a, String x, Color clr, int ch) {
         ),
       Text(
         n.toString(),
-        style:
-            TextStyle(fontSize: 20.0, color: clr, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20.0, color: clr, fontWeight: FontWeight.bold),
       ),
       Text(
         tag,
-        style: TextStyle(
-            color: c,
-            fontWeight: ch == 1 ? FontWeight.bold : FontWeight.normal),
+        style: TextStyle(color: c, fontWeight: ch == 1 ? FontWeight.bold : FontWeight.normal),
       ),
       SizedBox(
         height: 5.0,
@@ -317,10 +292,7 @@ Widget cusprogressbar(double width, double progress) {
   return Container(
     width: width,
     height: 25.0,
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(13.0),
-        border: Border.all(color: Colors.grey[200])),
+    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(13.0), border: Border.all(color: Colors.grey[200])),
     child: Center(
       child: LinearPercentIndicator(
         width: width - 3,

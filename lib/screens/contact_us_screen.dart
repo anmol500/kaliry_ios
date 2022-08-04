@@ -13,8 +13,7 @@ class ContactUsScreen extends StatefulWidget {
 }
 
 class _ContactUsScreenState extends State<ContactUsScreen> {
-  TextStyle _labelStyle = TextStyle(
-      fontSize: 17, fontWeight: FontWeight.w600, color: Colors.grey[500]);
+  TextStyle _labelStyle = TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: Colors.grey[500]);
   TextStyle _mainStyle(Color clr) {
     return TextStyle(color: clr, fontSize: 17);
   }
@@ -51,8 +50,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     );
   }
 
-  Future<bool> sendContactDetails(
-      String name, String email, String mob, String message) async {
+  Future<bool> sendContactDetails(String name, String email, String mob, String message) async {
     Response res = await post(
       Uri.parse("${APIData.contactUs}${APIData.secretKey}"),
       headers: {"Accept": "application/json"},
@@ -63,11 +61,13 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   bool isLoading = false;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
 
-  FlatButton submitButton(Color clr) {
-    return FlatButton(
-      color: clr,
+  TextButton submitButton(Color clr) {
+    return TextButton(
+      style: ElevatedButton.styleFrom(
+        primary: clr,
+      ),
       onPressed: () async {
         if (_formKey.currentState.validate()) {
           setState(() {
@@ -78,12 +78,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             isLoading = false;
           });
           if (isPassed) {
-            SnackBar snackBar = SnackBar(
-                content: Text(translate("Form_submitted_successfully")));
+            SnackBar snackBar = SnackBar(content: Text(translate("Form_submitted_successfully")));
             _scaffoldKey.currentState.showSnackBar(snackBar);
           } else if (!isPassed) {
-            SnackBar snackBar =
-                SnackBar(content: Text(translate("Form_submission_failed")));
+            SnackBar snackBar = SnackBar(content: Text(translate("Form_submission_failed")));
             _scaffoldKey.currentState.showSnackBar(snackBar);
           }
         }
@@ -155,21 +153,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     return Form(
       key: _formKey,
       child: Column(
-        children: [
-          inputField(translate("Name_"), 0, borderClr),
-          inputField(translate("Phone_"), 1, borderClr),
-          inputField(translate("Email_"), 2, borderClr),
-          inputField(translate("Your_Message"), 3, borderClr),
-          submitButton(Color(0xffF44A4A))
-        ],
+        children: [inputField(translate("Name_"), 0, borderClr), inputField(translate("Phone_"), 1, borderClr), inputField(translate("Email_"), 2, borderClr), inputField(translate("Your_Message"), 3, borderClr), submitButton(Color(0xffF44A4A))],
       ),
     );
   }
 
   Widget leadingOfDetails(IconData icon) {
     return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: Colors.grey[300]),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.grey[300]),
       height: 40,
       width: 40,
       child: Icon(
@@ -179,8 +170,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     );
   }
 
-  Widget boxContainer(
-      String desc, String title, IconData icon, Color descColor) {
+  Widget boxContainer(String desc, String title, IconData icon, Color descColor) {
     return ListTile(
       leading: leadingOfDetails(icon),
       title: Text(
@@ -194,31 +184,19 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     );
   }
 
-
-
-
-
-
   Widget companyDetails(Color descColor) {
-    var homeData =
-        Provider.of<HomeDataProvider>(context, listen: false).homeModel;
+    var homeData = Provider.of<HomeDataProvider>(context, listen: false).homeModel;
     return Column(
       children: [
         SizedBox(
           height: 20,
         ),
         cusDivider(Colors.grey[300]),
-        boxContainer(homeData.settings.defaultAddress, translate("ADDRESS_"),
-            Icons.location_on, descColor),
-        if (homeData.settings.mapLat != null &&
-            homeData.settings.mapLong != null)
-           
+        boxContainer(homeData.settings.defaultAddress, translate("ADDRESS_"), Icons.location_on, descColor),
+        if (homeData.settings.mapLat != null && homeData.settings.mapLong != null) cusDivider(Colors.grey[300]),
+        boxContainer(homeData.settings.welEmail, translate("EMAIL_"), Icons.mail, descColor),
         cusDivider(Colors.grey[300]),
-        boxContainer(homeData.settings.welEmail, translate("EMAIL_"),
-            Icons.mail, descColor),
-        cusDivider(Colors.grey[300]),
-        boxContainer(homeData.settings.defaultPhone, translate("PHONE_"),
-            Icons.phone, descColor),
+        boxContainer(homeData.settings.defaultPhone, translate("PHONE_"), Icons.phone, descColor),
         cusDivider(Colors.grey[300]),
       ],
     );
@@ -254,8 +232,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: mode.bgcolor,
-      appBar: secondaryAppBar(mode.notificationIconColor, mode.bgcolor, context,
-          translate("Contact_Us")),
+      appBar: secondaryAppBar(mode.notificationIconColor, mode.bgcolor, context, translate("Contact_Us")),
       body: scaffoldBody(mode.notificationIconColor),
     );
   }

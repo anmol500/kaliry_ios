@@ -5,7 +5,7 @@ import 'package:eclass/provider/recent_course_provider.dart';
 import 'package:eclass/provider/watchlist_provider.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
- import '../provider/home_data_provider.dart';
+import '../provider/home_data_provider.dart';
 import 'cart_screen.dart';
 import 'courses_screen.dart';
 import 'settings_screen.dart';
@@ -90,8 +90,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getHomePageData();
     });
-
-
   }
 
   Future<bool> onBackPressed() {
@@ -109,7 +107,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           style: TextStyle(fontFamily: 'Mada', color: Color(0xFF3F4654)),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -118,7 +116,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                 style: TextStyle(color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
               )),
           SizedBox(height: 16),
-          FlatButton(
+          TextButton(
               onPressed: () {
                 SystemNavigator.pop();
                 Navigator.pop(context);

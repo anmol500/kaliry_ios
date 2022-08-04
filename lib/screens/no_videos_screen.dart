@@ -1,5 +1,8 @@
+import 'package:eclass/Widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:provider/provider.dart';
+import '../common/theme.dart' as T;
 
 class EmptyVideosPage extends StatelessWidget {
   Widget showImage() {
@@ -37,10 +40,13 @@ class EmptyVideosPage extends StatelessWidget {
       ),
     );
   }
-
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    T.Theme mode = Provider.of<T.Theme>(context);
     return Scaffold(
+      key: scaffoldKey,
+      appBar: appBar(mode.bgcolor, context, scaffoldKey),
       body: Center(
         child: Container(
           margin: EdgeInsets.only(bottom: 40),

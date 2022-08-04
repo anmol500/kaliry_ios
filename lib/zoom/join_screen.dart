@@ -72,11 +72,13 @@ class _JoinWidgetState extends State<JoinWidget> {
                     return SizedBox(
                       height: 50,
                       width: 200,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mode.easternBlueColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
                         ),
-                        color: mode.easternBlueColor,
                         onPressed: () async {
                           if (meetingPasswordController.text.isNotEmpty) {
                             joinMeeting(context);

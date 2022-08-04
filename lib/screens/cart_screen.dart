@@ -62,7 +62,7 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
 
   bool couponApplyLoading = false;
   TextEditingController couponCtrl = new TextEditingController();
@@ -271,7 +271,7 @@ class _CartScreenState extends State<CartScreen> {
                     translate("Total_") + (cart.cartTotal - couponDis).toString(),
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: () async {
                       await Provider.of<UserProfile>(context, listen: false).fetchUserProfile();
                       String email = Provider.of<UserProfile>(context, listen: false).profileInstance.email;
@@ -488,8 +488,11 @@ class _CartScreenState extends State<CartScreen> {
             SizedBox(
               height: 5.0,
             ),
-            FlatButton(
-              color: mode.customRedColor1,
+            TextButton(
+
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
               onPressed: () {
                 Navigator.push(
                     context,

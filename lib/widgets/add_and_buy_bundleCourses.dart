@@ -8,7 +8,7 @@ import './triangle.dart';
 class AddAndBuyBundle extends StatefulWidget {
   final int bundleId;
   final dynamic bprice;
-  final GlobalKey<ScaffoldState> _scaffoldKey;
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey;
   AddAndBuyBundle(this.bundleId, this.bprice, this._scaffoldKey);
   @override
   _AddAndBuyBundleState createState() => _AddAndBuyBundleState();
@@ -39,14 +39,11 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
         });
         setState(() {});
         if (!inCart) {
-          bool success =
-              await crt.addToCartBundle(widget.bundleId.toString(), context);
+          bool success = await crt.addToCartBundle(widget.bundleId.toString(), context);
           if (success)
-            widget._scaffoldKey.currentState.showSnackBar(
-                SnackBar(content: Text(translate("Bundle_added_to_cart"))));
+            widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Bundle_added_to_cart"))));
           else
-            widget._scaffoldKey.currentState.showSnackBar(SnackBar(
-                content: Text(translate("Bundle_addition_to_cart_failed"))));
+            widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Bundle_addition_to_cart_failed"))));
         } else
           Navigator.push(
               context,
@@ -62,26 +59,16 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         height: 55.0,
         width: MediaQuery.of(context).size.width - 50,
-        decoration: BoxDecoration(
-            color: Color(0xfff44a4a),
-            border: Border.all(width: 1.0, color: Colors.black12),
-            borderRadius: BorderRadius.circular(10.0)),
+        decoration: BoxDecoration(color: Color(0xfff44a4a), border: Border.all(width: 1.0, color: Colors.black12), borderRadius: BorderRadius.circular(10.0)),
         child: Stack(
           children: [
             Center(
               child: this.isloading
-                  ? CircularProgressIndicator(
-                      valueColor:
-                          new AlwaysStoppedAnimation<Color>(Colors.white))
+                  ? CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.white))
                   : Text(
-                      inCart
-                          ? translate("GO_TO_CART")
-                          : translate("ADD_TO_CART"),
+                      inCart ? translate("GO_TO_CART") : translate("ADD_TO_CART"),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
             ),
             Positioned(
@@ -91,8 +78,7 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
                 margin: EdgeInsets.all(3.0),
                 height: 40.0,
                 width: 40.0,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(25.00)),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.00)),
                 child: Image.asset(
                   "assets/icons/addtocart.png",
                   color: Colors.white,
@@ -113,8 +99,7 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
           this.buynowLoading = true;
         });
         if (!inCart) {
-          bool success = await CartApiCall()
-              .addToCartBundle(widget.bundleId.toString(), context);
+          bool success = await CartApiCall().addToCartBundle(widget.bundleId.toString(), context);
           if (success) {
             Navigator.push(
                 context,
@@ -123,8 +108,7 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
                           pageInd: 3,
                         )));
           } else {
-            widget._scaffoldKey.currentState.showSnackBar(
-                SnackBar(content: Text(translate("Something_went_wrong"))));
+            widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Something_went_wrong"))));
           }
         } else
           Navigator.push(
@@ -155,10 +139,7 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
                     )
                   : Text(
                       translate("BUY_NOW"),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
             ),
             Positioned(
@@ -168,8 +149,7 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
                 margin: EdgeInsets.all(3.0),
                 height: 40.0,
                 width: 40.0,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(25.00)),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(25.00)),
                 child: Image.asset(
                   "assets/icons/buynow.png",
                   color: Colors.grey,
@@ -184,10 +164,7 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
 
   Widget buttonContainer(bool inCart) {
     return Container(
-      height: MediaQuery.of(context).size.height /
-          (MediaQuery.of(context).orientation == Orientation.landscape
-              ? 1.5
-              : 3.9),
+      height: MediaQuery.of(context).size.height / (MediaQuery.of(context).orientation == Orientation.landscape ? 1.5 : 3.9),
       padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
       margin: EdgeInsets.only(left: 12.0, right: 12.0, bottom: 10.0),
       decoration: BoxDecoration(
@@ -217,8 +194,7 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
 
   @override
   Widget build(BuildContext context) {
-    bool inCart =
-        Provider.of<CartProducts>(context).checkBundle(widget.bundleId);
+    bool inCart = Provider.of<CartProducts>(context).checkBundle(widget.bundleId);
     return SliverToBoxAdapter(
       child: Container(
         child: Column(

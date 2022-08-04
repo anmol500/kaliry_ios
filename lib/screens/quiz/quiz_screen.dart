@@ -18,8 +18,7 @@ class QuizScreen extends StatefulWidget {
   final List<QuizQuestion> questions;
   final Quiz quiz;
 
-  const QuizScreen({Key key, @required this.questions, this.quiz})
-      : super(key: key);
+  const QuizScreen({Key key, @required this.questions, this.quiz}) : super(key: key);
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -28,7 +27,7 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int _currentIndex = 0;
   final Map<int, dynamic> _answers = {};
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _key = GlobalKey<ScaffoldMessengerState>();
   // New Code
   TextEditingController answer = TextEditingController();
   final Map<String, String> _questionIds = {};
@@ -68,16 +67,12 @@ class _QuizScreenState extends State<QuizScreen> {
                   children: <Widget>[
                     Text(
                       "${_currentIndex + 1}.",
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: mode.titleTextColor,
-                          fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 22, color: mode.titleTextColor, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(width: 16.0),
                     Expanded(
                       child: Text(
-                        HtmlUnescape()
-                            .convert(widget.questions[_currentIndex].question),
+                        HtmlUnescape().convert(widget.questions[_currentIndex].question),
                         softWrap: true,
                         style: MediaQuery.of(context).size.width > 800
                             ? TextStyle(
@@ -102,9 +97,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       ...options.map((option) => RadioListTile(
                             title: Text(
                               HtmlUnescape().convert("$option"),
-                              style: MediaQuery.of(context).size.width > 800
-                                  ? TextStyle(fontSize: 30.0)
-                                  : null,
+                              style: MediaQuery.of(context).size.width > 800 ? TextStyle(fontSize: 30.0) : null,
                             ),
                             groupValue: _answers[_currentIndex],
                             value: option,
@@ -113,21 +106,16 @@ class _QuizScreenState extends State<QuizScreen> {
                               setState(() {
                                 _answers[_currentIndex] = option;
                                 // New Code
-                                _questionIds["${_currentIndex + 1}"] = widget
-                                    .questions[_currentIndex].id
-                                    .toString();
+                                _questionIds["${_currentIndex + 1}"] = widget.questions[_currentIndex].id.toString();
                                 _subAnswers["${_currentIndex + 1}"] = null;
 
-                                widget.questions[_currentIndex].allAnswers
-                                    .forEach((key, value) {
+                                widget.questions[_currentIndex].allAnswers.forEach((key, value) {
                                   if (value == option) {
                                     _objAnswers["${_currentIndex + 1}"] = key;
                                   }
                                 });
-                                widget.questions[_currentIndex].allAnswers
-                                    .forEach((key, value) {
-                                  if (value ==
-                                      widget.questions[_currentIndex].correct) {
+                                widget.questions[_currentIndex].allAnswers.forEach((key, value) {
+                                  if (value == widget.questions[_currentIndex].correct) {
                                     _cAnswers["${_currentIndex + 1}"] = key;
                                   }
                                 });
@@ -139,8 +127,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         padding: EdgeInsets.symmetric(vertical: 5.0),
                         child: TextField(
                           onChanged: (ans) {
-                            _questionIds["${_currentIndex + 1}"] =
-                                widget.questions[_currentIndex].id.toString();
+                            _questionIds["${_currentIndex + 1}"] = widget.questions[_currentIndex].id.toString();
                             _subAnswers["${_currentIndex + 1}"] = ans;
                             _objAnswers["${_currentIndex + 1}"] = null;
                             _cAnswers["${_currentIndex + 1}"] = null;
@@ -175,20 +162,14 @@ class _QuizScreenState extends State<QuizScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             ),
-                            child: RaisedButton(
-                              color: mode.easternBlueColor,
-                              padding: MediaQuery.of(context).size.width > 800
-                                  ? const EdgeInsets.symmetric(
-                                      vertical: 20.0, horizontal: 64.0)
-                                  : null,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: mode.easternBlueColor,
+                                padding: MediaQuery.of(context).size.width > 800 ? const EdgeInsets.symmetric(vertical: 20.0, horizontal: 64.0) : null,
+                              ),
                               child: Text(
                                 translate("Previous_"),
-                                style: MediaQuery.of(context).size.width > 800
-                                    ? TextStyle(fontSize: 30.0)
-                                    : TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 16.0),
+                                style: MediaQuery.of(context).size.width > 800 ? TextStyle(fontSize: 30.0) : TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 16.0),
                               ),
                               onPressed: _previous,
                             ),
@@ -199,22 +180,14 @@ class _QuizScreenState extends State<QuizScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
-                          child: RaisedButton(
-                            color: mode.easternBlueColor,
-                            padding: MediaQuery.of(context).size.width > 800
-                                ? const EdgeInsets.symmetric(
-                                    vertical: 20.0, horizontal: 64.0)
-                                : null,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: mode.easternBlueColor,
+                              padding: MediaQuery.of(context).size.width > 800 ? const EdgeInsets.symmetric(vertical: 20.0, horizontal: 64.0) : null,
+                            ),
                             child: Text(
-                              _currentIndex == (widget.questions.length - 1)
-                                  ? translate("Submit_")
-                                  : translate("Next_"),
-                              style: MediaQuery.of(context).size.width > 800
-                                  ? TextStyle(fontSize: 30.0)
-                                  : TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                      fontSize: 16.0),
+                              _currentIndex == (widget.questions.length - 1) ? translate("Submit_") : translate("Next_"),
+                              style: MediaQuery.of(context).size.width > 800 ? TextStyle(fontSize: 30.0) : TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 16.0),
                             ),
                             onPressed: _nextSubmit,
                           ),
@@ -269,9 +242,7 @@ class _QuizScreenState extends State<QuizScreen> {
     } else {
       if (widget.quiz.type == null) {
         await submit();
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (_) =>
-                QuizSubmitted(questions: widget.questions, answers: _answers)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => QuizSubmitted(questions: widget.questions, answers: _answers)));
       } else {
         await submit();
       }
@@ -327,36 +298,18 @@ class _QuizScreenState extends State<QuizScreen> {
       print("Response Code: " + "${response.statusCode}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Fluttertoast.showToast(
-            msg: translate("Quiz_Submitted_Successfully"),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.blue,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        Fluttertoast.showToast(msg: translate("Quiz_Submitted_Successfully"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.blue, textColor: Colors.white, fontSize: 16.0);
         await Future.delayed(Duration(seconds: 3));
         if (widget.quiz.type == "1") {
           Navigator.pop(context);
         }
       } else {
-        Fluttertoast.showToast(
-            msg: translate("Failed_"),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        Fluttertoast.showToast(msg: translate("Failed_"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
         await Future.delayed(Duration(seconds: 3));
       }
     } catch (e) {
       print('Exception : $e');
-      Fluttertoast.showToast(
-          msg: translate("Failed_"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Failed_"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
       await Future.delayed(Duration(seconds: 3));
     }
     setState(() {
@@ -372,13 +325,13 @@ class _QuizScreenState extends State<QuizScreen> {
             content: Text(translate("Are_you_sure_you_want_to_quit_the_quiz")),
             title: Text(translate("Warning_")),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text(translate("Yes_")),
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text(translate("No_")),
                 onPressed: () {
                   Navigator.pop(context, false);

@@ -27,21 +27,14 @@ class _PasswordResetState extends State<PasswordReset> {
               if (value == "") return translate("This_field_cant_left_empty");
               return null;
             },
-            obscureText:
-                idx == 0 ? false : (idx == 1 ? _hidepass : _hiderepass),
+            obscureText: idx == 0 ? false : (idx == 1 ? _hidepass : _hiderepass),
             maxLines: 1,
             decoration: InputDecoration(
                 suffixIcon: idx == 0
                     ? SizedBox.shrink()
                     : IconButton(
                         icon: Icon(
-                          idx == 1
-                              ? (_hidepass
-                                  ? Icons.visibility_off
-                                  : Icons.visibility)
-                              : (_hiderepass
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
+                          idx == 1 ? (_hidepass ? Icons.visibility_off : Icons.visibility) : (_hiderepass ? Icons.visibility_off : Icons.visibility),
                           color: Colors.grey,
                         ),
                         onPressed: () {
@@ -68,10 +61,7 @@ class _PasswordResetState extends State<PasswordReset> {
                   ),
                 ),
                 labelText: label,
-                labelStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey[500])),
+                labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.grey[500])),
             onChanged: (value) {
               if (idx == 0)
                 setState(() {
@@ -115,8 +105,10 @@ class _PasswordResetState extends State<PasswordReset> {
   Widget submitButton() {
     return Container(
       width: 150,
-      child: RaisedButton(
-        color: Colors.red,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red,
+        ),
         onPressed: () async {
           if (_formKey.currentState.validate() && pass == repass) {
             setState(() {
@@ -127,16 +119,13 @@ class _PasswordResetState extends State<PasswordReset> {
               isLoading = false;
             });
             if (ispassed) {
-              SnackBar snackbar = SnackBar(
-                  content: Text(translate("Password_Reset_Successfully")));
+              SnackBar snackbar = SnackBar(content: Text(translate("Password_Reset_Successfully")));
               _scaffoldKey.currentState.showSnackBar(snackbar);
               if (widget.medium == 0) {
-                Timer(Duration(seconds: 2),
-                    () => Navigator.of(context).pushNamed('/SignIn'));
+                Timer(Duration(seconds: 2), () => Navigator.of(context).pushNamed('/SignIn'));
               }
             } else if (!ispassed) {
-              SnackBar snackbar =
-                  SnackBar(content: Text(translate("Password_Reset_Failed")));
+              SnackBar snackbar = SnackBar(content: Text(translate("Password_Reset_Failed")));
               _scaffoldKey.currentState.showSnackBar(snackbar);
             }
           }
@@ -153,10 +142,7 @@ class _PasswordResetState extends State<PasswordReset> {
                     )
                   : Text(
                       translate("Submit_"),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
                     )),
         ),
       ),
@@ -179,7 +165,7 @@ class _PasswordResetState extends State<PasswordReset> {
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
 
   bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
@@ -189,8 +175,7 @@ class _PasswordResetState extends State<PasswordReset> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: mode.bgcolor,
-      appBar: secondaryAppBar(
-          Colors.black, mode.bgcolor, context, translate("Change_Password")),
+      appBar: secondaryAppBar(Colors.black, mode.bgcolor, context, translate("Change_Password")),
       body: scaffoldBody(mode.notificationIconColor),
     );
   }

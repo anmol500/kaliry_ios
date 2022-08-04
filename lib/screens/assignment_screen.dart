@@ -72,8 +72,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var chapters = widget.courseDetails.course.chapter;
       for (int i = 0; i < chapters.length; i++) {
-        data.add(
-            ChaptersData("${chapters[i].id}", "${chapters[i].chapterName}"));
+        data.add(ChaptersData("${chapters[i].id}", "${chapters[i].chapterName}"));
       }
       setState(() {
         _visible = true;
@@ -100,20 +99,19 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
         filename: fileName,
       ),
     });
-    final response =
-        await dio.post("${APIData.submitAssignment}${APIData.secretKey}",
-            data: _body,
-            options: Options(
-                method: 'POST',
-                headers: {
-                  "Accept": "application/json",
-                  HttpHeaders.authorizationHeader: "Bearer $authToken",
-                },
-                responseType: ResponseType.plain,
-                followRedirects: false,
-                validateStatus: (status) {
-                  return status < 500;
-                }));
+    final response = await dio.post("${APIData.submitAssignment}${APIData.secretKey}",
+        data: _body,
+        options: Options(
+            method: 'POST',
+            headers: {
+              "Accept": "application/json",
+              HttpHeaders.authorizationHeader: "Bearer $authToken",
+            },
+            responseType: ResponseType.plain,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status < 500;
+            }));
     print(response.statusMessage);
     print(response.data);
     print(response.statusCode);
@@ -122,19 +120,13 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
         isUploading = false;
       });
       Navigator.pop(context);
-      Fluttertoast.showToast(
-          msg: translate("Assignment_submitted_successfully"),
-          textColor: Colors.white,
-          backgroundColor: Colors.green);
+      Fluttertoast.showToast(msg: translate("Assignment_submitted_successfully"), textColor: Colors.white, backgroundColor: Colors.green);
     } else {
       setState(() {
         isUploading = false;
       });
       Navigator.pop(context);
-      Fluttertoast.showToast(
-          msg: translate("Assignment_submission_failed"),
-          textColor: Colors.white,
-          backgroundColor: Colors.red);
+      Fluttertoast.showToast(msg: translate("Assignment_submission_failed"), textColor: Colors.white, backgroundColor: Colors.red);
     }
   }
 
@@ -144,8 +136,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
       content: new Row(
         children: [
           CircularProgressIndicator(),
-          Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Uploading ...")),
+          Container(margin: EdgeInsets.only(left: 7), child: Text("Uploading ...")),
         ],
       ),
     );
@@ -190,8 +181,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                   child: TextFormField(
                     controller: titleController,
                     keyboardType: TextInputType.text,
-                    decoration:
-                        InputDecoration(hintText: translate("Enter_Title")),
+                    decoration: InputDecoration(hintText: translate("Enter_Title")),
                     validator: (value) {
                       if (value.length == 0) {
                         return translate("Enter_Title");
@@ -208,19 +198,11 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FlatButton.icon(
+                    TextButton.icon(
                       onPressed: () async {
-                        FilePickerResult result =
-                            await FilePicker.platform.pickFiles(
+                        FilePickerResult result = await FilePicker.platform.pickFiles(
                           type: FileType.custom,
-                          allowedExtensions: [
-                            'jpg',
-                            'pdf',
-                            'doc',
-                            'zip',
-                            'png',
-                            'jpeg'
-                          ],
+                          allowedExtensions: ['jpg', 'pdf', 'doc', 'zip', 'png', 'jpeg'],
                         );
                         if (result != null) {
                           file = result.files.first;
@@ -232,10 +214,11 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                       icon: Icon(Icons.attach_file),
                       label: Text(
                         translate("Choose_file"),
-                        style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.w500),
+                        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
                       ),
-                      color: mode.titleTextColor.withOpacity(0.09),
+                      style: ElevatedButton.styleFrom(
+                        primary: mode.titleTextColor.withOpacity(0.09),
+                      ),
                     ),
                     SizedBox(
                       width: 15.0,
@@ -245,8 +228,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                         : Flexible(
                             child: Text(
                               sFileName,
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.w500),
+                              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
                             ),
                           ),
                   ],
@@ -257,7 +239,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                 ButtonTheme(
                   height: 40,
                   minWidth: 200,
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       FocusScope.of(context).requestFocus(FocusNode());
                       final form = _formKey.currentState;
@@ -265,15 +247,12 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                       if (form.validate() == true) {
                         if (_mySelection != null) {
                           if (sFileName != null) {
-                            uploadAssignment(file,
-                                widget.courseDetails.course.id, _mySelection);
+                            uploadAssignment(file, widget.courseDetails.course.id, _mySelection);
                           } else {
-                            Fluttertoast.showToast(
-                                msg: translate("Choose_Assignment_file"));
+                            Fluttertoast.showToast(msg: translate("Choose_Assignment_file"));
                           }
                         } else {
-                          Fluttertoast.showToast(
-                              msg: translate("Select_Chapter"));
+                          Fluttertoast.showToast(msg: translate("Select_Chapter"));
                         }
                       } else {
                         return;
@@ -283,7 +262,9 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                       translate("Submit_Assignment"),
                       style: TextStyle(fontSize: 16.0, color: Colors.white),
                     ),
-                    color: mode.easternBlueColor,
+                    style: ElevatedButton.styleFrom(
+                      primary: mode.easternBlueColor,
+                    ),
                   ),
                 )
               ],

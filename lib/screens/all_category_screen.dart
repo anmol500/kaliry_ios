@@ -12,18 +12,16 @@ class AllCategoryScreen extends StatefulWidget {
 }
 
 class _AllCategoryScreenState extends State<AllCategoryScreen> {
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   List<bool> expanded = [false, false, false, false, false];
   var category, subCategory, childCategory;
   int selected = -1;
 
-  List<Widget> childCatItemList(
-      int subCatId, String catId, List<ChildCategory> ccList) {
+  List<Widget> childCatItemList(int subCatId, String catId, List<ChildCategory> ccList) {
     List<Widget> ccWidgetList = [];
     ccList.forEach(
       (element) {
-        if (element.subcategoryId.toString() == subCatId.toString() &&
-            element.categoryId.toString() == catId.toString())
+        if (element.subcategoryId.toString() == subCatId.toString() && element.categoryId.toString() == catId.toString())
           ccWidgetList.add(
             Padding(
               padding: const EdgeInsets.only(left: 30.0),
@@ -50,8 +48,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.of(context)
-                          .pushNamed('/childCategory', arguments: element);
+                      Navigator.of(context).pushNamed('/childCategory', arguments: element);
                     },
                   ),
                 ),
@@ -63,8 +60,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
     return ccWidgetList;
   }
 
-  List<Widget> subCategoryItemList(
-      int id, List<SubCategory> scList, Color clr) {
+  List<Widget> subCategoryItemList(int id, List<SubCategory> scList, Color clr) {
     var homeData = Provider.of<HomeDataProvider>(context, listen: false);
     List<Widget> scItems = [];
     scList.forEach(
@@ -74,8 +70,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
             ExpansionTile(
               trailing: InkWell(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed('/subCategory', arguments: element);
+                  Navigator.of(context).pushNamed('/subCategory', arguments: element);
                 },
                 child: Container(
                   height: 40.0,
@@ -112,8 +107,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                   ],
                 ),
               ),
-              children: childCatItemList(
-                  element.id, element.categoryId, homeData.childCategoryList),
+              children: childCatItemList(element.id, element.categoryId, homeData.childCategoryList),
             ),
           );
         }
@@ -126,13 +120,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x1c2464).withOpacity(0.30),
-              blurRadius: 8.0,
-              offset: Offset(0.0, 10.0),
-              spreadRadius: -15.0)
-        ],
+        boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 8.0, offset: Offset(0.0, 10.0), spreadRadius: -15.0)],
         borderRadius: BorderRadius.circular(10.0),
       ),
       margin: EdgeInsets.only(bottom: 10.0),
@@ -150,15 +138,12 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
         }),
         trailing: InkWell(
           onTap: () {
-            Navigator.of(context)
-                .pushNamed('/category', arguments: homeData.categoryList[idx]);
+            Navigator.of(context).pushNamed('/category', arguments: homeData.categoryList[idx]);
           },
           child: Container(
             height: 40.0,
             width: 40.0,
-            decoration: BoxDecoration(
-                color: Color(0xFF3F4654).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(25.00)),
+            decoration: BoxDecoration(color: Color(0xFF3F4654).withOpacity(0.1), borderRadius: BorderRadius.circular(25.00)),
             child: Center(
               child: Icon(
                 Icons.arrow_forward_ios,
@@ -177,8 +162,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
               width: 40.0,
               margin: EdgeInsets.fromLTRB(0.0, 0.0, 18.0, 0.0),
               child: CachedNetworkImage(
-                imageUrl:
-                    "${APIData.categoryImages}${homeData.categoryList[idx].catImage}",
+                imageUrl: "${APIData.categoryImages}${homeData.categoryList[idx].catImage}",
                 imageBuilder: (context, imageProvider) => Container(
                   height: 40.0,
                   width: 40.0,
@@ -188,9 +172,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                     image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                          Color(0xFF3F4654).withOpacity(0.4),
-                          BlendMode.colorBurn),
+                      colorFilter: ColorFilter.mode(Color(0xFF3F4654).withOpacity(0.4), BlendMode.colorBurn),
                     ),
                   ),
                 ),
@@ -221,8 +203,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
             ),
           ],
         ),
-        children: subCategoryItemList(
-            homeData.categoryList[idx].id, homeData.subCategoryList, bgColor),
+        children: subCategoryItemList(homeData.categoryList[idx].id, homeData.subCategoryList, bgColor),
       ),
     );
   }

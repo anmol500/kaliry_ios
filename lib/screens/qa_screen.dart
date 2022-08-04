@@ -40,25 +40,17 @@ class _QAScreenState extends State<QAScreen> {
   }
 
   addAnswers(index, courseId, questionId) async {
-    var reply = Provider.of<ContentProvider>(context, listen: false)
-        .contentModel
-        .questions[index]
-        .answer;
-    var userDetails =
-        Provider.of<UserProfile>(context, listen: false).profileInstance;
-    var content =
-        Provider.of<ContentProvider>(context, listen: false).contentModel;
-    final res = await http.post(
-        Uri.parse("${APIData.submitAnswer}${APIData.secretKey}"),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer $authToken",
-          "Accept": "application/json"
-        },
-        body: {
-          "course_id": "$courseId",
-          "question_id": "$questionId",
-          "answer": "${_replyController.text}",
-        });
+    var reply = Provider.of<ContentProvider>(context, listen: false).contentModel.questions[index].answer;
+    var userDetails = Provider.of<UserProfile>(context, listen: false).profileInstance;
+    var content = Provider.of<ContentProvider>(context, listen: false).contentModel;
+    final res = await http.post(Uri.parse("${APIData.submitAnswer}${APIData.secretKey}"), headers: {
+      HttpHeaders.authorizationHeader: "Bearer $authToken",
+      "Accept": "application/json"
+    }, body: {
+      "course_id": "$courseId",
+      "question_id": "$questionId",
+      "answer": "${_replyController.text}",
+    });
     print(res.statusCode);
     print(res.body);
     if (res.statusCode == 200) {
@@ -74,36 +66,25 @@ class _QAScreenState extends State<QAScreen> {
           status: "1",
         ),
       );
-      Fluttertoast.showToast(
-          msg: translate("Answer_submitted_successfully"),
-          backgroundColor: Colors.green,
-          textColor: Colors.white);
+      Fluttertoast.showToast(msg: translate("Answer_submitted_successfully"), backgroundColor: Colors.green, textColor: Colors.white);
       _replyController.text = '';
       setState(() {});
     } else {
-      Fluttertoast.showToast(
-          msg: translate("Answer_submission_failed"),
-          backgroundColor: Colors.red,
-          textColor: Colors.white);
+      Fluttertoast.showToast(msg: translate("Answer_submission_failed"), backgroundColor: Colors.red, textColor: Colors.white);
     }
   }
 
   askQuestions(BuildContext context, courseId) async {
     FocusScope.of(context).requestFocus(FocusNode());
-    var content =
-        Provider.of<ContentProvider>(context, listen: false).contentModel;
-    var userDetails =
-        Provider.of<UserProfile>(context, listen: false).profileInstance;
-    final res = await http.post(
-        Uri.parse("${APIData.submitQuestion}${APIData.secretKey}"),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer $authToken",
-          "Accept": "application/json"
-        },
-        body: {
-          "course_id": "$courseId",
-          "question": "${_askQuizController.text}",
-        });
+    var content = Provider.of<ContentProvider>(context, listen: false).contentModel;
+    var userDetails = Provider.of<UserProfile>(context, listen: false).profileInstance;
+    final res = await http.post(Uri.parse("${APIData.submitQuestion}${APIData.secretKey}"), headers: {
+      HttpHeaders.authorizationHeader: "Bearer $authToken",
+      "Accept": "application/json"
+    }, body: {
+      "course_id": "$courseId",
+      "question": "${_askQuizController.text}",
+    });
 
     if (res.statusCode == 200) {
       var response = json.decode(res.body);
@@ -124,27 +105,19 @@ class _QAScreenState extends State<QAScreen> {
         createdAt: DateTime.parse(newQues['created_at']),
         updatedAt: DateTime.parse(newQues['updated_at']),
       ));
-      Fluttertoast.showToast(
-          msg: translate("Question_submitted_successfully"),
-          backgroundColor: Colors.green,
-          textColor: Colors.white);
+      Fluttertoast.showToast(msg: translate("Question_submitted_successfully"), backgroundColor: Colors.green, textColor: Colors.white);
       _askQuizController.text = '';
       setState(() {});
       Navigator.pop(context);
     } else {
-      Fluttertoast.showToast(
-          msg: translate("Question_submission_failed"),
-          backgroundColor: Colors.red,
-          textColor: Colors.white);
+      Fluttertoast.showToast(msg: translate("Question_submission_failed"), backgroundColor: Colors.red, textColor: Colors.white);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     T.Theme mode = Provider.of<T.Theme>(context, listen: false);
-    var questions = Provider.of<ContentProvider>(context).contentModel != null
-        ? Provider.of<ContentProvider>(context).contentModel.questions
-        : [];
+    var questions = Provider.of<ContentProvider>(context).contentModel != null ? Provider.of<ContentProvider>(context).contentModel.questions : [];
     return Scaffold(
       backgroundColor: mode.backgroundColor,
       appBar: customAppBar(context, translate("Questions_Answers")),
@@ -201,7 +174,7 @@ class _QAScreenState extends State<QAScreen> {
                 ),
               ),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -214,7 +187,7 @@ class _QAScreenState extends State<QAScreen> {
                     ),
                   ),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     askQuestions(context, widget.courseDetails.course.id);
                   },
@@ -242,8 +215,7 @@ class _QAScreenState extends State<QAScreen> {
       ),
       body: ListView.builder(
           itemCount: questions.length,
-          padding:
-              EdgeInsets.only(left: 18.0, right: 18.0, top: 10, bottom: 5.0),
+          padding: EdgeInsets.only(left: 18.0, right: 18.0, top: 10, bottom: 5.0),
           itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.only(bottom: 24),
@@ -261,12 +233,8 @@ class _QAScreenState extends State<QAScreen> {
                           height: 50,
                           width: 50,
                           imageUrl: "${questions[index].imagepath}",
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  CircularProgressIndicator(
-                                      value: downloadProgress.progress),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                          progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
                   SizedBox(
                     width: 10.0,
@@ -297,9 +265,7 @@ class _QAScreenState extends State<QAScreen> {
                         Row(
                           children: [
                             Text(
-                              DateFormat.yMMMd()
-                                  .add_jm()
-                                  .format(questions[index].updatedAt),
+                              DateFormat.yMMMd().add_jm().format(questions[index].updatedAt),
                               style: new TextStyle(
                                 color: mode.titleTextColor.withOpacity(0.6),
                                 fontSize: 16,
@@ -314,23 +280,18 @@ class _QAScreenState extends State<QAScreen> {
                             ButtonTheme(
                               minWidth: 20,
                               height: 40,
-                              child: FlatButton.icon(
-                                padding: EdgeInsets.all(0.0),
+                              child: TextButton.icon(
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.all(0.0),
+                                ),
                                 onPressed: () {
-                                  var reply = Provider.of<ContentProvider>(
-                                          context,
-                                          listen: false)
-                                      .contentModel
-                                      .questions[index]
-                                      .answer;
+                                  var reply = Provider.of<ContentProvider>(context, listen: false).contentModel.questions[index].answer;
                                   showModalBottomSheet(
                                     context: context,
                                     isScrollControlled: true,
                                     builder: (context) => Container(
                                       color: Colors.white,
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              1.4,
+                                      height: MediaQuery.of(context).size.height / 1.4,
                                       child: Column(
                                         children: [
                                           Container(
@@ -339,8 +300,7 @@ class _QAScreenState extends State<QAScreen> {
                                               color: Colors.white,
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Color(0x1c2464)
-                                                      .withOpacity(0.30),
+                                                  color: Color(0x1c2464).withOpacity(0.30),
                                                   blurRadius: 25.0,
                                                   offset: Offset(0.0, 20.0),
                                                   spreadRadius: -15.0,
@@ -353,28 +313,21 @@ class _QAScreenState extends State<QAScreen> {
                                                 right: 8.0,
                                               ),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text(
                                                     translate("Answers_"),
                                                     style: TextStyle(
-                                                      color:
-                                                          mode.titleTextColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      color: mode.titleTextColor,
+                                                      fontWeight: FontWeight.w500,
                                                       fontSize: 18.0,
                                                     ),
                                                   ),
                                                   IconButton(
-                                                    padding:
-                                                        EdgeInsets.all(0.0),
+                                                    padding: EdgeInsets.all(0.0),
                                                     icon: Icon(
-                                                      CupertinoIcons
-                                                          .clear_thick,
-                                                      color:
-                                                          mode.titleTextColor,
+                                                      CupertinoIcons.clear_thick,
+                                                      color: mode.titleTextColor,
                                                     ),
                                                     onPressed: () {
                                                       Navigator.pop(context);
@@ -385,27 +338,16 @@ class _QAScreenState extends State<QAScreen> {
                                             ),
                                           ),
                                           Container(
-                                            height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    1.4 -
-                                                70,
+                                            height: MediaQuery.of(context).size.height / 1.4 - 70,
                                             child: ListView.builder(
                                               itemCount: reply.length,
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 18.0,
-                                                  vertical: 18.0),
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
+                                              padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
+                                              itemBuilder: (BuildContext context, int index) {
                                                 return Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    reply[index].imagepath ==
-                                                            null
+                                                    reply[index].imagepath == null
                                                         ? Image.asset(
                                                             "${reply[index].imagepath}",
                                                             height: 50,
@@ -414,39 +356,23 @@ class _QAScreenState extends State<QAScreen> {
                                                         : CachedNetworkImage(
                                                             height: 50,
                                                             width: 50,
-                                                            imageUrl:
-                                                                "${reply[index].imagepath}",
-                                                            progressIndicatorBuilder: (context,
-                                                                    url,
-                                                                    downloadProgress) =>
-                                                                CircularProgressIndicator(
-                                                                    value: downloadProgress
-                                                                        .progress),
-                                                            errorWidget:
-                                                                (context, url,
-                                                                        error) =>
-                                                                    Icon(Icons
-                                                                        .error),
+                                                            imageUrl: "${reply[index].imagepath}",
+                                                            progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                                                            errorWidget: (context, url, error) => Icon(Icons.error),
                                                           ),
                                                     SizedBox(
                                                       width: 10.0,
                                                     ),
                                                     Expanded(
                                                       child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [
                                                           Text(
                                                             "${reply[index].user}",
                                                             style: TextStyle(
                                                               fontSize: 20.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
+                                                              fontWeight: FontWeight.w700,
                                                             ),
                                                           ),
                                                           Text(
@@ -454,8 +380,7 @@ class _QAScreenState extends State<QAScreen> {
                                                             maxLines: 4,
                                                             style: TextStyle(
                                                               fontSize: 16.0,
-                                                              color: mode
-                                                                  .titleTextColor,
+                                                              color: mode.titleTextColor,
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -489,30 +414,20 @@ class _QAScreenState extends State<QAScreen> {
                             ),
                             InkWell(
                               child: Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+                                padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
                                 child: Text(
                                   translate("Reply_"),
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: mode.easternBlueColor),
+                                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: mode.easternBlueColor),
                                 ),
                               ),
                               onTap: () {
-                                var reply = Provider.of<ContentProvider>(
-                                        context,
-                                        listen: false)
-                                    .contentModel
-                                    .questions[index]
-                                    .answer;
+                                var reply = Provider.of<ContentProvider>(context, listen: false).contentModel.questions[index].answer;
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (context) => Container(
                                     color: Colors.white,
-                                    height: MediaQuery.of(context).size.height /
-                                        1.3,
+                                    height: MediaQuery.of(context).size.height / 1.3,
                                     child: Column(
                                       children: [
                                         Container(
@@ -521,8 +436,7 @@ class _QAScreenState extends State<QAScreen> {
                                             color: Colors.white,
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Color(0x1c2464)
-                                                    .withOpacity(0.30),
+                                                color: Color(0x1c2464).withOpacity(0.30),
                                                 blurRadius: 25.0,
                                                 offset: Offset(0.0, 20.0),
                                                 spreadRadius: -15.0,
@@ -535,9 +449,7 @@ class _QAScreenState extends State<QAScreen> {
                                               right: 8.0,
                                             ),
                                             child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
                                                   translate("Add_Answers"),
@@ -548,18 +460,13 @@ class _QAScreenState extends State<QAScreen> {
                                                   ),
                                                 ),
                                                 IconButton(
-                                                    padding:
-                                                        EdgeInsets.all(0.0),
+                                                    padding: EdgeInsets.all(0.0),
                                                     icon: Icon(
-                                                      CupertinoIcons
-                                                          .clear_thick,
-                                                      color:
-                                                          mode.titleTextColor,
+                                                      CupertinoIcons.clear_thick,
+                                                      color: mode.titleTextColor,
                                                     ),
                                                     onPressed: () {
-                                                      FocusScope.of(context)
-                                                          .requestFocus(
-                                                              FocusNode());
+                                                      FocusScope.of(context).requestFocus(FocusNode());
                                                       Navigator.pop(context);
                                                     })
                                               ],
@@ -567,14 +474,9 @@ class _QAScreenState extends State<QAScreen> {
                                           ),
                                         ),
                                         Container(
-                                          height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  1.3 -
-                                              70,
+                                          height: MediaQuery.of(context).size.height / 1.3 - 70,
                                           child: SingleChildScrollView(
-                                            child: answersList(reply,
-                                                questions[index].id, index),
+                                            child: answersList(reply, questions[index].id, index),
                                           ),
                                         ),
                                       ],
@@ -613,9 +515,7 @@ class _QAScreenState extends State<QAScreen> {
                   height: 50,
                   width: 50,
                   imageUrl: "${reply[i].imagepath}",
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          value: downloadProgress.progress),
+                  progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
           SizedBox(
@@ -658,8 +558,7 @@ class _QAScreenState extends State<QAScreen> {
                   child: TextFormField(
                     maxLines: 1,
                     controller: _replyController,
-                    decoration: InputDecoration(
-                        hintText: translate("Write_your_answer")),
+                    decoration: InputDecoration(hintText: translate("Write_your_answer")),
                     validator: (val) {
                       if (val.length == 0) {
                         return translate("Enter_answer");
@@ -675,10 +574,12 @@ class _QAScreenState extends State<QAScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                RaisedButton(
-                    color: mode.easternBlueColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: mode.easternBlueColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                     ),
                     child: Text(
                       translate("Submit_"),
@@ -688,8 +589,7 @@ class _QAScreenState extends State<QAScreen> {
                       final form = _formKey1.currentState;
                       form.save();
                       if (form.validate() == true) {
-                        addAnswers(
-                            index, widget.courseDetails.course.id, questionId);
+                        addAnswers(index, widget.courseDetails.course.id, questionId);
                       }
                     }),
               ],

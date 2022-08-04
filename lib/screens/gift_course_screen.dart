@@ -21,8 +21,7 @@ class GiftCourseScreen extends StatefulWidget {
 }
 
 class _GiftCourseScreenState extends State<GiftCourseScreen> {
-  Future<void> giftCheckout(
-      int userId, int courseId, dynamic coursePrice) async {
+  Future<void> giftCheckout(int userId, int courseId, dynamic coursePrice) async {
     print("User Id : $userId");
     print("Course Id : $courseId");
     print("Course Price : $coursePrice");
@@ -36,8 +35,7 @@ class _GiftCourseScreenState extends State<GiftCourseScreen> {
       context,
       PageTransition(
         type: PageTransitionType.rightToLeft,
-        child: PaymentGateway(
-            int.parse("$coursePrice"), int.parse("$coursePrice")),
+        child: PaymentGateway(int.parse("$coursePrice"), int.parse("$coursePrice")),
       ),
     );
   }
@@ -62,13 +60,7 @@ class _GiftCourseScreenState extends State<GiftCourseScreen> {
       );
     } catch (e) {
       print('Exception : $e');
-      Fluttertoast.showToast(
-          msg: translate("Failed_"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Failed_"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
     }
 
     if (response.statusCode == 200) {
@@ -78,13 +70,7 @@ class _GiftCourseScreenState extends State<GiftCourseScreen> {
       dynamic coursePrice = widget.coursePrice;
       await giftCheckout(userId, courseId, coursePrice);
     } else {
-      Fluttertoast.showToast(
-          msg: translate("Failed_"),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Fluttertoast.showToast(msg: translate("Failed_"), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
     }
   }
 
@@ -135,10 +121,7 @@ class _GiftCourseScreenState extends State<GiftCourseScreen> {
             ),
           ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelStyle: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey[500]),
+          labelStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.grey[500]),
         ),
       ),
     );
@@ -173,8 +156,10 @@ class _GiftCourseScreenState extends State<GiftCourseScreen> {
                 SizedBox(
                   height: 15.0,
                 ),
-                RaisedButton(
-                  color: Colors.red,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
@@ -198,17 +183,13 @@ class _GiftCourseScreenState extends State<GiftCourseScreen> {
                     child: isLoading
                         ? Center(
                             child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           )
                         : Center(
                             child: Text(
                               translate("Proceed_to_Checkout"),
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white),
+                              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: Colors.white),
                             ),
                           ),
                   ),

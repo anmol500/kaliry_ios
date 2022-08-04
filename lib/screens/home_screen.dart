@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:eclass/Widgets/zoom_meeting_list.dart';
- import 'package:eclass/localization/language_provider.dart';
+import 'package:eclass/localization/language_provider.dart';
 import 'package:eclass/provider/home_data_provider.dart';
 import 'package:eclass/provider/recent_course_provider.dart';
 import 'package:eclass/provider/wish_list_provider.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:lottie/lottie.dart';
+import '../widgets/Avartar.dart';
 import '../widgets/zoom_meeting_list.dart';
 import 'fact_slider.dart';
 import 'image_swiper.dart';
@@ -38,7 +40,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HttpService httpService = HttpService();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   bool _visible;
 
   Widget welcomeText(String name, String imageUrl, BuildContext context) {
@@ -88,11 +90,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   height: 70,
-                  child: CircleAvatar(
-                    radius: 35.0,
-                    backgroundColor: Color(0xFFF44A4A),
-                    backgroundImage: imageUrl == null ? AssetImage("assets/placeholder/avatar.png") : CachedNetworkImageProvider(APIData.userImage + imageUrl),
-                  ),
+                  width: 70,
+                  child: Container(
+                      height: 70,
+                      width: 70,
+                      child: Avatar(
+                        url: imageUrl,
+                      )),
+
+                  // child: CircleAvatar(
+                  //   radius: 35.0,
+                  //   child:
+                  //
+                  //   backgroundColor: Color(0xFFF44A4A),
+                  //   // backgroundImage: imageUrl == null ? AssetImage("assets/placeholder/avatar.png") : CachedNetworkImageProvider(APIData.userImage + imageUrl),
+                  // ),
                 ),
               ],
             ),
@@ -321,8 +333,6 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           : FeaturedCoursesList(featuredCoursesList, _visible),
 
-
-
       bundleCourses.length == 0
           ? SliverToBoxAdapter(
               child: SizedBox.shrink(),
@@ -429,12 +439,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   LanguageProvider languageProvider;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

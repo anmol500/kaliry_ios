@@ -20,7 +20,6 @@ import 'Screens/faq_screen.dart';
 import 'Screens/instructor_faq_screen.dart';
 import 'Screens/loading_screen.dart';
 import 'Screens/about_us_screen.dart';
-import 'Screens/became_instructor_screen.dart';
 import 'Screens/bundle_detail_screen.dart';
 import 'Screens/category_screen.dart';
 import 'Screens/child_category_screen.dart';
@@ -59,8 +58,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +66,7 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (_) => UserDetailsProvider()), // Fetch User Details
+        ChangeNotifierProvider(create: (_) => UserDetailsProvider()), // Fetch User Details
         ChangeNotifierProvider(create: (_) => T.Theme()), // Theme Data
         ChangeNotifierProvider(create: (_) => UserProfile()),
         ChangeNotifierProvider(create: (_) => WishListProvider()),
@@ -94,11 +91,7 @@ class MyApp extends StatelessWidget {
         state: LocalizationProvider.of(context).state,
         child: MaterialApp(
           navigatorObservers: <NavigatorObserver>[observer],
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            localizationDelegate
-          ],
+          localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, localizationDelegate],
           supportedLocales: localizationDelegate.supportedLocales,
           locale: localizationDelegate.currentLocale,
           home: token == null ? SignInScreen() : LoadingScreen(token),
@@ -119,7 +112,6 @@ class MyApp extends StatelessWidget {
             "/bundleCourseDetail": (context) => BundleDetailScreen(),
             "/filterScreen": (context) => FilterScreen(),
             '/notifications': (context) => NotificationScreen(),
-            '/becameInstructor': (context) => BecomeInstructor(),
             '/aboutUs': (context) => AboutUsScreen(),
             '/purchaseHistory': (context) => PurchaseHistoryScreen(),
             '/contactUs': (context) => ContactUsScreen(),

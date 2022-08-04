@@ -11,9 +11,7 @@ class CheckQuizResult extends StatelessWidget {
   final List<QuizQuestion> questions;
   final Map<int, dynamic> answers;
 
-  const CheckQuizResult(
-      {Key key, @required this.questions, @required this.answers})
-      : super(key: key);
+  const CheckQuizResult({Key key, @required this.questions, @required this.answers}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +32,8 @@ class CheckQuizResult extends StatelessWidget {
     if (index == questions.length) {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 15.0),
-        child: RaisedButton(
-          color: mode.easternBlueColor,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: mode.easternBlueColor),
           child: Text(
             translate("Home_"),
             style: TextStyle(color: Colors.white),
@@ -57,42 +55,25 @@ class CheckQuizResult extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x1c2464).withOpacity(0.30),
-              blurRadius: 25.0,
-              offset: Offset(0.0, 20.0),
-              spreadRadius: -15.0)
-        ],
+        boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 25.0, offset: Offset(0.0, 20.0), spreadRadius: -15.0)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             HtmlUnescape().convert(question.question),
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 16.0),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16.0),
           ),
           SizedBox(height: 5.0),
           Text(
             HtmlUnescape().convert("${answers[index]}"),
-            style: TextStyle(
-                color: correct ? Colors.green : Colors.red,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(color: correct ? Colors.green : Colors.red, fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 5.0),
           correct
               ? Container()
               : Text.rich(
-                  TextSpan(children: [
-                    TextSpan(text: "${translate("Answer_")}: "),
-                    TextSpan(
-                        text: HtmlUnescape().convert(question.correct),
-                        style: TextStyle(fontWeight: FontWeight.w500))
-                  ]),
+                  TextSpan(children: [TextSpan(text: "${translate("Answer_")}: "), TextSpan(text: HtmlUnescape().convert(question.correct), style: TextStyle(fontWeight: FontWeight.w500))]),
                   style: TextStyle(fontSize: 16.0),
                 )
         ],

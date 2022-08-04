@@ -38,8 +38,7 @@ class _BundleDetailScreenState extends State<BundleDetailScreen> {
     );
   }
 
-  Widget bundleDetails(
-      BundleCourses bundleDetail, bool purchased, String currency) {
+  Widget bundleDetails(BundleCourses bundleDetail, bool purchased, String currency) {
     return SliverToBoxAdapter(
       child: Stack(children: [
         Container(
@@ -62,10 +61,7 @@ class _BundleDetailScreenState extends State<BundleDetailScreen> {
                   bundleDetail.title,
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22.0,
-                      color: Color(0xff404455)),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Color(0xff404455)),
                 ),
               ),
               SizedBox(
@@ -75,30 +71,17 @@ class _BundleDetailScreenState extends State<BundleDetailScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (bundleDetail.discountPrice != null)
-                      Text(
-                          "$selectedCurrency ${(num.parse(bundleDetail.discountPrice.toString()) * selectedCurrencyRate)}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22.0,
-                              color: Color(0xff404455))),
+                    if (bundleDetail.discountPrice != null) Text("$selectedCurrency ${(num.parse(bundleDetail.discountPrice.toString()) * selectedCurrencyRate)}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Color(0xff404455))),
                     SizedBox(
                       width: 10.0,
                     ),
                     Text(
                       "$selectedCurrency ${(num.parse(bundleDetail.price.toString()) * selectedCurrencyRate)}",
                       style: TextStyle(
-                          color: bundleDetail.discountPrice != null
-                              ? Color(0xff943f4654)
-                              : Color(0xff404455),
-                          fontSize:
-                              bundleDetail.discountPrice != null ? 16.0 : 22.0,
-                          decoration: bundleDetail.discountPrice != null
-                              ? TextDecoration.lineThrough
-                              : null,
-                          fontWeight: bundleDetail.discountPrice != null
-                              ? FontWeight.normal
-                              : FontWeight.bold),
+                          color: bundleDetail.discountPrice != null ? Color(0xff943f4654) : Color(0xff404455),
+                          fontSize: bundleDetail.discountPrice != null ? 16.0 : 22.0,
+                          decoration: bundleDetail.discountPrice != null ? TextDecoration.lineThrough : null,
+                          fontWeight: bundleDetail.discountPrice != null ? FontWeight.normal : FontWeight.bold),
                     )
                   ],
                 ),
@@ -108,19 +91,9 @@ class _BundleDetailScreenState extends State<BundleDetailScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(
-                        child:
-                            fun(translate("Created_by"), translate("Admin_"))),
-                    Expanded(
-                        child: fun(
-                            translate("Last_Updated"),
-                            bundleDetail.updatedAt == null
-                                ? ""
-                                : DateFormat.yMMMd().format(
-                                    DateTime.parse(bundleDetail.updatedAt)))),
-                    Expanded(
-                        child: fun(translate("No_of_Courses"),
-                            bundleDetail.courseId.length.toString())),
+                    Expanded(child: fun(translate("Created_by"), translate("Admin_"))),
+                    Expanded(child: fun(translate("Last_Updated"), bundleDetail.updatedAt == null ? "" : DateFormat.yMMMd().format(DateTime.parse(bundleDetail.updatedAt)))),
+                    Expanded(child: fun(translate("No_of_Courses"), bundleDetail.courseId.length.toString())),
                   ],
                 ),
               ),
@@ -179,10 +152,7 @@ class _BundleDetailScreenState extends State<BundleDetailScreen> {
   Widget bundleCoursesList(List<Course> courses) {
     return SliverToBoxAdapter(
       child: Container(
-        height: MediaQuery.of(context).size.height /
-            (MediaQuery.of(context).orientation == Orientation.landscape
-                ? 1.5
-                : 2.5),
+        height: MediaQuery.of(context).size.height / (MediaQuery.of(context).orientation == Orientation.landscape ? 1.5 : 2.5),
         child: ListView.builder(
           padding: EdgeInsets.only(left: 18.0, bottom: 23.0, top: 5.0),
           itemBuilder: (context, idx) => CourseListItem(courses[idx], true),
@@ -202,8 +172,7 @@ class _BundleDetailScreenState extends State<BundleDetailScreen> {
     );
   }
 
-  Widget scaffoldBody(BundleCourses bundleDetail, bool purchased,
-      List<Course> courses, dynamic currency) {
+  Widget scaffoldBody(BundleCourses bundleDetail, bool purchased, List<Course> courses, dynamic currency) {
     return Container(
         color: Color(0xffE5E5EF),
         child: CustomScrollView(
@@ -211,9 +180,7 @@ class _BundleDetailScreenState extends State<BundleDetailScreen> {
             appBar(bundleDetail.id, bundleDetail.title),
             block(),
             bundleDetails(bundleDetail, purchased, currency),
-            if (!purchased)
-              AddAndBuyBundle(
-                  bundleDetail.id, bundleDetail.discountPrice, _scaffoldKey),
+            if (!purchased) AddAndBuyBundle(bundleDetail.id, bundleDetail.discountPrice, _scaffoldKey),
             headings(translate("Details_"), Color(0xff0083A4)),
             bundleDescription(bundleDetail.detail),
             headings(translate("Courses_in_Bundle"), Color(0xff0083A4)),
@@ -228,12 +195,11 @@ class _BundleDetailScreenState extends State<BundleDetailScreen> {
   }
 
   Color txtcolor;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   @override
   Widget build(BuildContext context) {
     BundleCourses bundleDetail = ModalRoute.of(context).settings.arguments;
-    String currency =
-        Provider.of<HomeDataProvider>(context).homeModel.currency.currency;
+    String currency = Provider.of<HomeDataProvider>(context).homeModel.currency.currency;
     var courses = Provider.of<CoursesProvider>(context);
     List<Course> bundleCourses = courses.getCourses(bundleDetail.courseId);
 

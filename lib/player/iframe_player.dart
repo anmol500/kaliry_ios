@@ -14,19 +14,13 @@ class IFramePlayerScreen extends StatefulWidget {
 }
 
 class _IFramePlayerScreenState extends State<IFramePlayerScreen> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
   var playerResponse;
-  GlobalKey sc = new GlobalKey<ScaffoldState>();
+  GlobalKey sc = new GlobalKey<ScaffoldMessengerState>();
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight
-    ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown, DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     super.dispose();
   }
 
@@ -41,7 +35,7 @@ class _IFramePlayerScreenState extends State<IFramePlayerScreen> {
       return JavascriptChannel(
           name: 'Toaster',
           onMessageReceived: (JavascriptMessage message) {
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(message.message)),
             );
           });

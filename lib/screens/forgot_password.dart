@@ -10,7 +10,7 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController emailCtrl = new TextEditingController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   bool isloading = false;
   HttpService http = new HttpService();
 
@@ -41,22 +41,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               logopng(),
               TextField(
                 controller: emailCtrl,
-                decoration:
-                    InputDecoration(hintText: "Enter your registered E-mail"),
+                decoration: InputDecoration(hintText: "Enter your registered E-mail"),
               ),
-              RaisedButton(
-                color: Colors.red,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
                 onPressed: () async {
                   setState(() {
                     isloading = true;
                   });
                   bool x = await http.forgotEmailReq(emailCtrl.text);
                   if (x)
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Codereset(emailCtrl.text)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Codereset(emailCtrl.text)));
                   else
-                    _scaffoldKey.currentState.showSnackBar(
-                        SnackBar(content: Text("Invalid details")));
+                    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Invalid details")));
                   setState(() {
                     isloading = false;
                   });
@@ -66,14 +65,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         height: 25,
                         width: 25,
                         child: CircularProgressIndicator(
-                          valueColor:
-                              new AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       )
                     : Text(
                         "Submit",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, color: Colors.white),
+                        style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
                       ),
               )
             ],

@@ -14,7 +14,7 @@ class Codereset extends StatefulWidget {
 
 class _CoderesetState extends State<Codereset> {
   TextEditingController codeCtrl = new TextEditingController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   Widget scaffoldBody() {
     return Align(
       alignment: Alignment.topCenter,
@@ -26,23 +26,21 @@ class _CoderesetState extends State<Codereset> {
             children: [
               TextField(
                 controller: codeCtrl,
-                decoration: InputDecoration(
-                    hintText: "Check your mail id & enter code here.."),
+                decoration: InputDecoration(hintText: "Check your mail id & enter code here.."),
               ),
-              RaisedButton(
-                color: Colors.red,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
                 onPressed: () async {
                   setState(() {
                     isloading = true;
                   });
-                  bool x = await HttpService()
-                      .verifyCode(widget.email, codeCtrl.text);
+                  bool x = await HttpService().verifyCode(widget.email, codeCtrl.text);
                   if (x) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PasswordReset(0)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PasswordReset(0)));
                   } else
-                    _scaffoldKey.currentState
-                        .showSnackBar(SnackBar(content: Text("Invalid code")));
+                    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Invalid code")));
                   setState(() {
                     isloading = false;
                   });
@@ -52,14 +50,12 @@ class _CoderesetState extends State<Codereset> {
                         height: 25,
                         width: 25,
                         child: CircularProgressIndicator(
-                          valueColor:
-                              new AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       )
                     : Text(
                         "Submit",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, color: Colors.white),
+                        style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
                       ),
               )
             ],
@@ -73,8 +69,7 @@ class _CoderesetState extends State<Codereset> {
     T.Theme mode = Provider.of<T.Theme>(context);
     return Scaffold(
       backgroundColor: mode.bgcolor,
-      appBar: secondaryAppBar(
-          mode.notificationIconColor, mode.bgcolor, context, "Forgot Password"),
+      appBar: secondaryAppBar(mode.notificationIconColor, mode.bgcolor, context, "Forgot Password"),
       body: scaffoldBody(),
     );
   }

@@ -32,7 +32,6 @@ dependencies:
 
   cashfree_pg: ^2.0.10+30
   wakelock: ^0.5.6
-  flutterwave_payment: ^0.0.4+2
   sqflite: ^2.0.3
   path: ^1.8.1
   url_launcher: ^6.1.4
@@ -84,6 +83,8 @@ dependencies:
   audioplayers: ^1.0.1
   flutter_zoom_sdk: ^1.1.0+4
   cupertino_icons: ^1.0.5
+  lottie: ^1.4.0
+
 
 dev_dependencies:
   change_app_package_name: ^1.1.0
@@ -110,6 +111,7 @@ flutter:
     - assets/icons/
     - assets/placeholder/
     - assets/i18n/
+    - assets/
 
 
   fonts:

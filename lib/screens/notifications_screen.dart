@@ -62,7 +62,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     }
   }
 
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   bool noticlear = false;
 
   Widget appBar(BuildContext context, String title) {
@@ -75,10 +75,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       backgroundColor: const Color(0xFFF1F3F8),
       title: Text(
         title,
-        style: TextStyle(
-            fontSize: 18.0,
-            color: mode.notificationIconColor,
-            fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: 18.0, color: mode.notificationIconColor, fontWeight: FontWeight.w600),
       ),
       actions: [
         Padding(
@@ -87,8 +84,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ? Container(
                   child: Center(
                     child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(0xffF44A4A)),
+                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xffF44A4A)),
                     ),
                   ),
                 )
@@ -119,8 +115,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Navigator.of(context)
-              .pushNamed('/notificationDetail', arguments: data);
+          Navigator.of(context).pushNamed('/notificationDetail', arguments: data);
         },
         child: Container(
           padding: EdgeInsets.all(10.0),
@@ -182,10 +177,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       data.id,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: txtColor,
-                          fontSize: 17),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: txtColor, fontSize: 17),
                     ),
                     SizedBox(
                       height: 5,
@@ -236,20 +228,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 children: [
                   Text(
                     translate("No_Notifications"),
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF3F4654)),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xFF3F4654)),
                   ),
                   Container(
                     width: 250,
                     child: Text(
-                      translate(
-                          "You_are_all_caught_up_Check_back_later_for_new_notifications"),
+                      translate("You_are_all_caught_up_Check_back_later_for_new_notifications"),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Color(0xFF3F4654).withOpacity(0.8)),
+                      style: TextStyle(fontSize: 15, color: Color(0xFF3F4654).withOpacity(0.8)),
                     ),
                   ),
                 ],
@@ -270,10 +256,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
         itemBuilder: (context, idx) {
           return Container(
             margin: EdgeInsets.only(bottom: 10.0),
-            decoration: BoxDecoration(
-                color: tileColor, borderRadius: BorderRadius.circular(15.0)),
-            child:
-                notificationTile(data[idx].data, txtColor, data[idx].createdAt),
+            decoration: BoxDecoration(color: tileColor, borderRadius: BorderRadius.circular(15.0)),
+            child: notificationTile(data[idx].data, txtColor, data[idx].createdAt),
           );
         },
       ),
@@ -286,8 +270,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.length > 0)
-            return notificationList(
-                snapshot.data, mode.tilecolor, mode.txtcolor);
+            return notificationList(snapshot.data, mode.tilecolor, mode.txtcolor);
           else
             return Center(child: whenEmpty());
         } else

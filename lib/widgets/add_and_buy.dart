@@ -15,7 +15,7 @@ import 'triangle.dart';
 class AddAndBuy extends StatefulWidget {
   final int courseId;
   final String cprice;
-  final GlobalKey<ScaffoldState> _scaffoldKey;
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey;
   final FullCourse details;
 
   AddAndBuy(this.courseId, this.cprice, this.details, this._scaffoldKey);

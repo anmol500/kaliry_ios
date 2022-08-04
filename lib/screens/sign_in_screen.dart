@@ -23,7 +23,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   int _duration;
   bool _visible = false;
   Animation<double> animation;
@@ -129,19 +129,21 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
   Widget signInButton(width, scaffoldKey) {
     var userDetails = Provider.of<UserDetailsProvider>(context, listen: false);
     return Container(
+      width: width - 50,
       child: ButtonTheme(
-        minWidth: width - 50,
-        child: RaisedButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(3),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(3),
+            ),
+            padding: EdgeInsets.all(15.0),
+            disabledBackgroundColor: Colors.white.withOpacity(0.5),
           ),
-          padding: EdgeInsets.all(15.0),
           child: Text(
             "Sign In",
             style: TextStyle(fontFamily: "Mada", fontSize: 22.0, color: Color(0xFF181632)),
           ),
-          color: Colors.white,
-          disabledColor: Colors.white.withOpacity(0.5),
           onPressed: userDetails.getSignInEmail
               ? () async {
                   FocusScope.of(context).requestFocus(FocusNode());
@@ -252,12 +254,14 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
           Expanded(
             child: ButtonTheme(
               height: 52,
-              child: RaisedButton.icon(
+              child: ElevatedButton.icon(
                 icon: Icon(
                   FontAwesomeIcons.google,
                   color: Colors.red,
                 ),
-                color: Colors.white,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                ),
                 onPressed: () async {
                   signInWithGoogle().then((result) {
                     if (result != null) {
@@ -303,12 +307,14 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
           Expanded(
             child: ButtonTheme(
               height: 52,
-              child: RaisedButton.icon(
+              child: ElevatedButton.icon(
                 icon: Icon(
                   FontAwesomeIcons.user,
                   color: Colors.black54,
                 ),
-                color: Colors.white,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                ),
                 onPressed: () async {
                   signInAnonymously().then((result) {
                     if (result != null) {
@@ -362,7 +368,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
   //         Expanded(
   //             child: ButtonTheme(
   //           height: 52.0,
-  //           child: RaisedButton.icon(
+  //           child: ElevatedButton.icon(
   //               color: Color(0xFF4267B2),
   //               icon: Icon(
   //                 FontAwesomeIcons.facebook,
@@ -556,9 +562,9 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: FractionalOffset.bottomCenter,
-                  stops: [0.0, 0.25, 0.45, 0.70],
+                  stops: [0.0, 0.35, 0.45, 0.70],
                   colors: [
-                    Color(0xFF181632).withOpacity(0.03),
+                    Color(0xFF181632).withOpacity(0.00),
                     Color(0xFF181632).withOpacity(0.7),
                     Color(0xFF181632).withOpacity(0.9),
                     Color(0xFF181632),
@@ -650,7 +656,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
           style: TextStyle(fontFamily: 'Mada', color: Color(0xFF3F4654)),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -658,7 +664,7 @@ class _SignInScreenState extends State<SignInScreen> with TickerProviderStateMix
                 "Cancel".toUpperCase(),
                 style: TextStyle(color: Color(0xFF0284A2), fontWeight: FontWeight.w600),
               )),
-          FlatButton(
+          TextButton(
               onPressed: () {
                 SystemNavigator.pop();
                 Navigator.pop(context);

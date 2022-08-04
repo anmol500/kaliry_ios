@@ -1,46 +1,38 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import '../common/apidata.dart';
 import '../model/instructor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../common/theme.dart' as T;
+import 'Avartar.dart';
 
-class InstructorWidget extends StatelessWidget {
+class InstructorWidget extends StatefulWidget {
   final Instructor details;
 
   InstructorWidget(this.details);
 
-  Widget showImage() {
-    return Container(
-      height: 90,
-      width: 90,
-      margin: EdgeInsets.only(top: 2.0),
-      alignment: Alignment.topLeft,
-      child: CachedNetworkImage(
-        imageUrl: "${APIData.userImage}${details.user.userImg}",
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        placeholder: (context, url) => Image.asset(
-          "assets/placeholder/avatar.png",
-          width: 120,
-          height: 120,
-        ),
-        errorWidget: (context, url, error) => Image.asset(
-          "assets/placeholder/avatar.png",
-          width: 120,
-          height: 120,
-        ),
-      ),
-    );
+  @override
+  State<InstructorWidget> createState() => _InstructorWidgetState();
+}
+
+class _InstructorWidgetState extends State<InstructorWidget> with TickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
   }
 
   Widget showDetails(BuildContext context) {
@@ -54,7 +46,7 @@ class InstructorWidget extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Text(
-                details.user.fname + " " + details.user.lname,
+                widget.details.user.fname + " " + widget.details.user.lname,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -73,8 +65,7 @@ class InstructorWidget extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.of(context)
-                          .pushNamed('/InstructorScreen', arguments: details);
+                      Navigator.of(context).pushNamed('/InstructorScreen', arguments: widget.details);
                     },
                     child: Text(
                       translate("View_More"),
@@ -100,8 +91,7 @@ class InstructorWidget extends StatelessWidget {
             SizedBox(
               width: 10.0,
             ),
-            Text(details.enrolledUser.toString() + " ${translate("Students_")}",
-                style: TextStyle(color: Color(0xff8A8C99), fontSize: 16.0))
+            Text(widget.details.enrolledUser.toString() + " ${translate("Students_")}", style: TextStyle(color: Color(0xff8A8C99), fontSize: 16.0))
           ],
         ),
         SizedBox(
@@ -117,8 +107,7 @@ class InstructorWidget extends StatelessWidget {
             SizedBox(
               width: 10.0,
             ),
-            Text(details.courseCount.toString() + " ${translate("Courses_")}",
-                style: TextStyle(color: Color(0xff8A8C99), fontSize: 16.0))
+            Text(widget.details.courseCount.toString() + " ${translate("Courses_")}", style: TextStyle(color: Color(0xff8A8C99), fontSize: 16.0))
           ],
         ),
       ],
@@ -136,7 +125,7 @@ class InstructorWidget extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: showImage(),
+            child: Avatar(url: "${APIData.userImage}${widget.details.user.userImg}"),
           ),
           SizedBox(
             width: 7.0,

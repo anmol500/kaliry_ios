@@ -35,8 +35,7 @@ class _FilterScreenState extends State<FilterScreen> {
               color: txtColor,
             ),
             onPressed: () {
-              FilterDetailsProvider details =
-                  Provider.of<FilterDetailsProvider>(context, listen: false);
+              FilterDetailsProvider details = Provider.of<FilterDetailsProvider>(context, listen: false);
               details.setdefault();
               setState(() {});
             })
@@ -54,8 +53,7 @@ class _FilterScreenState extends State<FilterScreen> {
         onChanged: (value) {
           setState(() {
             _values = value;
-            FilterDetailsProvider details =
-                Provider.of<FilterDetailsProvider>(context, listen: false);
+            FilterDetailsProvider details = Provider.of<FilterDetailsProvider>(context, listen: false);
             details.minprice = value.start.toInt();
             details.maxprice = value.end.toInt();
           });
@@ -70,13 +68,11 @@ class _FilterScreenState extends State<FilterScreen> {
         children: [
           Text(
             _values.start.toInt().toString(),
-            style: TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 16, color: txtColor),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: txtColor),
           ),
           Text(
             _values.end.toInt().toString(),
-            style: TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 16, color: txtColor),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: txtColor),
           ),
         ],
       ),
@@ -89,10 +85,7 @@ class _FilterScreenState extends State<FilterScreen> {
       alignment: Alignment.centerLeft,
       child: Text(
         txt,
-        style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: Color(0xff0083A4)),
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xff0083A4)),
       ),
     );
   }
@@ -113,8 +106,7 @@ class _FilterScreenState extends State<FilterScreen> {
           onChanged: (value) {
             setState(() {
               valueDur = value;
-              FilterDetailsProvider details =
-                  Provider.of<FilterDetailsProvider>(context, listen: false);
+              FilterDetailsProvider details = Provider.of<FilterDetailsProvider>(context, listen: false);
               details.durationval = value;
             });
           }));
@@ -136,8 +128,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 children: [
                   rangelabels(txtcolor),
                   RangeSlider(
-                    values: RangeValues(
-                        details.minprice * 1.0, details.maxprice * 1.0),
+                    values: RangeValues(details.minprice * 1.0, details.maxprice * 1.0),
                     min: 0,
                     max: 100000,
                     activeColor: Colors.red,
@@ -145,9 +136,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     onChanged: (values) {
                       setState(() {
                         _currentRangeValues = values;
-                        FilterDetailsProvider details =
-                            Provider.of<FilterDetailsProvider>(context,
-                                listen: false);
+                        FilterDetailsProvider details = Provider.of<FilterDetailsProvider>(context, listen: false);
                         details.minprice = values.start.toInt();
                         details.maxprice = values.end.toInt();
                       });
@@ -164,15 +153,16 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
             ),
             Container(
-              child: RaisedButton(
-                color: Colors.red,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(
                   translate("Apply_"),
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
                 ),
               ),
             )
@@ -192,11 +182,7 @@ class _FilterScreenState extends State<FilterScreen> {
     // TODO: implement initState
     super.initState();
     languageProvider = Provider.of<LanguageProvider>(context, listen: false);
-    dura = [
-      "0-2 ${translate("hours_")}",
-      "3-6 ${translate("hours_")}",
-      "6+ ${translate("hours_")}"
-    ];
+    dura = ["0-2 ${translate("hours_")}", "3-6 ${translate("hours_")}", "6+ ${translate("hours_")}"];
   }
 
   @override

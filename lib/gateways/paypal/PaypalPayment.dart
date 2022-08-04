@@ -15,13 +15,7 @@ class PaypalPayment extends StatefulWidget {
   final String userEmail;
   final String payAmount;
 
-  PaypalPayment(
-      {this.onFinish,
-      this.currency,
-      this.userFirstName,
-      this.userLastName,
-      this.userEmail,
-      this.payAmount});
+  PaypalPayment({this.onFinish, this.currency, this.userFirstName, this.userLastName, this.userEmail, this.payAmount});
 
   @override
   State<StatefulWidget> createState() {
@@ -30,7 +24,7 @@ class PaypalPayment extends StatefulWidget {
 }
 
 class PaypalPaymentState extends State<PaypalPayment> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   String checkoutUrl;
   String executeUrl;
   String accessToken;
@@ -39,12 +33,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
   List<String> payResponse = [];
 
   // you can change default currency according to your need
-  Map<dynamic, dynamic> defaultCurrency = {
-    "symbol": "USD",
-    "decimalDigits": 2,
-    "symbolBeforeTheNumber": true,
-    "currency": "USD"
-  };
+  Map<dynamic, dynamic> defaultCurrency = {"symbol": "USD", "decimalDigits": 2, "symbolBeforeTheNumber": true, "currency": "USD"};
 
   bool isEnableShipping = false;
   bool isEnableAddress = false;
@@ -58,25 +47,16 @@ class PaypalPaymentState extends State<PaypalPayment> {
     Future.delayed(Duration.zero, () async {
       try {
         accessToken = await services.getAccessToken(
-          clientId: Provider.of<PaymentAPIProvider>(context, listen: false)
-              .paymentApi
-              .paypalClientId,
-          secret: Provider.of<PaymentAPIProvider>(context, listen: false)
-              .paymentApi
-              .paypalSecret,
-          mode: Provider.of<PaymentAPIProvider>(context, listen: false)
-              .paymentApi
-              .paypalMode,
+          clientId: Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.paypalClientId,
+          secret: Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.paypalSecret,
+          mode: Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.paypalMode,
         );
 
-        final transactions = getOrderParams(widget.userFirstName,
-            widget.userLastName, "Courses", widget.payAmount);
+        final transactions = getOrderParams(widget.userFirstName, widget.userLastName, "Courses", widget.payAmount);
         final res = await services.createPaypalPayment(
           transactions,
           accessToken,
-          Provider.of<PaymentAPIProvider>(context, listen: false)
-              .paymentApi
-              .paypalMode,
+          Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.paypalMode,
         );
         if (res != null) {
           setState(() {
@@ -103,15 +83,9 @@ class PaypalPaymentState extends State<PaypalPayment> {
 
   int quantity = 1;
 
-  Map<String, dynamic> getOrderParams(
-      userFirstName, userLastName, itemName, itemPrice) {
+  Map<String, dynamic> getOrderParams(userFirstName, userLastName, itemName, itemPrice) {
     List items = [
-      {
-        "name": itemName,
-        "quantity": quantity,
-        "price": itemPrice,
-        "currency": defaultCurrency["currency"]
-      }
+      {"name": itemName, "quantity": quantity, "price": itemPrice, "currency": defaultCurrency["currency"]}
     ];
 
     // checkout invoice details
@@ -132,29 +106,14 @@ class PaypalPaymentState extends State<PaypalPayment> {
           "amount": {
             "total": itemPrice,
             "currency": defaultCurrency["currency"],
-            "details": {
-              "subtotal": itemPrice,
-              "shipping": shippingCost,
-              "shipping_discount": ((-1.0) * shippingDiscountCost).toString()
-            }
+            "details": {"subtotal": itemPrice, "shipping": shippingCost, "shipping_discount": ((-1.0) * shippingDiscountCost).toString()}
           },
           "description": "The payment transaction description.",
-          "payment_options": {
-            "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
-          },
+          "payment_options": {"allowed_payment_method": "INSTANT_FUNDING_SOURCE"},
           "item_list": {
             "items": items,
             if (isEnableShipping && isEnableAddress)
-              "shipping_address": {
-                "recipient_name": userFirstName + " " + userLastName,
-                "line1": addressStreet,
-                "line2": "",
-                "city": addressCity,
-                "country_code": addressCountry,
-                "postal_code": addressZipCode,
-                "phone": addressPhoneNumber,
-                "state": addressState
-              },
+              "shipping_address": {"recipient_name": userFirstName + " " + userLastName, "line1": addressStreet, "line2": "", "city": addressCity, "country_code": addressCountry, "postal_code": addressZipCode, "phone": addressPhoneNumber, "state": addressState},
           }
         }
       ],
@@ -169,16 +128,11 @@ class PaypalPaymentState extends State<PaypalPayment> {
       iconTheme: IconThemeData(color: Colors.black),
       elevation: 0.0,
       centerTitle: true,
-      leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context)),
+      leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.pop(context)),
       backgroundColor: Colors.white,
       title: Text(
         title,
-        style: TextStyle(
-            fontSize: 18.0,
-            color: mode.notificationIconColor,
-            fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: 18.0, color: mode.notificationIconColor, fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -198,15 +152,8 @@ class PaypalPaymentState extends State<PaypalPayment> {
               final uri = Uri.parse(request.url);
               final payerID = uri.queryParameters['PayerID'];
               if (payerID != null) {
-                services
-                    .executePayment(executeUrl, payerID, accessToken)
-                    .then((List<String> ls) {
-                  print("paymentMethod: " +
-                      payerID +
-                      "  " +
-                      accessToken +
-                      " " +
-                      ls[0]);
+                services.executePayment(executeUrl, payerID, accessToken).then((List<String> ls) {
+                  print("paymentMethod: " + payerID + "  " + accessToken + " " + ls[0]);
                   setState(() {
                     payResponse = ls;
                   });

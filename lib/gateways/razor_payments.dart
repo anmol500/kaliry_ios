@@ -122,9 +122,12 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              primary: Color.fromRGBO(72, 163, 198, 1.0),
             ),
             onPressed: () {
               if (payment.paymentApi.razorpayKey == null) {
@@ -134,7 +137,6 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
                 openCheckout();
               }
             },
-            color: Color.fromRGBO(72, 163, 198, 1.0),
             child: Text(
               "Continue Pay",
               style: TextStyle(color: Colors.white),

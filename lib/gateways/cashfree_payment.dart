@@ -32,30 +32,13 @@ class _CashfreePaymentState extends State<CashfreePayment> {
     homeDataProvider = Provider.of<HomeDataProvider>(context, listen: false);
     await Provider.of<UserProfile>(context, listen: false).fetchUserProfile();
     setState(() {
-      fName = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .fname;
-      lName = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .lname;
-      email = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .email;
-      phone = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .mobile;
-      address = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .address;
-      cashfreeAppID = Provider.of<PaymentAPIProvider>(context, listen: false)
-          .paymentApi
-          .allKeys
-          .cASHFREEAPPID;
-      cashfreeSecretKey =
-          Provider.of<PaymentAPIProvider>(context, listen: false)
-              .paymentApi
-              .allKeys
-              .cASHFREESECRETKEY;
+      fName = Provider.of<UserProfile>(context, listen: false).profileInstance.fname;
+      lName = Provider.of<UserProfile>(context, listen: false).profileInstance.lname;
+      email = Provider.of<UserProfile>(context, listen: false).profileInstance.email;
+      phone = Provider.of<UserProfile>(context, listen: false).profileInstance.mobile;
+      address = Provider.of<UserProfile>(context, listen: false).profileInstance.address;
+      cashfreeAppID = Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.allKeys.cASHFREEAPPID;
+      cashfreeSecretKey = Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.allKeys.cASHFREESECRETKEY;
 
       customerName = "$fName $lName";
       customerPhone = "$phone";
@@ -83,21 +66,12 @@ class _CashfreePaymentState extends State<CashfreePayment> {
   bool generatingToken = true;
 
   Future<void> generateToken() async {
-    print(
-        'CashFree App ID :-> $cashfreeAppID, \nCashFree Secret Key :-> $cashfreeSecretKey');
+    print('CashFree App ID :-> $cashfreeAppID, \nCashFree Secret Key :-> $cashfreeSecretKey');
 
     var response = await http.post(
-      Uri.parse(
-          "https://test.cashfree.com/api/v2/cftoken/order"), // User api.cashfree.com for production
-      headers: {
-        "x-client-id": "$cashfreeAppID",
-        "x-client-secret": "$cashfreeSecretKey"
-      },
-      body: jsonEncode({
-        "orderId": "$orderId",
-        "orderAmount": "$orderAmount",
-        "orderCurrency": "$orderCurrency"
-      }),
+      Uri.parse("https://test.cashfree.com/api/v2/cftoken/order"), // User api.cashfree.com for production
+      headers: {"x-client-id": "$cashfreeAppID", "x-client-secret": "$cashfreeSecretKey"},
+      body: jsonEncode({"orderId": "$orderId", "orderAmount": "$orderAmount", "orderCurrency": "$orderCurrency"}),
     );
     print('Cashfree Status Code : ${response.statusCode}');
     print('Cashfree Response : ${response.body}');
@@ -122,7 +96,7 @@ class _CashfreePaymentState extends State<CashfreePayment> {
     loadData();
   }
 
-  var scaffoldKey = GlobalKey<ScaffoldState>();
+  var scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
   //Replace with actual values
   String orderId;
@@ -130,8 +104,7 @@ class _CashfreePaymentState extends State<CashfreePayment> {
   String orderAmount;
   String tokenData = "TOKEN_DATA"; // Generated Token.
   String customerName;
-  String orderNote =
-      "Order_Note"; // A help text to make customers know more about the order.
+  String orderNote = "Order_Note"; // A help text to make customers know more about the order.
   String orderCurrency;
   String appId;
   String customerPhone;
@@ -149,31 +122,31 @@ class _CashfreePaymentState extends State<CashfreePayment> {
           : Column(
               children: [
                 Center(
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text('WEB CHECKOUT'),
                     onPressed: () => makePayment(),
                   ),
                 ),
                 Center(
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text('SEAMLESS PAYPAL'),
                     onPressed: () => seamlessPayPalPayment(),
                   ),
                 ),
                 Center(
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text('UPI INTENT'),
                     onPressed: () => makeUpiPayment(),
                   ),
                 ),
                 Center(
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text('GET INSTALLED UPI APPS'),
                     onPressed: () => getUPIApps(),
                   ),
                 ),
                 Center(
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text('SEAMLESS UPI INTENT'),
                     onPressed: () => seamlessUPIIntent(),
                   ),
@@ -214,8 +187,7 @@ class _CashfreePaymentState extends State<CashfreePayment> {
             if ('$value' == 'SUCCESS') {
               sendPaymentDetails(orderId, "Cashfree");
             } else {
-              Fluttertoast.showToast(
-                  msg: "Your transaction ${value.toString().toLowerCase()}.");
+              Fluttertoast.showToast(msg: "Your transaction ${value.toString().toLowerCase()}.");
             }
           }
         },
@@ -251,8 +223,7 @@ class _CashfreePaymentState extends State<CashfreePayment> {
             if ('$value' == 'SUCCESS') {
               sendPaymentDetails(orderId, "Cashfree");
             } else {
-              Fluttertoast.showToast(
-                  msg: "Your transaction ${value.toString().toLowerCase()}.");
+              Fluttertoast.showToast(msg: "Your transaction ${value.toString().toLowerCase()}.");
             }
           }
         },
@@ -285,8 +256,7 @@ class _CashfreePaymentState extends State<CashfreePayment> {
             if ('$value' == 'SUCCESS') {
               sendPaymentDetails(orderId, "Cashfree");
             } else {
-              Fluttertoast.showToast(
-                  msg: "Your transaction ${value.toString().toLowerCase()}.");
+              Fluttertoast.showToast(msg: "Your transaction ${value.toString().toLowerCase()}.");
             }
           }
         },
@@ -322,8 +292,7 @@ class _CashfreePaymentState extends State<CashfreePayment> {
             if ('$value' == 'SUCCESS') {
               sendPaymentDetails(orderId, "Cashfree");
             } else {
-              Fluttertoast.showToast(
-                  msg: "Your transaction ${value.toString().toLowerCase()}.");
+              Fluttertoast.showToast(msg: "Your transaction ${value.toString().toLowerCase()}.");
             }
           }
         },
@@ -334,8 +303,7 @@ class _CashfreePaymentState extends State<CashfreePayment> {
   sendPaymentDetails(transactionId, paymentMethod) async {
     try {
       goToDialog2();
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
       var sendResponse;
 
@@ -432,8 +400,7 @@ class _CashfreePaymentState extends State<CashfreePayment> {
           barrierDismissible: false,
           builder: (context) => WillPopScope(
               child: AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25.0))),
                 backgroundColor: Colors.white,
                 title: Text(
                   "Saving Payment Info",

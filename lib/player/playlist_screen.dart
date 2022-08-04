@@ -52,7 +52,7 @@ class PlayListScreen extends StatefulWidget {
 
 class _PlayListScreenState extends State<PlayListScreen> with WidgetsBindingObserver {
   bool showBottomNavigation = false;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
   AnimationController animationController;
   TabController tabController;
   var newIndex = 1;
@@ -411,7 +411,7 @@ class _PlayListScreenState extends State<PlayListScreen> with WidgetsBindingObse
                                     content: Text(translate("Do_you_want_to_delete_download")),
                                     actions: [
                                       // ignore: deprecated_member_use
-                                      FlatButton(
+                                      TextButton(
                                         child: Text(translate("OK_")),
                                         onPressed: () {
                                           downloader.delete(downloader.items[index].task);
@@ -419,7 +419,7 @@ class _PlayListScreenState extends State<PlayListScreen> with WidgetsBindingObse
                                         },
                                       ),
                                       // ignore: deprecated_member_use
-                                      FlatButton(
+                                      TextButton(
                                         child: Text(translate("Cancel_")),
                                         onPressed: () {
                                           Navigator.of(context).pop();
@@ -1227,7 +1227,7 @@ class _PlayListScreenState extends State<PlayListScreen> with WidgetsBindingObse
       return JavascriptChannel(
           name: 'Toaster',
           onMessageReceived: (JavascriptMessage message) {
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(message.message)),
             );
           });
@@ -1312,6 +1312,7 @@ class _PlayListScreenState extends State<PlayListScreen> with WidgetsBindingObse
 
                               if (x != null || res) {
                                 Provider.of<CoursesProvider>(context, listen: false).setProgress(int.parse(widget.sections[0].sectionDetails.courseId), fChecked, x);
+
                                 _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Sections_Marking_Completed"))));
                               } else {
                                 _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Sections_Marking_Failed"))));

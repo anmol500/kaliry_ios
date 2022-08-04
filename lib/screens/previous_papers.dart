@@ -13,12 +13,11 @@ class PreviousPapers extends StatefulWidget {
 }
 
 class _PreviousPapersState extends State<PreviousPapers> {
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
-    ContentProvider contentProvider =
-        Provider.of<ContentProvider>(context, listen: false);
+    ContentProvider contentProvider = Provider.of<ContentProvider>(context, listen: false);
 
     return Scaffold(
       key: scaffoldKey,
@@ -56,8 +55,7 @@ class _PreviousPapersState extends State<PreviousPapers> {
                           Container(
                             width: 200,
                             child: Text(
-                              translate(
-                                  "There_is_no_Previous_Paper_to_be_shown"),
+                              translate("There_is_no_Previous_Paper_to_be_shown"),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 15,
@@ -86,8 +84,7 @@ class _PreviousPapersState extends State<PreviousPapers> {
                         size: 50,
                       ),
                       title: Text(
-                        contentProvider.contentModel.papers[index].title
-                            .toUpperCase(),
+                        contentProvider.contentModel.papers[index].title.toUpperCase(),
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -105,8 +102,7 @@ class _PreviousPapersState extends State<PreviousPapers> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => PreviousPapersLoadingScreen(
-                              fileURL: contentProvider
-                                  .contentModel.papers[index].filepath,
+                              fileURL: contentProvider.contentModel.papers[index].filepath,
                             ),
                           ),
                         );

@@ -219,7 +219,7 @@ class _SettingScreenState extends State<SettingScreen> {
   //logout of current session
   Widget logoutSection(Color headingColor) {
     return Container(
-      child: FlatButton(
+      child: TextButton(
           onPressed: () async {
             setState(() {
               logoutLoading = true;
@@ -260,7 +260,7 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
 
   bool isLoop = false;
   Future<void> initLoop() async {

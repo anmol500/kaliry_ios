@@ -18,11 +18,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     T.Theme mode = Provider.of<T.Theme>(context);
-    var quiz = Provider.of<ContentProvider>(context, listen: false)
-                .contentModel !=
-            null
-        ? Provider.of<ContentProvider>(context, listen: false).contentModel.quiz
-        : [];
+    var quiz = Provider.of<ContentProvider>(context, listen: false).contentModel != null ? Provider.of<ContentProvider>(context, listen: false).contentModel.quiz : [];
     return Scaffold(
       appBar: customAppBar(context, translate("Quiz_")),
       backgroundColor: mode.backgroundColor,
@@ -50,8 +46,7 @@ class HomePage extends StatelessWidget {
                         children: [
                           Text(
                             translate("Quiz_is_not_available"),
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                           ),
                           Container(
                             width: 200,
@@ -310,21 +305,14 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildCategoryItem(BuildContext context, int index) {
-    var quiz =
-        Provider.of<ContentProvider>(context, listen: false).contentModel.quiz;
+    var quiz = Provider.of<ContentProvider>(context, listen: false).contentModel.quiz;
     T.Theme mode = Provider.of<T.Theme>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15.0),
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x1c2464).withOpacity(0.30),
-              blurRadius: 25.0,
-              offset: Offset(0.0, 20.0),
-              spreadRadius: -15.0)
-        ],
+        boxShadow: [BoxShadow(color: Color(0x1c2464).withOpacity(0.30), blurRadius: 25.0, offset: Offset(0.0, 20.0), spreadRadius: -15.0)],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -337,8 +325,7 @@ class HomePage extends StatelessWidget {
             textAlign: TextAlign.start,
             maxLines: 1,
             wrapWords: false,
-            style: TextStyle(
-                color: mode.titleTextColor, fontWeight: FontWeight.w700),
+            style: TextStyle(color: mode.titleTextColor, fontWeight: FontWeight.w700),
           ),
           AutoSizeText(
             "${quiz[index].description}",
@@ -347,9 +334,7 @@ class HomePage extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             wrapWords: false,
-            style: TextStyle(
-                color: mode.titleTextColor.withOpacity(0.9),
-                fontWeight: FontWeight.w500),
+            style: TextStyle(color: mode.titleTextColor.withOpacity(0.9), fontWeight: FontWeight.w500),
           ),
           Divider(),
           Row(
@@ -360,10 +345,7 @@ class HomePage extends StatelessWidget {
                 flex: 2,
                 child: Text(
                   translate("Type_"),
-                  style: TextStyle(
-                      color: mode.titleTextColor.withOpacity(0.8),
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w500),
+                  style: TextStyle(color: mode.titleTextColor.withOpacity(0.8), fontSize: 18.0, fontWeight: FontWeight.w500),
                 ),
               ),
               Expanded(
@@ -377,13 +359,8 @@ class HomePage extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Text(
-                  "${quiz[index].type}" == "1"
-                      ? translate("Subjective_")
-                      : translate("Objective_"),
-                  style: TextStyle(
-                      color: mode.titleTextColor.withOpacity(0.8),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                  "${quiz[index].type}" == "1" ? translate("Subjective_") : translate("Objective_"),
+                  style: TextStyle(color: mode.titleTextColor.withOpacity(0.8), fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
             ],
@@ -399,10 +376,7 @@ class HomePage extends StatelessWidget {
                 flex: 2,
                 child: Text(
                   translate("Per_Question_Mark"),
-                  style: TextStyle(
-                      color: mode.titleTextColor.withOpacity(0.8),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                  style: TextStyle(color: mode.titleTextColor.withOpacity(0.8), fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
               Expanded(
@@ -417,10 +391,7 @@ class HomePage extends StatelessWidget {
                 flex: 2,
                 child: Text(
                   "${quiz[index].perQuestionMark}",
-                  style: TextStyle(
-                      color: mode.titleTextColor.withOpacity(0.8),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                  style: TextStyle(color: mode.titleTextColor.withOpacity(0.8), fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
             ],
@@ -436,10 +407,7 @@ class HomePage extends StatelessWidget {
                 flex: 2,
                 child: Text(
                   translate("Due_Days"),
-                  style: TextStyle(
-                      color: mode.titleTextColor.withOpacity(0.8),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                  style: TextStyle(color: mode.titleTextColor.withOpacity(0.8), fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
               Expanded(
@@ -454,10 +422,7 @@ class HomePage extends StatelessWidget {
                 flex: 2,
                 child: Text(
                   "${quiz[index].dueDays}",
-                  style: TextStyle(
-                      color: mode.titleTextColor.withOpacity(0.8),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                  style: TextStyle(color: mode.titleTextColor.withOpacity(0.8), fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
             ],
@@ -475,8 +440,8 @@ class HomePage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  child: RaisedButton(
-                    color: mode.easternBlueColor,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: mode.easternBlueColor),
                     onPressed: () async {
                       if (quiz[index].questions.length == 0) {
                         print("Questions are not available!");
@@ -513,8 +478,8 @@ class HomePage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  child: RaisedButton(
-                    color: mode.easternBlueColor,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: mode.easternBlueColor),
                     onPressed: () {
                       if (quiz[index].questions.length == 0) {
                         print("Questions are not available!");

@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eclass/provider/home_data_provider.dart';
 import 'package:eclass/provider/visible_provider.dart';
 import 'package:eclass/services/http_services.dart';
+import 'package:eclass/widgets/Avartar.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:lottie/lottie.dart';
 import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
 import '../common/apidata.dart';
@@ -25,15 +27,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircleAvatar(
-              radius: 38.0,
-              backgroundColor: Colors.white,
-              backgroundImage: user.profileInstance.userImg == null
-                  ? AssetImage("assets/placeholder/avatar.png")
-                  : CachedNetworkImageProvider(
-                      APIData.userImage + "${user.profileInstance.userImg}",
-                    ),
-            ),
+            Container(
+                height: 70,
+                width: 70,
+                child: Avatar(
+                  url: APIData.userImage + "${user.profileInstance.userImg}",
+                )),
             SizedBox(
               height: 5.0,
             ),
@@ -199,12 +198,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   bool logoutLoading = false;
   //logout of current session
   Widget logoutSection(Color headingColor) {
     return Container(
-      child: FlatButton(
+      child: TextButton(
         onPressed: () async {
           setState(() {
             logoutLoading = true;

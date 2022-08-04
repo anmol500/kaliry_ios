@@ -21,7 +21,7 @@ import '../Widgets/instructorwidget.dart';
 import '../Widgets/lessons.dart';
 import '../Widgets/utils.dart';
 import '../common/apidata.dart';
- import '../common/theme.dart' as T;
+import '../common/theme.dart' as T;
 import '../model/course.dart';
 import '../model/course_with_progress.dart';
 import '../model/include.dart';
@@ -850,7 +850,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with TickerProv
   }
 
   final HttpService httpService = HttpService();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {

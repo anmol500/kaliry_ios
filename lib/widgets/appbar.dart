@@ -57,10 +57,7 @@ AppBar customAppBar(BuildContext context, String title) {
     backgroundColor: title != "" ? const Color(0xFFF1F3F8) : Colors.white,
     title: Text(
       title,
-      style: TextStyle(
-          fontSize: 18.0,
-          color: mode.notificationIconColor,
-          fontWeight: FontWeight.w600),
+      style: TextStyle(fontSize: 18.0, color: mode.notificationIconColor, fontWeight: FontWeight.w600),
     ),
     actions: [],
   );

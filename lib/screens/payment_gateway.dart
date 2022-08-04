@@ -1,17 +1,12 @@
 import 'package:eclass/gateways/cashfree_payment.dart';
 import 'package:eclass/gateways/instamojo_payment.dart';
-import 'package:eclass/gateways/manual_payment_list.dart';
 import 'package:eclass/gateways/paypal/PaypalPayment.dart';
-import 'package:eclass/gateways/rave_payment.dart';
-import 'package:eclass/gateways/stripe_payment.dart';
 import 'package:eclass/gateways/upi_payment.dart';
 import 'package:eclass/model/payment_gateway_model.dart';
 import 'package:eclass/provider/manual_payment_provider.dart';
 import 'package:eclass/provider/user_profile.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import '../Widgets/utils.dart';
-import '../gateways/bank_payment.dart';
-import '../gateways/paytm_payment_page1.dart';
 import '../gateways/razor_payments.dart';
 import '../provider/home_data_provider.dart';
 import '../provider/payment_api_provider.dart';
@@ -74,30 +69,13 @@ class _PaymentGatewayState extends State<PaymentGateway> {
               )),
         ),
         onTap: () {
-          if (id == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => StripePaymentScreen(amount: payAbleAmount),
-              ),
-            );
-          } else if (id == 2) {
+          if (id == 2) {
             onPayWithPayPal(homeData, user);
           } else if (id == 3) {
             if ("${homeData.homeModel.currency.currency}" == "NGN" || "${homeData.homeModel.currency.currency}" == "GHS") {
             } else {
               Fluttertoast.showToast(msg: translate("Supported_only_NGN_GHS_currency"));
             }
-          } else if (id == 4) {
-            Fluttertoast.showToast(msg: translate("Supported_only_live_mode"));
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PaytmPaymentPage(
-                  amount: payAbleAmount,
-                ),
-              ),
-            );
           } else if (id == 5) {
             Navigator.push(
               context,
@@ -116,17 +94,6 @@ class _PaymentGatewayState extends State<PaymentGateway> {
                 ),
               ),
             );
-          } else if (id == 7) {
-          } else if (id == 71) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RavePayment(
-                  amount: payAbleAmount,
-                ),
-              ),
-            );
-          } else if (id == 72) {
           } else if (id == 73) {
             Navigator.push(
               context,
@@ -142,22 +109,6 @@ class _PaymentGatewayState extends State<PaymentGateway> {
               MaterialPageRoute(
                 builder: (context) => UPIPayment(
                   amount: payAbleAmount,
-                ),
-              ),
-            );
-          } else if (id == 8) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BankPayment(),
-              ),
-            );
-          } else if (id == 9) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ManualPaymentList(
-                  manualPaymentModel: manualPaymentProvider.manualPaymentModel,
                 ),
               ),
             );

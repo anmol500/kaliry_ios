@@ -42,19 +42,15 @@ class _QuizCustomDialogState extends State<QuizCustomDialog> {
           ),
           processing
               ? CircularProgressIndicator()
-              : RaisedButton(
+              : ElevatedButton(
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                    padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                     child: Text(
                       translate("Start_Now"),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w600),
+                      style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w600),
                     ),
                   ),
-                  color: mode.easternBlueColor,
+                  style: ElevatedButton.styleFrom(primary: mode.easternBlueColor),
                   onPressed: () {
                     _startQuiz();
                   },
@@ -69,10 +65,7 @@ class _QuizCustomDialogState extends State<QuizCustomDialog> {
       processing = true;
     });
     try {
-      var questions = Provider.of<ContentProvider>(context, listen: false)
-          .contentModel
-          .quiz[widget.index]
-          .questions;
+      var questions = Provider.of<ContentProvider>(context, listen: false).contentModel.quiz[widget.index].questions;
       List<QuizQuestion> quizQuestions = questions;
       Navigator.pop(context);
       if (questions.length < 1) {
@@ -99,8 +92,7 @@ class _QuizCustomDialogState extends State<QuizCustomDialog> {
         context,
         MaterialPageRoute(
           builder: (_) => ErrorPage(
-            message:
-                "${translate("Cant_reach_the_servers")}, \n ${translate("Please_check_your_internet_connection")}",
+            message: "${translate("Cant_reach_the_servers")}, \n ${translate("Please_check_your_internet_connection")}",
           ),
         ),
       );

@@ -137,6 +137,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with TickerProv
         "Authorization": "Bearer $authToken",
       },
     );
+
     FullCourse courseDetails;
     if (res.statusCode == 200) {
       log("Course Details : ${res.body}");
@@ -154,6 +155,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with TickerProv
       Future.delayed(Duration(seconds: 3));
       Navigator.pop(context);
     }
+
     return courseDetails;
   }
 
@@ -539,6 +541,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with TickerProv
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           FullCourse details = snapshot.data;
+          print('=======s======');
+          print(details.course.url.toString());
+          print(details.course.video.toString());
 
           return Container(
             color: Color(0xffE5E5EF),
@@ -553,8 +558,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with TickerProv
                 if (!purchased && type == "0") AddAndBuy(details.course.id, details.course.price, details, _scaffoldKey),
                 if (purchased) ResumeAndStart(details, markedChpIds, purchaseDate),
 
-                if (details.course.url != null && details.course.video == null) previewVideoPlayer(details.course.url),
-                if (details.course.url == null && details.course.video != null) previewVideoPlayer(APIData.previewVideoLink + details.course.video),
+                if (details.course.url != null && details.course.video == null) previewVideoPlayer(Uri.encodeFull(details.course.url)),
+                if (details.course.url == null && details.course.video != null) previewVideoPlayer(Uri.encodeFull(APIData.previewVideoLink + details.course.video.toString())),
 
                 // what will you learn
                 if (details.course.whatlearns.length == 0)

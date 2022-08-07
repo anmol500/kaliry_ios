@@ -39,6 +39,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         playerYoutube = true;
       });
     } else {
+      print('=======s======initializePlayer');
+      print(widget.url);
+
       _controller = VideoPlayerController.network(
         widget.url,
       )..initialize().then((_) {
@@ -128,10 +131,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         /* decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
         ),*/
-        height: MediaQuery.of(context).size.height /
-            (MediaQuery.of(context).orientation == Orientation.landscape
-                ? 1.6
-                : 4.0),
+        height: MediaQuery.of(context).size.height / (MediaQuery.of(context).orientation == Orientation.landscape ? 1.6 : 4.0),
         child: Stack(children: [
           playview(),
           if (!playerYoutube)
@@ -163,13 +163,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 child: Container(
                   width: 47.0,
                   height: 47.0,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(32.0),
-                      border: Border.all(color: Color(0xff0083A4), width: 1.3),
-                      color: Colors.black38),
-                  child: (playerYoutube
-                          ? _controller2.value.isPlaying
-                          : _controller.value.isPlaying)
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(32.0), border: Border.all(color: Color(0xff0083A4), width: 1.3), color: Colors.black38),
+                  child: (playerYoutube ? _controller2.value.isPlaying : _controller.value.isPlaying)
                       ? Icon(
                           Icons.pause,
                           color: val,

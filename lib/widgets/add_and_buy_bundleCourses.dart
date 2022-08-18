@@ -41,9 +41,9 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
         if (!inCart) {
           bool success = await crt.addToCartBundle(widget.bundleId.toString(), context);
           if (success)
-            widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Bundle_added_to_cart"))));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Bundle_added_to_cart"))));
           else
-            widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Bundle_addition_to_cart_failed"))));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Bundle_addition_to_cart_failed"))));
         } else
           Navigator.push(
               context,
@@ -108,7 +108,7 @@ class _AddAndBuyBundleState extends State<AddAndBuyBundle> {
                           pageInd: 3,
                         )));
           } else {
-            widget._scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Something_went_wrong"))));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Something_went_wrong"))));
           }
         } else
           Navigator.push(

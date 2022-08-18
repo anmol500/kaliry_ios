@@ -113,12 +113,12 @@ class _CartScreenState extends State<CartScreen> {
         couponName = couponCtrl.text;
         isCouponApplied = true;
       });
-      _scaffoldKey.currentState.showSnackBar(validCouponSnackBar);
+      ScaffoldMessenger.of(context).showSnackBar(validCouponSnackBar);
     } else {
       setState(() {
         couponApplyLoading = false;
       });
-      _scaffoldKey.currentState.showSnackBar(invalidCouponSnackBar);
+      ScaffoldMessenger.of(context).showSnackBar(invalidCouponSnackBar);
     }
   }
 
@@ -310,7 +310,7 @@ class _CartScreenState extends State<CartScreen> {
                           Provider.of<Visible>(context, listen: false).toggleVisible(false);
                           Navigator.of(context).pushNamed('/SignIn');
                         } else {
-                          _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
                         }
                       }
                     },
@@ -420,7 +420,7 @@ class _CartScreenState extends State<CartScreen> {
                                 });
                                 bool val = await crt.removeFromCart(detail.courseId, context);
                                 if (val) {
-                                  _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
                                 }
                                 setState(() {
                                   isLoadingDelItemId = -1;
@@ -489,10 +489,9 @@ class _CartScreenState extends State<CartScreen> {
               height: 5.0,
             ),
             TextButton(
-
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                ),
+                backgroundColor: Colors.red,
+              ),
               onPressed: () {
                 Navigator.push(
                     context,
@@ -609,7 +608,7 @@ class _CartScreenState extends State<CartScreen> {
                                   bool val = await crt.removeFromCart(cartCourseList[i].id, context);
                                   if (val) {
                                     cartCourseList.removeWhere((element) => element.id == cartCourseList[i].id);
-                                    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
                                   }
                                   setState(() {
                                     isLoadingDelItemId = -1;
@@ -725,7 +724,7 @@ class _CartScreenState extends State<CartScreen> {
                                   bool val = await CartApiCall().removeBundleFromCart(cartBundleList[i].id.toString(), context, cartBundleList[i]);
                                   if (val) {
                                     cartBundleList.removeWhere((element) => element.id == cartBundleList[i].id);
-                                    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Item_deleted_from_your_cart"))));
                                   }
                                   setState(() {
                                     isLoadingDelItemId = -1;

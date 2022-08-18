@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700, color: Color(0xFF3F4654)),
                             ),
                             Text(
-                              name + "!",
+                              name.split(' ').first + "!",
                               style: TextStyle(
                                 fontSize: 28.0,
                                 fontWeight: FontWeight.w600,
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 70,
                       width: 70,
                       child: Avatar(
-                        url: imageUrl,
+                        url: APIData.userImage.toString() + imageUrl.toString(),
                       )),
 
                   // child: CircleAvatar(

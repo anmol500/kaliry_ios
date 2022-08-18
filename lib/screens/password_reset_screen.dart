@@ -120,13 +120,13 @@ class _PasswordResetState extends State<PasswordReset> {
             });
             if (ispassed) {
               SnackBar snackbar = SnackBar(content: Text(translate("Password_Reset_Successfully")));
-              _scaffoldKey.currentState.showSnackBar(snackbar);
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
               if (widget.medium == 0) {
                 Timer(Duration(seconds: 2), () => Navigator.of(context).pushNamed('/SignIn'));
               }
             } else if (!ispassed) {
               SnackBar snackbar = SnackBar(content: Text(translate("Password_Reset_Failed")));
-              _scaffoldKey.currentState.showSnackBar(snackbar);
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
           }
         },

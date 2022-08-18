@@ -71,6 +71,7 @@ dependencies:
   paytm: ^3.0.1
   youtube_player_iframe: ^2.3.0
   flutter_inappwebview: ^5.4.3+7
+  nb_utils: ^4.6.20
   better_player:
     path: local/better_player-0.0.79
   webview_flutter: ^3.0.4

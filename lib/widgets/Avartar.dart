@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class Avatar extends StatefulWidget {
   const Avatar({Key key, this.url}) : super(key: key);
@@ -34,18 +35,10 @@ class _AvatarState extends State<Avatar> with TickerProviderStateMixin {
       width: 90,
       margin: EdgeInsets.only(top: 2.0),
       alignment: Alignment.topLeft,
-      child: CachedNetworkImage(
-        imageUrl: widget.url,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        placeholder: (context, url) => Lottie.asset(
+      child: Image.network(
+        widget.url,
+        fit: BoxFit.cover,
+        errorBuilder: (context, url, error) => Lottie.asset(
           'assets/avatarLottie.json',
           controller: _controller,
           onLoaded: (composition) {
@@ -54,16 +47,7 @@ class _AvatarState extends State<Avatar> with TickerProviderStateMixin {
               ..repeat();
           },
         ),
-        errorWidget: (context, url, error) => Lottie.asset(
-          'assets/avatarLottie.json',
-          controller: _controller,
-          onLoaded: (composition) {
-            _controller
-              ..duration = composition.duration
-              ..repeat();
-          },
-        ),
-      ),
+      ).cornerRadiusWithClipRRect(100),
     );
   }
 }

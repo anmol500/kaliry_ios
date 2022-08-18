@@ -28,8 +28,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
       var selectedCurrency1 = await storage.containsKey(key: 'selectedCurrency');
       var selectedCurrencyRate1 = await storage.containsKey(key: 'selectedCurrencyRate');
       var r = await storage.read(key: 'selectedCurrencyRate');
-      if (selectedCurrency1 && selectedCurrencyRate1 && r.toString() != 'null') {
-        print('loading screeenn :' + selectedCurrencyRate1.toString());
+      if (selectedCurrency1 && selectedCurrencyRate1) {
+        print('loading screeenn :' + selectedCurrencyRate1.toString() + (await storage.read(key: 'selectedCurrencyRate')).toString());
         selectedCurrency = await storage.read(key: 'selectedCurrency');
         selectedCurrencyRate = int.parse(await storage.read(key: 'selectedCurrencyRate'));
       } else {

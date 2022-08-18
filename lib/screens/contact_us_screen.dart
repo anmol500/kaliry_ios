@@ -79,10 +79,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           });
           if (isPassed) {
             SnackBar snackBar = SnackBar(content: Text(translate("Form_submitted_successfully")));
-            _scaffoldKey.currentState.showSnackBar(snackBar);
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
           } else if (!isPassed) {
             SnackBar snackBar = SnackBar(content: Text(translate("Form_submission_failed")));
-            _scaffoldKey.currentState.showSnackBar(snackBar);
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         }
       },

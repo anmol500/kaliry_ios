@@ -1313,9 +1313,9 @@ class _PlayListScreenState extends State<PlayListScreen> with WidgetsBindingObse
                               if (x != null || res) {
                                 Provider.of<CoursesProvider>(context, listen: false).setProgress(int.parse(widget.sections[0].sectionDetails.courseId), fChecked, x);
 
-                                _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Sections_Marking_Completed"))));
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Sections_Marking_Completed"))));
                               } else {
-                                _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Sections_Marking_Failed"))));
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Sections_Marking_Failed"))));
                               }
                               setState(() {
                                 isLoadingMark = false;

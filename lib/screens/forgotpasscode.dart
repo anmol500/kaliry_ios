@@ -40,7 +40,7 @@ class _CoderesetState extends State<Codereset> {
                   if (x) {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => PasswordReset(0)));
                   } else
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Invalid code")));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid code")));
                   setState(() {
                     isloading = false;
                   });

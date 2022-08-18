@@ -39,9 +39,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         playerYoutube = true;
       });
     } else {
-      print('=======s======initializePlayer');
-      print(widget.url);
-
       _controller = VideoPlayerController.network(
         widget.url,
       )..initialize().then((_) {

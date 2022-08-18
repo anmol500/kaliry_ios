@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:eclass/common/global.dart';
 import 'package:eclass/model/zoom_meeting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +44,9 @@ class HomeDataProvider with ChangeNotifier {
 
     if (res.statusCode == 200) {
       homeModel = HomeModel.fromJson(json.decode(res.body));
+
+      storage.write(key: 'selectedCurrencyRate', value: homeModel.currency.id.toString());
+      storage.write(key: 'selectedCurrency', value: homeModel.currency.currency.toString());
       generateLists(homeModel, context);
       for (int i = 0; i < homeModel.category.length; i++) {
         categoryMap[homeModel.category[i].id] = homeModel.category[i].title;

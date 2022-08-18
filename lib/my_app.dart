@@ -7,6 +7,7 @@ import 'package:eclass/localization/language_provider.dart';
 import 'package:eclass/provider/manual_payment_provider.dart';
 import 'package:eclass/provider/terms_policy_provider.dart';
 import 'package:eclass/provider/watchlist_provider.dart';
+import 'package:eclass/screens/became_instructor_screen.dart';
 import 'package:eclass/screens/currency_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -108,6 +109,7 @@ class MyApp extends StatelessWidget {
             '/subCategory': (context) => SubCategoryScreen(),
             '/childCategory': (context) => ChildCategoryScreen(),
             '/forgotPassword': (context) => ForgotPassword(),
+            '/becameInstructor': (context) => BecomeInstructor(),
             '/editProfile': (context) => EditProfile(),
             "/bundleCourseDetail": (context) => BundleDetailScreen(),
             "/filterScreen": (context) => FilterScreen(),

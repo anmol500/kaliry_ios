@@ -369,9 +369,9 @@ class _CourseDetailMenuScreenState extends State<CourseDetailMenuScreen> {
         } else if (idx == 4) {
           bool x = await flagInappropriateContent();
           if (x) {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Complaint_received_We_will_check_it"))));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Complaint_received_We_will_check_it"))));
           } else {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Complaint_sending_failed_Retry_later"))));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Complaint_sending_failed_Retry_later"))));
           }
         } else if (idx == 3) {
           WishListProvider wishListProvider = Provider.of<WishListProvider>(context, listen: false);

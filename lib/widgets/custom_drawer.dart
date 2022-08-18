@@ -7,6 +7,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
+import '../Screens/edit_profile.dart';
 import '../common/apidata.dart';
 import '../provider/user_profile.dart';
 import 'package:flutter/material.dart';
@@ -19,64 +20,69 @@ class CustomDrawer extends StatefulWidget {
 
 class _CustomDrawerState extends State<CustomDrawer> {
   Widget drawerHeader(UserProfile user) {
-    return DrawerHeader(
-      child: Container(
-        padding: EdgeInsets.all(1.0),
-        height: 100,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-                height: 70,
-                width: 70,
-                child: Avatar(
-                  url: APIData.userImage + "${user.profileInstance.userImg}",
-                )),
-            SizedBox(
-              height: 5.0,
-            ),
-            FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(
-                user.profileInstance.fname + " " + user.profileInstance.lname,
-                style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (contet) => EditProfile()));
+      },
+      child: DrawerHeader(
+        child: Container(
+          padding: EdgeInsets.all(1.0),
+          height: 100,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  height: 70,
+                  width: 70,
+                  child: Avatar(
+                    url: APIData.userImage + "${user.profileInstance.userImg}",
+                  )),
+              SizedBox(
+                height: 5.0,
               ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(
-                user.profileInstance.email,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: user.profileInstance.email.length > 35
-                      ? 11.0
-                      : user.profileInstance.email.length > 20
-                          ? 14
-                          : 16.0,
-                  fontStyle: FontStyle.italic,
-                  letterSpacing: 0.2,
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  user.profileInstance.fname + " " + user.profileInstance.lname,
+                  style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700),
                 ),
               ),
+              SizedBox(
+                height: 5.0,
+              ),
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  user.profileInstance.email,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: user.profileInstance.email.length > 35
+                        ? 11.0
+                        : user.profileInstance.email.length > 20
+                            ? 14
+                            : 16.0,
+                    fontStyle: FontStyle.italic,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
+            Color(0xFF6E1A52),
+            Color(0xFFF44A4A),
+          ]),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x1c2464).withOpacity(0.30),
+              blurRadius: 15.0,
+              offset: Offset(0.0, 10.0),
             ),
           ],
         ),
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-          Color(0xFF6E1A52),
-          Color(0xFFF44A4A),
-        ]),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x1c2464).withOpacity(0.30),
-            blurRadius: 15.0,
-            offset: Offset(0.0, 10.0),
-          ),
-        ],
       ),
     );
   }
@@ -130,6 +136,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, "/downloads");
+            },
+          ),
+          ListTile(
+            title: Text(
+              translate("Become_an_Instructor"),
+              style: TextStyle(fontSize: 16.0),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/becameInstructor");
             },
           ),
           ListTile(
@@ -216,7 +232,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             Provider.of<Visible>(context, listen: false).toggleVisible(false);
             Navigator.of(context).pushNamed('/SignIn');
           } else {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translate("Logout_failed"))));
           }
         },
         child: logoutLoading

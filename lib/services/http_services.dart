@@ -28,15 +28,13 @@ class Access with ChangeNotifier {
 
 class HttpService {
   Future<List<FaqElement>> fetchUserFaq() async {
-    var response =
-        await http.get(Uri.parse("${APIData.userFaq}${APIData.secretKey}"));
+    var response = await http.get(Uri.parse("${APIData.userFaq}${APIData.secretKey}"));
     var jsonResponse = (convert.jsonDecode(response.body)['faq']) as List;
     return jsonResponse.map((faq) => FaqElement.fromJson(faq)).toList();
   }
 
   Future<List<FaqElement>> fetchInstructorFaq() async {
-    var response = await http
-        .get(Uri.parse("${APIData.instructorFaq}${APIData.secretKey}"));
+    var response = await http.get(Uri.parse("${APIData.instructorFaq}${APIData.secretKey}"));
     var jsonResponse = (convert.jsonDecode(response.body)['faq']) as List;
     return jsonResponse.map((faq) => FaqElement.fromJson(faq)).toList();
   }
@@ -58,8 +56,7 @@ class HttpService {
   Future<bool> forgotEmailReq(String _email) async {
     String url = APIData.forgotPassword;
 
-    http.Response res =
-        await http.post(Uri.parse(url), body: {"email": _email});
+    http.Response res = await http.post(Uri.parse(url), body: {"email": _email});
     if (res.statusCode == 200)
       return true;
     else
@@ -69,18 +66,15 @@ class HttpService {
   Future<bool> verifyCode(String email, String code) async {
     String url = APIData.forgotPassword;
 
-    http.Response res =
-        await http.post(Uri.parse(url), body: {"email": email, "code": code});
+    http.Response res = await http.post(Uri.parse(url), body: {"email": email, "code": code});
     if (res.statusCode == 200)
       return true;
     else
       return false;
   }
 
-  Future<bool> login(
-      String email, String pass, BuildContext context, _scaffoldKey) async {
-    http.Response res = await http.post(Uri.parse(APIData.login),
-        body: {"email": email, "password": pass});
+  Future<bool> login(String email, String pass, BuildContext context, _scaffoldKey) async {
+    http.Response res = await http.post(Uri.parse(APIData.login), body: {"email": email, "password": pass});
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
       authToken = body["access_token"];
@@ -88,21 +82,20 @@ class HttpService {
       await storage.write(key: "token", value: "$authToken");
       await storage.write(key: "refreshToken", value: "$refreshToken");
       authToken = await storage.read(key: "token");
-      HomeDataProvider homeData =
-          Provider.of<HomeDataProvider>(context, listen: false);
+      HomeDataProvider homeData = Provider.of<HomeDataProvider>(context, listen: false);
       await homeData.getHomeDetails(context);
       return true;
-    }
-   else {
+    } else {
       if (res.statusCode == 402) {
-        _scaffoldKey.currentState.showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Verify email to continue."),
           action: SnackBarAction(label: "ok", onPressed: () {}),
         ));
         return false;
       } else {
-
-        _scaffoldKey.currentState.showSnackBar(SnackBar(
+        print(res.statusCode);
+        print(res.body);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Username or Password is Wrong"),
           action: SnackBarAction(label: "ok", onPressed: () {}),
         ));
@@ -111,19 +104,11 @@ class HttpService {
     }
   }
 
-  Future<bool> signUp(String name, String email, String password, String mobile,
-      BuildContext context, _scaffoldKey) async {
+  Future<bool> signUp(String name, String email, String password, String mobile, BuildContext context, _scaffoldKey) async {
     print(name);
     print(email);
     print(password);
-    http.Response res = await http.post(Uri.parse(APIData.register), body: {
-      "name": name,
-      "email": email,
-      "password": password,
-      "mobile": mobile
-    }, headers: {
-      "Accept": "application/json"
-    });
+    http.Response res = await http.post(Uri.parse(APIData.register), body: {"name": name, "email": email, "password": password, "mobile": mobile}, headers: {"Accept": "application/json"});
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
       authToken = body["access_token"];
@@ -131,14 +116,13 @@ class HttpService {
       await storage.write(key: "token", value: "$authToken");
       await storage.write(key: "refreshToken", value: "$refreshToken");
       authToken = await storage.read(key: "token");
-      HomeDataProvider homeData =
-          Provider.of<HomeDataProvider>(context, listen: false);
+      HomeDataProvider homeData = Provider.of<HomeDataProvider>(context, listen: false);
       await homeData.getHomeDetails(context);
       return true;
     } else {
       print('Sign-Up Status Code :-> ${res.statusCode}');
       if (res.statusCode == 402) {
-        _scaffoldKey.currentState.showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Verification email sent verify to continue."),
           action: SnackBarAction(
               label: "ok",
@@ -146,6 +130,7 @@ class HttpService {
                 Navigator.of(context).pushNamed('/SignIn');
               }),
         ));
+        Navigator.of(context).pushNamed('/SignIn');
         return false;
       } else {
         Fluttertoast.showToast(msg: "Registration Failed!");
@@ -155,8 +140,7 @@ class HttpService {
   }
 
   Future<List<About>> fetchAboutUs() async {
-    var response =
-        await http.get(Uri.parse(APIData.aboutUs + "${APIData.secretKey}"));
+    var response = await http.get(Uri.parse(APIData.aboutUs + "${APIData.secretKey}"));
     var jsonResponse = (convert.jsonDecode(response.body)['about']) as List;
     return jsonResponse.map((employee) => About.fromJson(employee)).toList();
   }
@@ -190,17 +174,11 @@ class HttpService {
   }
 
   Future<List<Orderhistory>> fetchPurchaseHistory() async {
-    var response = await http.get(
-        Uri.parse(APIData.purchaseHistory + "${APIData.secretKey}"),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer $authToken",
-          HttpHeaders.acceptHeader: "application/json"
-        });
+    var response = await http.get(Uri.parse(APIData.purchaseHistory + "${APIData.secretKey}"), headers: {HttpHeaders.authorizationHeader: "Bearer $authToken", HttpHeaders.acceptHeader: "application/json"});
     if (response.statusCode != 200) {
       return [];
     }
-    PurchaseHistory jsonResponse =
-        PurchaseHistory.fromJson(convert.jsonDecode(response.body));
+    PurchaseHistory jsonResponse = PurchaseHistory.fromJson(convert.jsonDecode(response.body));
 
     return jsonResponse.orderhistory;
   }

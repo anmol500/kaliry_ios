@@ -55,7 +55,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   if (x)
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => Codereset(emailCtrl.text)));
                   else
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Invalid details")));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid details")));
                   setState(() {
                     isloading = false;
                   });

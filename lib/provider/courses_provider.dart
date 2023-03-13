@@ -1,3 +1,7 @@
+import 'package:eclass/Screens/sign_in_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
+
 import '../common/apidata.dart';
 import '../common/global.dart';
 import '../model/course.dart';
@@ -28,8 +32,7 @@ class CoursesProvider with ChangeNotifier {
           return true;
         }
         for (int j = 0; j < studyingList[idx].course.progress.length; j++) {
-          if (studyingList[idx].course.progress[j].userId ==
-              studyingList[idx].enroll.userId) {
+          if (studyingList[idx].course.progress[j].userId == studyingList[idx].enroll.userId) {
             progressidx = j;
             break;
           }
@@ -71,8 +74,7 @@ class CoursesProvider with ChangeNotifier {
           return;
         }
         for (int j = 0; j < studyingList[idx].course.progress.length; j++) {
-          if (studyingList[idx].course.progress[j].userId ==
-              studyingList[idx].enroll.userId) {
+          if (studyingList[idx].course.progress[j].userId == studyingList[idx].enroll.userId) {
             progressidx = j;
             break;
           }
@@ -131,8 +133,7 @@ class CoursesProvider with ChangeNotifier {
       if (studyingList[idx].course.id == id) {
         studyingList[idx].course.progress.forEach((element) {
           if (element.userId == studyingList[idx].enroll.userId) {
-            ans = (element.markChapterId.length * 1.0) /
-                element.allChapterId.length;
+            ans = (element.markChapterId.length * 1.0) / element.allChapterId.length;
           }
         });
         break;
@@ -169,8 +170,7 @@ class CoursesProvider with ChangeNotifier {
   List<Course> getCourses(List<String> ids) {
     List<Course> ans = [];
     allCourses.forEach((element) {
-      for (int i = 0; i < ids.length; i++)
-        if (element.id.toString() == ids[i]) ans.add(element);
+      for (int i = 0; i < ids.length; i++) if (element.id.toString() == ids[i]) ans.add(element);
     });
     return ans;
   }
@@ -249,20 +249,19 @@ class CoursesProvider with ChangeNotifier {
   MyCoursesModel myCoursesModel;
 
   Future<MyCoursesModel> initPurchasedCourses(BuildContext context) async {
-    http.Response res = await http
-        .post(Uri.parse("${APIData.myCourses}${APIData.secretKey}"), headers: {
+    http.Response res = await http.post(Uri.parse("${APIData.myCourses}${APIData.secretKey}"), headers: {
       "Accept": "application/json",
       "Authorization": "Bearer $authToken",
     });
     debugPrint(res.body);
-    debugPrint(res.statusCode.toString());
+
+    // debugPrint(res.statusCode.toString());
     if (res.statusCode == 200) {
       myCoursesModel = MyCoursesModel.fromJson(json.decode(res.body));
       myCoursesModel.enrollDetails.forEach((element) {
         if (element.enroll.bundleId == null) {
           if (studyingList.length > 0) {
-            if (!studyingList
-                .any((_element) => _element.course.id == element.course.id)) {
+            if (!studyingList.any((_element) => _element.course.id == element.course.id)) {
               studyingList.add(element);
             }
           } else {
@@ -276,7 +275,9 @@ class CoursesProvider with ChangeNotifier {
         }
       });
     } else {
-      throw "Can't get courses.";
+      Navigator.push((context), MaterialPageRoute(builder: (context) => SignInScreen()));
+      push(SignInScreen());
+      // throw "Can't get courses.";
     }
     notifyListeners();
     return myCoursesModel;
@@ -303,9 +304,7 @@ class CoursesProvider with ChangeNotifier {
     List<Course> ans = [];
 
     for (int i = 0; i < allCourses.length; i++) {
-      if (allCourses[i].subcategoryId.toString() == id.toString() &&
-          allCourses[i].categoryId.toString() == sub.toString())
-        ans.add(allCourses[i]);
+      if (allCourses[i].subcategoryId.toString() == id.toString() && allCourses[i].categoryId.toString() == sub.toString()) ans.add(allCourses[i]);
     }
     return ans;
   }
@@ -314,9 +313,7 @@ class CoursesProvider with ChangeNotifier {
     List<Course> ans = [];
 
     for (int i = 0; i < allCourses.length; i++) {
-      if (allCourses[i].childcategoryId.toString() == child.toString() &&
-          allCourses[i].subcategoryId.toString() == sub &&
-          allCourses[i].categoryId.toString() == cate) ans.add(allCourses[i]);
+      if (allCourses[i].childcategoryId.toString() == child.toString() && allCourses[i].subcategoryId.toString() == sub && allCourses[i].categoryId.toString() == cate) ans.add(allCourses[i]);
     }
     return ans;
   }
@@ -325,8 +322,7 @@ class CoursesProvider with ChangeNotifier {
     List<Course> ans = [];
 
     allCourses.forEach((element) {
-      if (element.title.toLowerCase().contains(query.toLowerCase()))
-        ans.add(element);
+      if (element.title.toLowerCase().contains(query.toLowerCase())) ans.add(element);
     });
 
     return ans;

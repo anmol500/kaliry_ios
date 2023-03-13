@@ -169,11 +169,17 @@ class FeaturedListItem extends StatelessWidget {
                               Column(
                                 children: [
                                   courseDetail.price != null
-                                      ? Text(
-                                          "${(num.parse(courseDetail.price.toString()) * selectedCurrencyRate)} $selectedCurrency",
-                                          maxLines: 2,
-                                          style: TextStyle(color: mode.txtcolor, fontSize: 18.0, fontWeight: FontWeight.bold),
-                                        )
+                                      ? courseDetail.discountPrice != null
+                                          ? Text(
+                                              "${(num.parse(courseDetail.discountPrice.toString()) * selectedCurrencyRate)} $selectedCurrency",
+                                              maxLines: 2,
+                                              style: TextStyle(color: mode.txtcolor, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                            )
+                                          : Text(
+                                              "${(num.parse(courseDetail.price.toString()) * selectedCurrencyRate)} $selectedCurrency",
+                                              maxLines: 2,
+                                              style: TextStyle(color: mode.txtcolor, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                            )
                                       : isPurchased
                                           ? SizedBox(
                                               height: 10,

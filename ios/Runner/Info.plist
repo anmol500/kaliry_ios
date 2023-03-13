@@ -16,6 +16,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>kaliry</string>
+	<key>NSCalendarsUsageDescription</key>
+    <string>$(PRODUCT_NAME) uses your calendar.</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

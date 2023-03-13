@@ -134,12 +134,40 @@ class CourseListItem extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          courseDetail.discountPrice == null
-                              ? SizedBox.shrink()
-                              : Text(
-                                  "$selectedCurrency ${(num.parse(courseDetail.discountPrice.toString()) * selectedCurrencyRate)}",
-                                  style: TextStyle(color: mode.txtcolor, fontSize: 16.0, fontWeight: FontWeight.bold),
-                                ),
+                          // courseDetail.discountPrice == null
+                          //     ? SizedBox.shrink()
+                          //     : Text(
+                          //         "$selectedCurrency ${(num.parse(courseDetail.discountPrice.toString()) * selectedCurrencyRate)}",
+                          //         style: TextStyle(color: mode.txtcolor, fontSize: 16.0, fontWeight: FontWeight.bold),
+                          //       ),
+
+                          courseDetail.price != null
+                              ? courseDetail.discountPrice != null
+                                  ? Text(
+                                      "${(num.parse(courseDetail.discountPrice.toString()) * selectedCurrencyRate)} $selectedCurrency",
+                                      maxLines: 2,
+                                      style: TextStyle(color: mode.txtcolor, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                    )
+                                  : Text(
+                                      "${(num.parse(courseDetail.price.toString()) * selectedCurrencyRate)} $selectedCurrency",
+                                      maxLines: 2,
+                                      style: TextStyle(color: mode.txtcolor, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                    )
+                              : isPurchased
+                                  ? SizedBox(
+                                      height: 10,
+                                    )
+                                  : courseDetail.discountPrice != null
+                                      ? Text(
+                                          "${(num.parse(courseDetail.discountPrice.toString()) * selectedCurrencyRate)} $selectedCurrency",
+                                          maxLines: 2,
+                                          style: TextStyle(color: mode.txtcolor, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                        )
+                                      : Text(
+                                          translate("Free_"),
+                                          maxLines: 1,
+                                          style: TextStyle(color: mode.txtcolor, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                        ),
                         ],
                       ),
                     ],
@@ -147,11 +175,22 @@ class CourseListItem extends StatelessWidget {
                   Align(
                     alignment: Alignment.topRight,
                     child: courseDetail.price == null
-                        ? SizedBox.shrink()
-                        : Text(
-                            "$selectedCurrency ${(num.parse(courseDetail.price.toString()) * selectedCurrencyRate)}",
-                            style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: 12.0, color: Colors.grey),
-                          ),
+                        ? SizedBox(
+                            height: 10,
+                          )
+                        : isPurchased
+                            ? SizedBox(
+                                height: 10,
+                              )
+                            : Text(
+                                courseDetail.discountPrice == null ? '' : "${(num.parse(courseDetail.price.toString()) * selectedCurrencyRate)} $selectedCurrency",
+                                // courseDetail.price.toString()+']]',
+                                style: TextStyle(
+                                    decoration: courseDetail.discountPrice != null ? TextDecoration.lineThrough : null,
+                                    fontSize: courseDetail.discountPrice != null ? 12.0 : 18.0,
+                                    color: courseDetail.discountPrice != null ? Colors.grey : mode.txtcolor,
+                                    fontWeight: courseDetail.discountPrice != null ? null : FontWeight.bold),
+                              ),
                   ),
                   Container(
                     child: Column(

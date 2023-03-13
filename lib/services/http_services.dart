@@ -132,8 +132,11 @@ class HttpService {
         ));
         Navigator.of(context).pushNamed('/SignIn');
         return false;
+      } else if (res.statusCode == 422) {
+        Fluttertoast.showToast(msg: "Already Registered, Please verify your email!");
+        return false;
       } else {
-        Fluttertoast.showToast(msg: "Registration Failed!");
+        Fluttertoast.showToast(msg: "Already Registered, Please verify your email!");
         return false;
       }
     }

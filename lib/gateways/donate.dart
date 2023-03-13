@@ -1,7 +1,6 @@
 import 'package:eclass/Widgets/appbar.dart';
 import 'package:eclass/provider/home_data_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
@@ -27,13 +26,7 @@ class _DonateState extends State<Donate> {
 
     return Scaffold(
       appBar: customAppBar(context, translate("Donate_")),
-      body: Container(
-        child: InAppWebView(
-          initialUrlRequest: URLRequest(
-            url: Uri.tryParse(homeDataProvider.homeModel.settings.donationLink),
-          ),
-        ),
-      ),
+      body: Container(),
     );
   }
 }

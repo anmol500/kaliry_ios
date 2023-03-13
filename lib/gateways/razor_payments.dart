@@ -210,10 +210,11 @@ class _MyRazorPaymentPageState extends State<MyRazorPaymentPage> {
       'key': "${payment.paymentApi.razorpayKey}",
       'amount': '${price * 100}',
       'name': APIData.appName,
-      'external': {
-        'wallets': ['paytm']
-      },
-      'prefill': {'contact': "${user.profileInstance.mobile}", 'email': "${user.profileInstance.email}"}
+      "method": {"netbanking": "1", "card": "1", "upi": "1", "wallet": "0"},
+      'prefill': {
+        'contact': "${user.profileInstance.mobile}",
+        'email': "${user.profileInstance.email}",
+      }
     };
 
     try {

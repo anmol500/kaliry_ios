@@ -52,6 +52,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   getHomePageData() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       CoursesProvider coursesProvider = Provider.of<CoursesProvider>(context, listen: false);
+      // widget.homeDataProvider = Provider.of<HomeDataProvider>(context, listen: false);
       HomeDataProvider homeDataProvider = Provider.of<HomeDataProvider>(context, listen: false);
       RecentCourseProvider recentCourseProvider = Provider.of<RecentCourseProvider>(context, listen: false);
       BundleCourseProvider bundleCourseProvider = Provider.of<BundleCourseProvider>(context, listen: false);

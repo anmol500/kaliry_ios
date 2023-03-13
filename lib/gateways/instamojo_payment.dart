@@ -9,7 +9,6 @@ import 'package:eclass/provider/payment_api_provider.dart';
 import 'package:eclass/provider/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../common/apidata.dart';
@@ -35,28 +34,13 @@ class _InstamojoPaymentPageState extends State<InstamojoPaymentPage> {
   void loadData() async {
     await Provider.of<UserProfile>(context, listen: false).fetchUserProfile();
     setState(() {
-      fName = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .fname;
-      lName = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .lname;
-      email = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .email;
-      phone = Provider.of<UserProfile>(context, listen: false)
-          .profileInstance
-          .mobile;
-      instamojoUrl = Provider.of<PaymentAPIProvider>(context, listen: false)
-          .paymentApi
-          .instamojoUrl;
-      instamojoApiKey = Provider.of<PaymentAPIProvider>(context, listen: false)
-          .paymentApi
-          .instamojoApiKey;
-      instamojoAuthToken =
-          Provider.of<PaymentAPIProvider>(context, listen: false)
-              .paymentApi
-              .instamojoAuthToken;
+      fName = Provider.of<UserProfile>(context, listen: false).profileInstance.fname;
+      lName = Provider.of<UserProfile>(context, listen: false).profileInstance.lname;
+      email = Provider.of<UserProfile>(context, listen: false).profileInstance.email;
+      phone = Provider.of<UserProfile>(context, listen: false).profileInstance.mobile;
+      instamojoUrl = Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.instamojoUrl;
+      instamojoApiKey = Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.instamojoApiKey;
+      instamojoAuthToken = Provider.of<PaymentAPIProvider>(context, listen: false).paymentApi.instamojoAuthToken;
       isBack = true;
     });
     createRequest(); //creating the HTTP request
@@ -75,51 +59,12 @@ class _InstamojoPaymentPageState extends State<InstamojoPaymentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, "Instamojo Payment"),
-      body: Container(
-        child: Center(
-          child: isLoading
-              ? //check loadind status
-              CircularProgressIndicator() //if true
-              : InAppWebView(
-                  initialUrlRequest: URLRequest(
-                    url: Uri.tryParse(selectedUrl),
-                  ),
-                  onWebViewCreated: (InAppWebViewController controller) {},
-                  onProgressChanged:
-                      (InAppWebViewController controller, int progress) {
-                    setState(() {
-                      this.progress = progress / 100;
-                    });
-                  },
-                  onUpdateVisitedHistory: (_, Uri uri, __) {
-                    String url = uri.toString();
-                    print(uri);
-                    // uri containts newly loaded url
-                    if (mounted) {
-                      if (url.contains(APIData.confirmation)) {
-                        //Take the payment_id parameter of the url.
-                        String paymentRequestId =
-                            uri.queryParameters['payment_id'];
-                        print("value is: " + paymentRequestId);
-                        //calling this method to check payment status
-                        _checkPaymentStatus(paymentRequestId);
-                      }
-                    }
-                  },
-                ),
-        ),
-      ),
+      body: Container(),
     );
   }
 
   _checkPaymentStatus(String id) async {
-    var response =
-        await http.get(Uri.parse(instamojoUrl + "payments/$id/"), headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/x-www-form-urlencoded",
-      "X-Api-Key": "$instamojoApiKey",
-      "X-Auth-Token": "$instamojoAuthToken"
-    });
+    var response = await http.get(Uri.parse(instamojoUrl + "payments/$id/"), headers: {"Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded", "X-Api-Key": "$instamojoApiKey", "X-Auth-Token": "$instamojoAuthToken"});
     var realResponse = json.decode(response.body);
     print(realResponse);
     if (realResponse['success'] == true) {
@@ -149,28 +94,18 @@ class _InstamojoPaymentPageState extends State<InstamojoPaymentPage> {
       "allow_repeated_payments": "true",
       "send_email": "false",
       "send_sms": "false",
-      "redirect_url":
-          APIData.confirmation, //Where to redirect after a successful payment.
+      "redirect_url": APIData.confirmation, //Where to redirect after a successful payment.
       "webhook": APIData.confirmation,
     };
     //First we have to create a Payment_Request.
     //then we'll take the response of our request.
-    var resp = await http.post(Uri.parse(instamojoUrl + "payment-requests/"),
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "X-Api-Key": "$instamojoApiKey",
-          "X-Auth-Token": "$instamojoAuthToken"
-        },
-        body: body);
+    var resp = await http.post(Uri.parse(instamojoUrl + "payment-requests/"), headers: {"Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded", "X-Api-Key": "$instamojoApiKey", "X-Auth-Token": "$instamojoAuthToken"}, body: body);
     if (json.decode(resp.body)['success'] == true) {
       //If request is successful take the longurl.
       setState(() {
         isLoading = false; //setting state to false after data loaded
 
-        selectedUrl =
-            json.decode(resp.body)["payment_request"]['longurl'].toString() +
-                "?embed=form";
+        selectedUrl = json.decode(resp.body)["payment_request"]['longurl'].toString() + "?embed=form";
       });
       print(json.decode(resp.body)['message'].toString());
       //If something is wrong with the data we provided to
@@ -181,8 +116,7 @@ class _InstamojoPaymentPageState extends State<InstamojoPaymentPage> {
   sendPaymentDetails(transactionId, paymentMethod) async {
     try {
       goToDialog2();
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
       var sendResponse;
 
@@ -280,8 +214,7 @@ class _InstamojoPaymentPageState extends State<InstamojoPaymentPage> {
           barrierDismissible: false,
           builder: (context) => WillPopScope(
               child: AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25.0))),
                 backgroundColor: Colors.white,
                 title: Text(
                   "Saving Payment Info",

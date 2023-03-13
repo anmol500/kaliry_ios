@@ -17,25 +17,28 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
   bool _visible = false;
-
+  HomeDataProvider homeData;
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var token = await storage.read(key: "token");
       authToken = token;
-      HomeDataProvider homeData = Provider.of<HomeDataProvider>(context, listen: false);
+
+      homeData = Provider.of<HomeDataProvider>(context, listen: false);
       await homeData.getHomeDetails(context);
       var selectedCurrency1 = await storage.containsKey(key: 'selectedCurrency');
       var selectedCurrencyRate1 = await storage.containsKey(key: 'selectedCurrencyRate');
       var r = await storage.read(key: 'selectedCurrencyRate');
       if (selectedCurrency1 && selectedCurrencyRate1) {
-        print('loading screeenn :' + selectedCurrencyRate1.toString() + (await storage.read(key: 'selectedCurrencyRate')).toString());
         selectedCurrency = await storage.read(key: 'selectedCurrency');
-        selectedCurrencyRate = int.parse(await storage.read(key: 'selectedCurrencyRate'));
+        selectedCurrencyRate = 1;
+        // selectedCurrencyRate = int.parse(await storage.read(key: 'selectedCurrencyRate'));
       } else {
         selectedCurrency = homeData.homeModel.currency.currency;
         selectedCurrencyRate = 1;
       }
+
+      print('---------------- $selectedCurrencyRate');
 
       // Loading Languages
       LanguageProvider languageProvider = Provider.of<LanguageProvider>(context, listen: false);

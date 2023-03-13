@@ -1,6 +1,5 @@
 import 'package:eclass/Widgets/appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 class MyWebView extends StatefulWidget {
@@ -18,13 +17,7 @@ class _MyWebViewState extends State<MyWebView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, translate(widget.title)),
-      body: Container(
-        child: InAppWebView(
-          initialUrlRequest: URLRequest(
-            url: Uri.tryParse(widget.url),
-          ),
-        ),
-      ),
+      body: Container(),
     );
   }
 }

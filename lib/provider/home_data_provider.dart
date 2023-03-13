@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:eclass/common/global.dart';
 import 'package:eclass/model/zoom_meeting.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,11 @@ class HomeDataProvider with ChangeNotifier {
 
   Future<HomeModel> getHomeDetails(context) async {
     String url = "${APIData.home}${APIData.secretKey}";
-    Response res = await get(Uri.parse(url));
+
+    Response res = await get(Uri.parse(url), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${await storage.read(key: "token")}',
+    });
 
     if (res.statusCode == 200) {
       homeModel = HomeModel.fromJson(json.decode(res.body));

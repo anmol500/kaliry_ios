@@ -8,6 +8,8 @@ import 'package:eclass/zoom/join_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:http/http.dart';
+import 'package:jitsi_meet/feature_flag/feature_flag.dart';
+import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -131,6 +133,25 @@ class _ZoomMeetingListState extends State<ZoomMeetingList> {
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
+                      _joinMeetingJitsi() async {
+                        try {
+                          FeatureFlag featureFlag = FeatureFlag();
+                          featureFlag.welcomePageEnabled = false;
+                          featureFlag.resolution = FeatureFlagVideoResolution.MD_RESOLUTION; // Limit video resolution to 360p
+
+                          var options = JitsiMeetingOptions(room: '${zoomMeetingList[index].meetingId}')
+                            ..userDisplayName = "${zoomMeetingList[index].meetingId}"
+                            ..serverURL = 'https://kaliry.com/meetup-conferencing/'
+                            ..audioOnly = true
+                            ..audioMuted = true
+                            ..videoMuted = true;
+
+                          await JitsiMeet.joinMeeting(options, roomNameConstraints: Map());
+                        } catch (error) {
+                          debugPrint("error: $error");
+                        }
+                      }
+
                       return Padding(
                         padding: EdgeInsets.only(right: 18.0),
                         child: Container(
@@ -218,10 +239,12 @@ class _ZoomMeetingListState extends State<ZoomMeetingList> {
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
                                           ),
                                           onPressed: () {
-                                            liveClassAttendance(meetingType: "1", meetingId: zoomMeetingList[index].id);
+                                            // liveClassAttendance(meetingType: "1", meetingId: zoomMeetingList[index].id);
 
-                                            print(zoomMeetingList[index].zoomUrl);
-                                            // launchUrl(Uri.parse(zoomMeetingList[index].zoomUrl));
+                                            _joinMeetingJitsi();
+
+                                            // launchUrl(Uri.parse('https://kaliry.com/meetup-conferencing/${zoomMeetingList[index].meetingId}'));
+                                            //
                                             // Navigator.push(
                                             //   context,
                                             //   MaterialPageRoute(

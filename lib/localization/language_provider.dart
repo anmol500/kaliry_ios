@@ -16,17 +16,14 @@ class LanguageProvider extends ChangeNotifier {
     http.Response response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       String data = response.body;
-      print('Language List Response :-> $data');
+      // print('Language List Response :-> $data');
       languageModel = LanguageModel.fromJson(await jsonDecode(data));
       // Load Language Code
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       languageCode = sharedPreferences.getString('languageCode');
       languageCode = languageCode == null ? 'en' : languageCode;
 
-      if (loadScreen)
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LanguageScreen()));
+      if (loadScreen) Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LanguageScreen()));
     } else {
       print('Language Response Code :-> ${response.statusCode}');
     }
@@ -34,8 +31,7 @@ class LanguageProvider extends ChangeNotifier {
 
   String languageCode;
 
-  Future<void> changeLanguageCode(
-      {String language, BuildContext context}) async {
+  Future<void> changeLanguageCode({String language, BuildContext context}) async {
     for (Language _language in languageModel.language) {
       if (_language.name == language) {
         languageCode = _language.local;
@@ -45,13 +41,7 @@ class LanguageProvider extends ChangeNotifier {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString('languageCode', languageCode);
     await changeLocale(context, languageCode);
-    await Fluttertoast.showToast(
-        msg: translate("Language_Changed_Successfully"),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.blue,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    await Fluttertoast.showToast(msg: translate("Language_Changed_Successfully"), toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER, backgroundColor: Colors.blue, textColor: Colors.white, fontSize: 16.0);
     notifyListeners();
   }
 
